@@ -31,12 +31,18 @@ h6   { font-size: 102%; margin-bottom: 0ex;  margin-top: 1.3ex;}
 p    { margin-top: 0.9ex; margin-bottom: 1.3ex; }
 pre  { margin-top: 0; margin-bottom: 0; }
 h1   { margin-top: 0; margin-bottom: 0; }
+ul	{margin-top: 0.5ex}
+li   { margin-bottom: 0.7ex; }
 </style>
 </head>
 <body>
 <p><a href='../../../'>home</a></p>
 <section>
 <h1>tech blog</h1>
+
+<p>Drafts / previous versions of <a href='https://github.com/kwynncom/tech-blog'>this page are on GitHub</a>.  For time zone purposes, I am near Atlanta and use my 
+local timezone.  Atlanta is the same as New York (America/New_York), or UTC -5 / Eastern Standard Time (EST) in winter and UTC -4 during Daylight Saving Time / 
+Eastern Daylight Time (EDT) / summer time, which is in effect almost 8 months out of the year.</p>
 
 <section>
     <h3>January 12, 2022 - the concept of "from scratch"</h3>
@@ -45,59 +51,76 @@ h1   { margin-top: 0; margin-bottom: 0; }
     
     <p>Yet again I'm continuing my web dev Q&A, usually answering emails from one apprentice.  He is the "you" when I use "you."   </p>
     
-    <p>You asked about Googling HTML and CSS and "from scratch."  I fear you may have seriously misunderstood what I mean by "from scratch."  I'm going to have to 
-        whittle on the concept below.  As I think about it, it may be somewhat hard to specify.  
+    <p>You asked about Googling HTML and CSS and "from scratch."  I fear you may have seriously misunderstood what I mean by "from scratch." </p>
+    
+    <p>Before revisiting "from scratch," I'll separate what I do and do not recommend:     
+    </p>
+
+    <h4>DO</h4>
+    <ul>
+        <li>Use Google and any other examples / sources you can get your hands on.  "Program by Google" is fine as long as you eventually understand the core code 
+            you're using.  Again, start anywhere / however you want / however you can / whatever makes progress.  Do something--anything--to start.  </li>
+        <li>Use others' code for specific tasks such as PHPMailer for email.  You do NOT have to understand its internals at all.</li>
+        <li>Start with others' code as the entirety of your app, as long as you eventually understand the core logic.</li>
+        <li>If you see something using Bootstrap CSS, find out what Bootstrap is doing and use that specific part without installing a zillion bytes of Bootstrap</li>
+     </ul>
+    
+    <h4>do NOT, at least at first</h4>
+    <ul>
+        <li>use Angular, React, Bootstrap (CSS or JS), WordPress, Drupal, or the like</li>
+    </ul>
+    
+    <p>When I say "from scratch," in part I mean use out-of-the-box JavaScript as opposed to a general library like React or Angular or even jQuery, at least to start.  
+        You should know how to use basic JavaScript.  After gaining some understanding, perhaps in a month or two or so, then by all means experiment, probably starting
+        with React.  For now, for my own purposes, I have turned away from all of the above including React.  I still want to whittle on my own JavaScript.  At this rate
+        it will be 6 months at least before I reconsider that.  I put React highest on the list because I have not tried it and have heard good things.  I have tried 
+        Angular and I found it to be a waste of time in the short-term.  It took longer to learn the "Angular way" than it would have taken me to do it myself and 
+        even create my own portions of a library.
     </p>
     
-    <p>You should always use Google and any other references / examples.  Starting to "program by Google" is fine.  Again, start anywhere / however 
-        you want / however you can / whatever makes progress.  Do something--anything--to start.  
-    </p>
-
-
-    <p>Using PHPMailer or many other libraries is still fine.  PHPMailer does one very tedious task very well.  PHPMailer is an alternative to the mail() function.
-        Using other's code for specific tasks is fine.  
-        </p>
-
-    <p>I need to think of a word or simple term for "NOT from scratch."  What I mean by NOT-from-scratch are libraries or frameworks or systems that fundamentally 
-        alter how JS or HTML or CSS or PHP works.  That is, think three times before starting with Angular, React, Bootstrap (JS or CSS), WordPress, Drupal, etc.  
-        All of those drastically change how you program, and sometimes they give you no choice in the matter.</p>
-    
-    <p>For example, Bootstrap's CSS litters your elements with a zillion 
-        lines (characters) of code that you wind up trying to override and otherwise fight with.  I addressed this at some length maybe 2 - 3 weeks ago, below, when I 
-        talked about PHP's 
-        date functions.  I whittled on Bootstrap CSS until I had what I actually needed, and it was a tiny, tiny fraction.  So, for that matter, it's fine to use 
-        Bootstrap as a reference for what you want something to look like. I just question the wisdom of importing a zillion lines of code.  Figure out what parts you 
-        need and use that.
-    </p>
-
-    <p>To try yet another angle, you are learning HTML, CSS, JS, and PHP.  You're learning the basics.  You want to be in control of the web form.  You should understand 
-        how a web form works with basic JS that comes with the browser.  That's as opposed to learning it the "React way" first.  If you want to try React in a month or 
-        two, I'd probably give it my approval, but you should still know how to do it in out-of-the-box JavaScript.  React is a library that you import that changes 
-        many things about how you do JavaScript.  
-    </p>
-
-    <p>Yet another...  For whatever you're doing, you should write the core code that's driving everything else.  If you start with someone else's core, that's fine 
-        as long as you understand it.  You don't have to understand the internals of all the various sub-tasks.  Going back to the PHPMailer example, you don't have to 
-        understand squat about how it works.  You can just use it.  
+    <p>The same applies to using WordPress and Drupal and such in PHP.  They fundamentally alter the dev landscape.  Using WordPress in some cases may be a 
+        necessary evil, but you should still know how to do various things yourself.
         
     </p>
     
-    <p>Put another way, all of the "bad guys" above are very general libaries or systems or whatever that put a layer between your code and the fundamental code 
-        below it--whether that's PHP, JS, CSS, HMTL, or whatnot.  Again, it's fine to use other's code for specific tasks or even quite a few tasks as long as you 
-        are running the show with code you understand.  That is, you should understand the code that's driving the external code.  You don't have to understand squat 
-        about the underlying code you're calling.
-       </p>
-
-
-
+    <p>You're going to be Googling HTML and CSS and many other things for your entire career (or at least until Google is renamed after being seized for crimes against 
+        humanity).  Starting with "program by Google" is fine as long as you eventually understand enough to modify it.  The long-term problem with "program by 
+        Google" is people who do that and barely make it work and then have no idea what to do when it stops working.
+    </p>
     
-    <p>
-        "From scratch" 
-        means either code that you have typed or code that you have copied and then typed on to meet your own specs.  Even if you copy code and it works as-is, that's 
-        still "from scratch" in the essential way I mean it.  
+    <p>I need to fully distinguish PHPMailer from Angular.  Angular fundamentally changes how you do things.  Angular is a very general library that does a lot 
+        of stuff.  Again, if you're going down that route, you should know 
+        how to do basic things in pure JavaScript first.  PHPMailer does something very specific; it does not alter the entire dev landscape.  You don't have to 
+        understand the internals of everything you use, or you'd never get anything done.
     </p>
 
+    <p>Perhaps another way to come at it is that Angular is an overlay with which you do general dev.  It's an overlay of pure JavaScript.  You should know the basics of 
+        pure JavaScript first.  You should be able to implement basic logic in pure JavaScript first.  
+        PHPMailer is an overlay of SMTP, but it does a very specific task.  There is no reason for you to implement anything that specific.  
+        If you implemented everything yourself, you'd never get anything done.  
+    </p>
     
+    <p>Another way: your current goal is to write a web form and get email notification of the entry.  You should understand a basic web form and be able to 
+        modify it yourself, even if you copied the code.  You should have fluid control over your core product--the web form.  A web form is very general and 
+        can have many field and do many things.  PHPMailer sends emails.  If it "just works," great.  It's not the core of what you're doing.
+        
+    </p>
+    
+    <p>Ideally, "from scratch" means you typed all the core code yourself, or you copied it from yourself.  You may be typing it yourself but looking every 
+        single detail up.  The next nuance that is good enough is that you 
+        copied it from someone else but you come to understand it well enough to modify it.  Then the next time you are copying from yourself.
+    </p>
+    
+    <p>Going back to the Bootstrap CSS example, one problem with importing the entire Bootstrap CSS is that it formats every p, div, li, tr, td, etc.  You wind up 
+        trying to override it and otherwise fight it.  I addressed this roughly 2 - 3 weeks ago below when I talked about PHP date formats.  The entirety of 
+        Bootstrap.css is huge.  I whittled down to what I wanted and it was a tiny fraction of the whole thing.
+    </p>
+    
+    <p>Another way: all of the "bad guys" above are very general libaries or systems or whatever that put a layer between your code and the fundamental code 
+        below it--whether that's PHP, JS, CSS, HMTL, or whatnot. You don't want to distort your dev environment like that until you at least know what a pure 
+        environment looks like.  
+    </p>
+   
 </section>
 
     <section>
