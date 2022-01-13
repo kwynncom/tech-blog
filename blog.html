@@ -45,7 +45,312 @@ local timezone.  Atlanta is the same as New York (America/New_York), or UTC -5 /
 Eastern Daylight Time (EDT) / summer time, which is in effect almost 8 months out of the year.</p>
 
 <section>
-    <h3>January 12, 2022 - the concept of "from scratch"</h3>
+    <h3>January 12, 2022, one of several entries today, starting this at 23:26</h3>
+    
+    <p>Updated 23:47 with some answers.  Updated 23:54 regarding http://validator....
+        
+    </p>
+    
+    <p>I'm consider several changes to my Apache config, several of which I've tested.  Some notes below.  I am not using newlines in a realistic way--that is, the 
+        following is not precisely correct.</p>
+    
+    <ul>
+        <li>I must fix http://validator references before doing the SSL rewrite</li>
+        <li>"$ sudo apachectl configtest" - keep this in mind</li>
+        <li>apachectl above seems to want you to define the ServerName in apache2.conf itself, in addition to elsewhere</li>
+        <li>This works quite nicely: &lt;VirtualHost *:80&gt;Include sites-available/common.conf</li>
+        <li>Does certbot need ServerName in sites-available if it's in Apache.conf? - YES, if you want to auto-discover.  But it CAN be in the include / common file.</li>
+        <li>Will certbot find my email address if it's in the include file?  Yes.</li>
+        <li>If you are already in *:80, then everything needs rewriting: RewriteEngine On   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,NE]</li>
+        <li>Apache Rewrite Rule config flags: L is the last rule, NE is no escape of chars in the URL because you want to pass them on as-is</li>
+        <li>If you're in an .htaccess file:  RewriteCond %{HTTPS} !=on  and perhaps ReWriteRule ^(.*)$ but I think ^ above would work fine</li>
+        <li>Note that the above is for a 302 (temp) rather than 301 (perm).  I can do 301 later.</li>
+    </ul>
+    
+</section>
+
+<section>
+    <h3>January 12, 2022, one of several entries today, starting 20:43, first posted 22:20</h3>
+    
+    <p>(I made small revisions at 22:38.)</p>
+    
+    <p>And back to my web dev Q&A with my apprentice.  He is the "you" to whom I'm originally speaking.</p>
+    
+    <p>First, something I should emphasize again about sending email.  Among basic features that should be simple, it is 
+        one of the harder things I've done over the years.  I'm sure I've done lots of harder things, but nothing that is 
+        both such a basic feature and so hard.
+        Part of the problem is that there are Federal and presumably 
+        many other laws around the world around spam, so the providers are very cautious.
+    </p>
+    
+    <p>To clarify for myself and everyone else, your point about "from scratch" was about memorizing stuff.  There are 
+        basic things I've done several thousand times that I still look up in some sense of the term "look up" (see below).  
+        That's in part because PHP is inconsistent in the order of function arguments in a few places, but that's not by 
+        any means the only example.
+     </p>
+     
+     <p>I'm trying to stop beating on <a href='https://www.php.net/'>php.net</a> and trying to grep -R my own code.  I will 
+         suggest something that I have only done sporadically:
+         </p>
+         
+    <p>Create your own page and / or your own program that demonstrates all the things you keep looking up.  Exaggerate the 
+        clarity of the variables.  I tend to use very short variable names because I get tired of typing them, but I should 
+        take my own advice when I'm giving examples.
+    </p>
+    
+    <p>I think it'd be very funny and geeky and cool to have one bigger and bigger program that demonstrates all of the 
+        little "primitives" of coding, where I'm using the term primitives to mean the syntax, the functions, the order of the 
+        function args and what they are, snippets of doing a bunch of simple little things, etc.
+    </p>
+    
+    <p>Alternatively, I have downloaded all the PHP doc, but I never fully installed it.  I've also considered installing it 
+        on Kwynn.com.  I've also also (sic) considered installing the "Nu" 
+        <a href='https://validator.w3.org/'>HTML validator that W3</a> runs.  Recently I noticed a reference to installing it 
+        yourself.
+     </p>
+     
+     <p>Other than my not understanding the memorizing key to your question, we seem to be on the same page.
+         
+     </p>
+     
+     <p>What, me using uncommon words such as Quixotic?  I would never do such a thing.</p>
+     
+     <p>WINE is a mixed bag.  Around 5 years ago an apprentice got <i>Call of Duty</i> working in Linux running on iCult hardware.
+         I don't remember if it was perfect, but it at least worked fairly well.
+I've had some success with WINE, but I'd say it's still a pain.  A potential apprentice recently mentioned 
+<a href='https://zorin.com/os/'>Zorin Linux</a>, which is based on Ubuntu.  Apparently the emphasis is on making it easier for 
+people to migrate from SatanSoft.  The <a href='https://en.wikipedia.org/wiki/Zorin_OS'>Zorin WikiPedia article</a> mentions
+both WINE and PlayOnLinux that Zorin encourages.
+     </p>
+     
+     <h4>HTTP headers</h4>
+     <p>Regarding the "header thing" or the "DO NOT CLOSE PHP TAGS UNLESS..." thing, which I got into in the last few weeks, 
+this issue is a special case, just like sending email is a special case.  The email thing you came up with on your own, in that you 
+brought it to me.  The tag thing I'm shoving a screeching at you because it has caused me enormous damage.  For one, it's 
+a special case because it goes in the "hear me now and believe me [and understand me] later" category.  It's probably not 
+worth taking the time to reproduce the dreaded "...cannot be changed after headers have already been sent" error.  With 
+that said, I'll give some explanation.
+     </p>
+     
+     <p>Below is a relevant example.  I have removed a number of lines to make it smaller.</p>
+     
+     <pre>$ curl -i https://kwynn.com/robots.txt
+HTTP/1.1 200 OK
+Date: Thu, 13 Jan 2022 02:11:22 GMT
+Server: Apache/2.4.41 (Ubuntu)
+Last-Modified: Sun, 04 Oct 2020 04:13:01 GMT
+ETag: "195-5b0d094ed72a3"
+Content-Length: 405
+Content-Type: text/plain
+
+User-agent: *
+Disallow: /t/8/01/wx/wx.php
+Sitemap: http://kwynn.com/t/1/01/sitemap.xml
+Sitemap: https://kwynn.com/t/20/10/sitemap_begin_2020.xml</pre>
+     
+<p>When your PHP runs in "web mode," it is usually responding to an HTTP GET or POST, which I'll demonstrate more specifically 
+    in a moment.  
+It must respond to an HTTP request with a result specified by the protocol (HTTP).  It's doing some of that behind the scenes.  
+PHP *MUST* generate headers for the browser to accept the result.  The curl command above generates a GET, and that is the result 
+including the headers, minus a few lines.  I'm not sure which of the above are absolutely required in an HTTP response, but, 
+whatever the case, the browser is expecting a number of lines and a number of types of lines and then a double newline.  
+Everything after the double newline is the body which is often the HTML itself.  If you output anything, even accidentally, 
+from PHP before the proper headers go out, you may break your page.
+</p>
+
+<p>If that's all there were to the "cannot be changed" issue, it wouldn't be so bad.  But, believe me, at least years ago 
+    the results were unpredictable to the point that it seemed like a virus.  (A real computer virus that does damage to 
+    data, as opposed to fake viruses that do nothing to people.)  At that time, I was just starting to do hard-core PHP dev, and I could not 
+    figure out what was going on.  (I think I already was using a debugger.)  I'm sure I Googled, but I guess it still took me a 
+    while to figure out what was going on.
+</p>
+     
+<p>I was going to show you what I thought was a more "pure" example of an HTTP GET, but it doesn't work quite like I expected.  
+I think that's because I'm not sending a proper HTTP request packet, and my brief attempts to do so didn't get me anywhere.  
+But it hopefully the follwoing gives you more insight.  Note that I'm removing parts of HTML tags because it seems that the validator doesn't like 
+CDATA, or maybe CDATA has been deprecated.
+</p>
+<pre>$ telnet kwynn.com 80
+Trying 2600:1f18:23ab:9500:acc1:69c5:2674:8c03...
+Connected to kwynn.com.
+Escape character is '^]'.
+GET /
+!DOCTYPE html
+html lang="en"
+head
+[...]
+titleKwynn's website/title
+[...]
+/body
+/html</pre>
+
+<p>You can see the request and response headers in control-shift-I network, and there are other ways to get at it.  Note that 
+    if you ever parse a raw HTTP response, all of the newlines are old-fashioned \r\n rather than just \n in Linux.  This becomes
+    important if you try to separate header and body.  I parse it with "$hba = explode("\r\n\r\n", $rin);" on 
+    <a href='https://github.com/kwynncom/github-activity-web-widget/blob/f234e9509064c61fd6f159fac21a57227f2270c5/getActual.php'>line 34</a>.
+    
+</p>
+
+<p>  As for your having no experience with PHP and "header()," hopefully I've shown 
+    that this is a much wider question than PHP.  Everything on the web uses headers.  
+    
+</p>
+
+<p>As for the header() PHP function, that lets you add headers when needed.  I hope you have realized that all headers must 
+    come before the main body of the output.  :)   Reasons I've had to use headers are:
+</p>
+
+<ul>
+    <li>"Content-Type: application/json" - You need to tell the recipient it's not HTML.</li>
+    <li>You output a lot of headers if you're doing a direct download such as PHP reading an audio file and then allowing a 
+        download, or downloading a PDF.  I'd have to go digging for those examples, or I'm sure you'd find them.
+        </li>
+    <li>If I ever decide to rewrite all URLs to a "single page" system like WordPress does, I should output my own modified 
+        dates and etags because PHP assumes the output is dated "now," when the date should be when the content changed.
+    </li>
+    <li>header('Location: https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); -- that's one way of doing a redirect, 
+        in this case to HTTPS from HTTP, although this is not the best modern method for forcing HTTPS.
+        
+    </li>
+    
+    <li>You have to use headers in cases of cross-scripting issues / CORS / Cross-origin resource sharing.  Browser security 
+        says the browser can only accept data from one domain unless you output headers telling it that cross-origins are OK.
+     </li>
+</ul>
+
+<p>Hopefully that gives you a lot more under the hood.
+</p>
+
+<h4>kwas()</h4>
+
+<p>In your kwas() example, you'll want a line before exit(0); that does echo('OK' . "\n");  I assume it's not outputting 
+    anything because you got sendmail installed, and sendmail is accepting emails for processing and thus mail() returns true.  
+    (As I said at great length below, that in itself won't get you much closer to sending an email, but anyhow...)
+</p>
+
+<p>kwas() is about checking your assumptions ALL THE TIME.  In your example, you didn't output anything in the event of 
+    success.
+</p>
+
+<p>You did incorporate kwutils into your code just fine.  You just didn't do anything to output in the event of success.
+</p>
+
+<p>There is more to say on this, but I'll wait until you have more examples.    
+</p>
+
+<p>Here is an example of one consequence of require_once'ing kwutils.  First without then with:</p>
+
+<pre>&lt;?php
+$a = [];
+$b = $a['a'];
+echo('got here' . "\n");
+// RESULT:
+[stderr in red:] PHP Warning:  Undefined array key "a" in /home/k/sm20/frag/kwuex.php on line 4
+got here
+
+&lt;php // new program
+require_once('/opt/kwynn/kwutils.php');
+// then same 3 lines as above
+// RESULT:
+ERROR: kwuex.php LINE: 4 - Undefined array key "a" /home/k/sm20/kwuex.php</pre>
+
+<p>When I change the error handler in kwutils.php, warnings become fatal errors.  I am certain this is the right 
+    answer in the real world.  Just about all of my own code uses it.  I haven't been able to fully prove it's the right 
+    answer in my main paid project because Drupal throws warnings right, left, and center.  But the new version is most certainly 
+    going to take the position of forcing fatal errors.  I made this change in response to annoyance at Drupal throwing 
+    warnings and continuing execution.
+</p>
+
+<p>There is as always more to say, but that will do for now.
+    
+</p>
+
+</section>
+
+<section>
+    <h3>January 12, 2022, posted at 20:33 (started 18:11) - installing an HTTPS SSL cert locally</h3>
+    
+    <p>This is my second entry started today and the 3rd entry that either started or bled into today.
+        
+    </p>
+    
+    <p>You have to have a domain for an SSL cert. For local dev purposes, I highly recommend using 
+        a subdomain (testinglocal.example.com) even if you're not using the base domain.  One reason is that when in 
+        development, you change things so much that you might go over certbot's limits on certs.  It's something like 5 certs 
+        a week for a given fully qualified domain.  Thus, if you're using a subdomain, you can just use another subdomain 
+        (testinglocal2.example.com) rather than losing access to the base domain for several days.  This isn't theory.  I 
+        went over the limit several months ago.  It snuck up on me.
+      </p>
+    
+    <p>As I muck around with my internet service provider's modem / router, I'm finding that my local system does 
+        not have a 32 bit IPv4 identity.  This is important for firewall reasons.  So, let's see if this works: 
+        "$ ifconfig  | grep global"  That results in 3 global IPv6 addresses.  The first one didn't seem to work, then I added 
+        a second.  Then as I ran curl from kwynn.com (external to my local system) and found which address it was using, I went 
+        back down to only one IPv6 address in the DNS AAAA record for the subdomain.  You register DNS records with your domain 
+        name registrar.  I use <a href='https://www.hover.com/'>Hover</a>.
+    </p>
+    
+    <p>My router's ping / icmp settings were somewhat confusing.  The setting 
+        "Drop incoming ICMP Echo requests to Device LAN Address"
+        had to be turned off for the "Global Unicast IPv6 Address" of the router itself to respond to ping.  In order to ping 
+        my local system, "Reflexive ACL" had to be turned off.  That needs to stay off through the certbot verification because 
+        the process needs a system passively listening on port 80.  
+   </p>
+
+   <p>Turn off any active local sites except the one in question.  That is, disable them in Apache then restart.  Below, 
+       "irrelevant" is the site / virtual host defined in /etc/apache2/sites-available/irrelevant.conf
+   </p>
+   
+   <pre>sudo a2dissite irrelevant
+sudo systemctl reload apache2</pre>
+       
+      
+   
+            <p>I set the one active virtual host to simply be receiving *:80: &lt;VirtualHost *:80&gt;  Putting IP address in 
+                the 
+                VirtualHost top line 
+        did not work--certbot did not find anything listening, even though curl worked.  You also need to set the ServerName 
+        to the fully qualified domain.  Don't forget to restart Apache.
+        
+    </p>
+    
+    
+    <p>Note that the ufw default settings were not causing a ping problem.  As for getting ready for the certbot:
+        "$ sudo ufw allow http" and "$ sudo ufw allow https"  
+     </p>
+
+    <p><a href='https://certbot.eff.org/'>Certbot home</a>, and 
+        <a href='https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal'>relevant-to-me instructions</a>.
+        
+    </p>
+     
+     <p>First, do the "dry run": "$ sudo certbot -v certonly --apache --dry-run"  Then do the real thing: "sudo certbot --apache"
+         
+     </p>
+
+     
+     <p>Once SSL is working, you can put an entry like this in /etc/hosts:</p>
+     <pre>127.0.0.1   blah.example.com</pre>
+     
+     <p>Once you do that, you can reverse all the security and even the AAAA DNS record because the site is now self-contained.
+         Note that you have to open things up again to renew the security cert before 90 days.  
+         
+     </p>
+     
+     <p>If needed, set your firewall back to "Reflexive ACL" on.  Then "$ sudo ufw status numbered  ".  Assuming you want to 
+         delete 
+         all the rules, "sudo ufw delete 1" to delete all the rules until they're all gone.  Delete the AAAA record.
+         
+     </p>
+     
+     <p>For cleanup later, when you're done with the cert: $ sudo certbot delete --cert-name blah.example.com
+              </p>
+
+</section>
+
+
+<section>
+    <h3>January 12, 2022 (AM) - the concept of "from scratch"</h3>
     
     <p>Note that my January 11 entry on email continued into today, January 12.  This is a new entry started on Jan 12.</p>
     
