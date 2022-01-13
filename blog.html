@@ -36,15 +36,45 @@ li   { margin-bottom: 0.7ex; }
 </style>
 </head>
 <body>
-<p><a href='../../../'>home</a></p>
+<p style='margin-bottom: 0.1ex; '><a href='../../../'>home</a></p>
 <section>
-<h1>tech blog</h1>
 
+<div style='margin-bottom: 2.5ex; '>
+<h1  style='display: inline-block'>tech blog</h1>
+<div style='display: inline-block; margin-left: 0.6ex; position: relative; top: 0.9ex; '>
+    
+<a href='https://validator.w3.org/check?uri=https://kwynn.com/t/7/11/blog.html'>
+                                                        
+        <img style='transform: scale(0.81, 0.81);' src="../../5/02/html5_valid.jpg" alt="HTML5 valid" width="103" height="36" /></a>
+</div>
+</div>
+    
 <p>Drafts / previous versions of <a href='https://github.com/kwynncom/tech-blog'>this page are on GitHub</a>.  For time zone purposes, I am near Atlanta and use my 
 local timezone.  Atlanta is the same as New York (America/New_York), or UTC -5 / Eastern Standard Time (EST) in winter and UTC -4 during Daylight Saving Time / 
 Eastern Daylight Time (EDT) / summer time, which is in effect almost 8 months out of the year.</p>
 
 <section>
+    
+    <h3>January 13, 2022 - broken HTML validator</h3>
+    
+    <p>Days ago nattered on about the referer HTTP request header as it applied to the W3 HTML validator.  Coincidentally, I just 
+        realized that the referer is essentially broken for validation purposes.  It appears that in March, 2021 (version 87), Firefox
+        started to 
+        <a href='https://blog.mozilla.org/security/2021/03/22/firefox-87-trims-http-referrers-by-default-to-protect-user-privacy/'>"trim" 
+            the referer</a> down to the domain name.  It would appear that I have a lot of work to do to fix this. 
+    </p>
+    
+    <p>I already fixed it for this page, or at least I gave it the quick-and-dirty fix.  I just hard-coded the URL to kwynn.com.  
+       That won't work for a fully online test system--that is, a test system accessible from the outside.  
+    </p>
+    
+    <p>The right solution is JavaScript populating the URI / URL on page load.  But I have to add that JavaScript to 156 pages 
+        according to my grep -R.  That is one of the rationales for a single page system--route all page requests through one 
+        program that adds / changes whatever needs adding / changing.  
+        
+    </p>
+    
+    
     <h3>January 12, 2022, one of several entries today, starting this at 23:26</h3>
     
     <p>Updated 23:47 with some answers.  Updated 23:54 regarding http://validator....
@@ -1883,8 +1913,10 @@ display_errors = On
         <section>
             <h5>W3 validator referer</h5>
             
+            <p>Update: see my first January 13, 2022 entry.  The "referer" generally won't work anymore.</p>
+            
             <p>Always point the validator check to https rather than http, such as 
-                <a href='https://validator.w3.org/check?uri=referer'>https://validator.w3.org/check?uri=referer</a>.  
+                https://validator.w3.org/check?uri=https://blah.example.com/page1.html.  
                 If you try to validate a secure page with an http link to W3, it won't 
                 work because the browser will not send a referer from a secure page to a non-secure page.
                 
@@ -3589,7 +3621,7 @@ like AWS does.  I am reasonable sure getting a 2nd IP address with Linode or Rac
 <li>2017 - November - started</li>
 </ul>
 <p style='margin-top: 2ex'>
-    <a href="https://validator.w3.org/check?uri=referer"><img
+    <a href='https://validator.w3.org/check?uri=https://kwynn.com/t/7/11/blog.html'><img
         src="../../5/02/html5_valid.jpg"
         alt="HTML5 valid" width="103" height="36" /></a>
 </p>
