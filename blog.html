@@ -53,9 +53,96 @@ li   { margin-bottom: 0.7ex; }
 local timezone.  Atlanta is the same as New York (America/New_York), or UTC -5 / Eastern Standard Time (EST) in winter and UTC -4 during Daylight Saving Time / 
 Eastern Daylight Time (EDT) / summer time, which is in effect almost 8 months out of the year.</p>
 
-<section>
+<p>Starting sometime in December, 2021, many entries are in response to one of my apprentices, so he is the "you" I'm speaking to initially.
     
-    <h3>January 13, 2022 - broken HTML validator</h3>
+</p>
+
+<section>
+    <h3>January 14, 2022</h3>
+    
+    <h4>Ubuntu package problems and some solutions</h4>
+    
+    <p>My currently active apprentice is having package (software install) problems.  These are some thoughts.</p>
+    
+    <p>For one, when installing Ubuntu and probably other Linux distributions / "distros" / sub-brands, the 3rd party / proprietary packages / 
+        software are probably not worth it.  That's one question Ubuntu asks by default upon install. I suspect that's the root of his problem.  
+        Specifically: when he runs "sudo apt install --fix-broken" these 2 packages have problems: "Errors were encountered while processing:
+        libgl1-amdgpu-mesa-dri:amd64 libgl1-amdgpu-mesa-dri:i386"
+    </p>
+    
+    <p>When I run "apt list --installed | grep libgl1" I get libgl1-mesa-dri and libgl1/impish.  I am reasonably sure this means he installed 
+        AMD specific drivers and I did not.  I can run <a href='https://www.flightgear.org/'>FlightGear</a> reasonably well on very old hardware.  
+        I'd have to go digging for my graphics card specs, but I remember it only has 1 GB RAM which is old.  Maybe the proprietary driver would 
+        help, but, as above, it's probably not worth the cost benefit, and I should get better hardware when I can.
+     </p>
+         
+    <p>I suspect he's also having problems because Ubuntu is pulling away from i386 (32 bit).  That is an argument for installing the latest 
+        Ubuntu rather than the LTS version, but that's another discussion.
+   </p>
+   
+   <p>The GUI / Gnome / desktop was probably almost literally making noises about a package problem.  Whether it was or wasn't, there is an argument to 
+       be made for checking by hand perhaps once a week:
+       </p>
+       
+       <pre>
+sudo apt update
+sudo apt dist-upgrade
+       </pre>
+   
+       <p>If you get the package error message, do not ignore it.  In fact, it's probably time to backup your computer.  This has not happened to me 
+           often, but it has gotten out of hand perhaps 3 times in 12 years.  Usually I was asking for it, but that's another discussion.
+      </p>
+      
+      <p>In any event, solve the package error ASAP.
+          
+      </p>
+      
+      <p>The solution to the problem is usually to remove the packages in question, and really thoroughly remove them.  I can't think of a way to 
+          quickly set this up to demonstrate, so I'll have to refer ya'll to Big Evil Goo.  The commands involve such terms as "purge," and then I 
+          can't remember if the usual term is delete or remove.  
+      </p>
+      
+      <p>Note that you may have to use the dpkg command for this process, and you may have to use aptitude rather than apt, although if it's not 
+          already installed, you probably can't install anything while that error is in progress.
+       </p>
+       
+       <p>Command list:</p>
+       
+       <pre>
+# a list of commands or their close equivalents for package management
+# use these 2 often, perhaps once a week or more:
+sudo apt update
+sudo apt dist-upgrade
+# the rest are not harmful but only useful in context
+sudo apt install --fix-broken
+# I have never used the audit option before; I was simply looking for something harmless but to remind one 
+# of the dpkg command
+# You may not have this package at all.  
+sudo dpkg --audit libgl1-mesa-dri
+apt list --installed       </pre>
+          
+<h4>several emails ago</h4>
+
+<p>You said that you've read some of these entries 3 times.  That doesn't surprise me.  In case there is doubt, I realize that a lot of this 
+    simply cannot make sense yet because you don't have the context.  Hopefully in a small number of months, you can re-read these and get more out of 
+    it.
+
+</p>
+       
+       
+   
+    
+</section>
+
+
+<section>
+    <h3>January 13, 2022 - broken HTML validator - continuing 02:38</h3>
+    
+    <p>I have the <a href='https://github.com/validator/validator'>Nu HTML validator</a> working locally.
+        I cloned it to /opt and then this works: python3 ./checker.py all and then python3 ./checker.py run .
+        
+        
+    </p>
     
     <p>Days ago nattered on about the referer HTTP request header as it applied to the W3 HTML validator.  Coincidentally, I just 
         realized that the referer is essentially broken for validation purposes.  It appears that in March, 2021 (version 87), Firefox
