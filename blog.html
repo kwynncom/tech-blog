@@ -90,7 +90,8 @@ sudo apt dist-upgrade
        </pre>
    
        <p>If you get the package error message, do not ignore it.  In fact, it's probably time to backup your computer.  This has not happened to me 
-           often, but it has gotten out of hand perhaps 3 times in 12 years.  Usually I was asking for it, but that's another discussion.
+           often, but it has gotten out of hand perhaps 3 times in 12 years.  Usually I was asking for it, but that's another discussion.  (Below I 
+           list one instances of trying to downgrade PHP.)
       </p>
       
       <p>In any event, solve the package error ASAP.
@@ -103,7 +104,7 @@ sudo apt dist-upgrade
       </p>
       
       <p>Note that you may have to use the dpkg command for this process, and you may have to use aptitude rather than apt, although if it's not 
-          already installed, you probably can't install anything while that error is in progress.
+          already installed, you probably can't install anything while that error is pending.
        </p>
        
        <p>Command list:</p>
@@ -119,8 +120,74 @@ sudo apt install --fix-broken
 # of the dpkg command
 # You may not have this package at all.  
 sudo dpkg --audit libgl1-mesa-dri
-apt list --installed       </pre>
-          
+apt list --installed      
+# which package did x file come from:
+# this is a small part of answering another question of yours
+dpkg -S /usr/bin/find
+# not directly relevant, but in answer to another issue
+tail -n 20 /var/log/syslog       </pre>
+       
+<p>For problems with running software as opposed to their packages, many pieces of software have a verbose mode or variously levels of 
+    verbosity.  Sometimes you can shut down the systemctl version of the program and run it "by hand" with the direct command and verbose turned on.
+
+</p>
+
+<p>You asked if some of these commands are the direct equivalent of what the GUI does.  Well, update and dist-upgrade are the equivalent of some of it, 
+    and as you discovered, sometimes doing it by hand is an improvement because the GUI will lose track of changing IP addresses.  That is, always do 
+    an update before an upgrade.
+</p>
+
+<p>The above will not upgrade you a full version such as 21.04 to 21.10.  There is of course a command line for that, too.  
+    
+</p>
+
+<p>You mentioned digging around on various errors in the syslog.  Unless the timing makes it certain it's what you need to focus on, I'm sure there 
+    is all sorts of junk in syslog that a perfectly running systems spits out.  You could spend forever chasing such things.
+    
+</p>
+
+<h4>software (un)installs versus Satan's OS (SOS) / Linux file organization</h4>
+
+<p>I only have a fuzzy understanding of how the files are laid out--libraries, binaries, datafiles, etc.  In the immediate context, solve your package 
+    problem first.  I wasn't trying to 
+    discourage you from learning more; I was just saying solve that problem first.  I don't think a better understanding of the overall system will 
+    help you solve the immediate problem.
+</p>
+
+<p>You pointed out in SatanSoft that you can delete software more easily.  There are a number of reasons for that.  For one, almost all software 
+is using SOS code.  In Linux, you have an ocean of free software to choose from.  The Nu HTML Validator uses both Java and Python, for example.  
+There are so many choices of how to build software that it leads to so many more packages.  Open source software is build on layers and layers and 
+layers of open source software.  The dependency graph is much more complex.
+    </p>
+    
+<p>For a number of reasons, SOS apps are already compiled for a known OS, and SOS takes care of any small differences in hardware.  The software is 
+    already a more-or-less standalone set of files when it ships. 
+    Lots of Linux software is interpreted rather than compiled, so its dependencies are not compiled in.  Also, Linux runs on such a variety of 
+    hardware that an app couldn't compile for a known hardware target anyhow.
+</p>
+
+<p>Another way of phrasing the above is that SOS software can make assumptions about what libraries are available because those libraries come with 
+    SOS.  With Linux, one can make very few assumptions, so one has to make a package dependency list which is turn invokes other dependencies.  
+</p>
+
+<p>Again, many more choices and possibilities.   
+</p>
+
+<p>Linux packages do have an uninstall.  I just haven't listed the command because I don't have anything I want to uninstall that badly.  Also, 
+    with Linux, how deep down the dependency tree should the uninstall go?  It can't uninstall stuff that other software depends upon.  
+</p>
+
+<p>Upon thought, if you continue to have trouble, I can do LOTS of uninstalling on one of my partitions.  This was weeks ago when I tried to 
+    downgrade to PHP 7.4.  I used a PPA that I had success with before going forward, but going backward got out of hand quickly.  I wound up 
+    with errors such as "yours" of the day, and I abandoned ship and built another partition.  I can go back to that old partition and start 
+    stripping it down to get rid of stuff that doesn't work anyhow.  I did NOT lose data.  It would be difficult, in fact, to use data due to 
+    package issues, even if the system was unbootable.  You could still get at the data with another running system whether on another parition or a
+    USB.
+</p>
+
+
+
+
 <h4>several emails ago</h4>
 
 <p>You said that you've read some of these entries 3 times.  That doesn't surprise me.  In case there is doubt, I realize that a lot of this 
