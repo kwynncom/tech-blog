@@ -3,26 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
 <title>Kwynn's tech blog</title>
-
-<script>
-
-var KWYNN_COM_SOUND_2020_1 = false;
-
-function play2020_1(toggle) {
-      const path = 'https://kwynn.com/t/20/11/audio/';
-      const name = 'ubuntu-20-04-1-desk-x64-95-seconds.wav';
-	  if (toggle !== false) {
-	      const sound = new Audio(path + name); 
-		  KWYNN_COM_SOUND_2020_1 = sound;
-	      sound.play();
-		} else KWYNN_COM_SOUND_2020_1.pause();
-}
-</script>
-
+<script src='UbuntuSymphony.js'></script>
 <style>
-
 body { font-family: sans-serif }
 h3   { margin-top: 1.7ex; margin-bottom: 0ex; font-size: 125%; }
 h4   { font-size: 112%; margin-top: 0.7ex; margin-bottom: 0.6ex; }
@@ -54,8 +37,191 @@ local timezone.  Atlanta is the same as New York (America/New_York), or UTC -5 /
 Eastern Daylight Time (EDT) / summer time, which is in effect almost 8 months out of the year.</p>
 
 <p>Starting sometime in December, 2021, many entries are in response to one of my apprentices, so he is the "you" I'm speaking to initially.
-    
 </p>
+
+<section>
+    <h3>January 15, 2022</h3>
+    
+    <p>As I'm writing this, as of 18:37, apprentice reports a successful install of Ubuntu 21.10.  It should be recorded as 21.10 rather than 21.1 
+        because the Ubuntu format is YY:MM.  Ubuntu releases every 6 months in April (04) and October (10).  The even-numbered years in April are 
+        LTS--long-term support--releases, meaning support for something like 5 years.  The other 3 releases in the cycle are supported for something 
+        like 9 months, so that you have 3 months to upgrade.  
+    </p>
+    
+    <p>As an action item, does the following work?</p>
+    
+    <pre>sudo apt update ; sudo apt dist-upgrade</pre>    
+    
+    <p>When I say "work," I mainly mean do you get any indication of broken packages?  You may have no packages to install.  You may also get 
+        an autoremove message.  There is no need to do the autoremove step, nor is there any harm.  I have never had a problem with autoremove.  Also, 
+        it's possible you'll get a message about another process having the lock because "unattended upgrades" may be in progress.  Generally, that's 
+        fine; just let the unattended finish.  Sometimes unattended dies, though, and you'll sit there forever waiting.  Usually that only happens 
+        when I'm updating a system running on USB drive plugged into USB 2.0.  (I have old hardware.  I do have a USB 3.1 PCI card and use it all the time, 
+        but my hardware is old enough that it won't boot off of PCI devices.)
+    </p>
+    <p>   
+           Which brings some more commands, in this case to know when a process like an upgrade has died.  
+        One is "top".  I would play with that relatively soon because it goes in the category of you should know what it usually looks like so you 
+        know how to look for anomalies.  When an upgrade is working, or any other disk-intensive process, the "wa" number will be very roughly 
+        16 - 25% as opposed to near zero.  
+        </p>
+        
+        <p>"sudo apt install iotop" and then "sudo iotop" is similar in that it does the same thing with disk data transfer.  Again, I recommend 
+            looking at what's normal.
+            
+        </p>
+    
+    <p>When I start a new partition / system / install, I don't bother moving data as part of the process.  I move the data from the previous partition 
+        as needed, which is a good way to keep things clean.
+        </p>
+        
+        <p>Ubuntu comes with backup software.  I have never played with it, but it might keep track of full backups versus incremental backups.  That 
+            would solve your redundancy problem.  The "rsync" command does that, too.  I've been using rsync for the last several weeks to upgrade 
+            kwynn.com with this local copy of the DocumentRoot tree.  
+            
+        </p>
+        
+        <p>Please tell me you didn't install 3rd party software?  If you did, just stay on top of broken packages.
+        </p>
+    
+    <p>In answer to one of your points from weeks ago, I just moved the <i><a href='#2020-1120-arb-file-music'>Ubuntu Symphony</a></i> JavaScript to an 
+        external file.  I did this in part because I have no plans to touch the code ever again, and it was sitting there in this file in my way.  
+        
+    </p>
+    
+    <h4>written before I knew you were done with your install</h4>
+    
+    <p>As for your immediate problem, I wasn't clear on at least a couple of points.  Just below I go back to immediate solutions.  But, first, to 
+        clarify one point: not installing 3rd-party / proprietary software is for future 
+        reference; at the moment, that damage has already been done.  For future reference: when you install Ubuntu, there are only a handful of (sets of) options as you 
+        start the install.  One of them is whether you want to install 3rd party software.  It asks you this about the same time as it asks whether 
+        you want to update packages as part of the install.  For future reference, I recommend against installing the 3rd party software, in part 
+        because I think it caused your problem.  I suspect it's caused me problems in the past, too.
+    </p>
+    
+       
+    <p>But back to the immediate problem, you may be able to solve everything if you just remove those 2 packages that are causing you problems.  In 
+        case it's not clear, it's possible everything you're describing traces back to that.  I will reiterate the point: if you see any indications, 
+        ever, of broken packages, back up your data and then attack that problem.  
+    </p>
+        
+    <p>In 
+        the last few hours, I booted into my partition that is broken in a similar manner as yours.  I was hoping to start removing packages to 
+        definitively record how it's done.  My partition is far more broken than yours, though.  The NetworkManager service was apparently "masked" by 
+        the cascading failure I had weeks ago.  I had to look "masked" up.  It's a step beyond "disabled" in systemctl / systemd.  That means I had 
+        no network.  My attempt to "unmask" it (which I may record) deleted it rather than unmasked it.  I have almost no clue what that's about.  
+        Without a network to look things up and let Ubuntu load software, I decided it was time to give it up on that partition.
+    </p>
+    
+    <p>"$ man apt" indicates that it may be as simple as "$ sudo apt purge &lt;package&gt;" or "$ sudo apt remove &lt;package&gt;"  After messing around 
+        with that broken partition, though, I decided I am not removing anything at all on any of my partitions.  
+    </p>
+    
+    <p>If you decide to start over, I would install 21.10, the Impish Indri; I've been running it since soon after it came out.  Impish is not LTS, so 
+        the consequence of this is that support will 
+        end in roughly July of this year, so by that time you should install 22.04, which will be LTS.  My jury is still out on this decision in 
+        general, but I am leaning towards keeping up with every 6-month, full version.  Probably the way to go is to upgrade your dev machine to 
+        every full version and 
+        then upgrade any clients once you're satisfied that their software will work.
+     </p>
+     
+     <p>One of the reasons I say this is because in addition to 3rd party software, I think you were zapped by Ubuntu's deprecation of 32 bit systems 
+         (i386). I'm assuming Ubuntu deprecated them some time after 20.04 based on observation; I'm sure you can find the official doc.
+      </p>
+    
+      <h4>"Try Ubuntu" and a permanent USB install to let you boot</h4>
+      
+      <p>A USB installer has a "Try Ubuntu" mode.  I recommend always having an installer USB on hand to give you something to boot from.  Note that 
+          the "Try Ubuntu" mode will not save your data, though.  Any data saved to the USB only lasts until reboot.  You can of course save to 
+          a standard filesystem.  
+      </p>
+      
+      <p>I also recommend installing from one USB to another USB such that the second one has a permanent install.  Then you can do work on the 
+          full install.  Also, the full install can be set to boot to your SSD or hd partitions.  You can do multiple installs onto a USB just 
+          like onto any other disk.  Note that when you are trying to boot from A to B, though, A must have a common kernel with B.  Thus, you need to 
+          periodically update the USB.  Also, when you are in Grub (just after power-on-reset) you'll notice that there are various options.  Several 
+          of those options allow you to look for a common kernel.  If you don't have a common kernel, when you try to boot into a partition, you'll get
+          a message to the effect of "cannot load."
+      </p>
+      
+      <p>After you update the USB, "sudo update-grub" is what syncs the USB with what is available to boot to on other disks.  Note that update-grub 
+          will set the partition runnng grub as the default boot partition from that physical device.  This can get confusing if you run grub from 
+          an SSD or hd.  If you had 2 partitons on an SSD and you update-grub from one, it would then be the default, which may not be what you 
+          wanted.  
+       </p>
+      
+       <p>As I mention this, you should look into paritions numbers and disk names (/dev/sda7).  You should know what your / actually is on the /dev level.
+           
+       </p>
+       
+      <h4>data management, commands that might save you in case of trouble, and one means of backup</h4>
+      
+      <p>You may do this anyhow, but consider various degrees of separation between a filesystem needed to boot / run and large data that is slower 
+          to copy.  That is, your data and running files go into at least 3 categories: the files needed to run Linux, your small data such as 
+          code you type, and then various degrees towards your large data.  Consider keeping your large data in one file tree that can be isolated or 
+          better yet on another partition.  It makes it easier to know what you really need to back up, and it lets you copy a whole partition 
+          and then set it up to run.
+          
+      </p>
+      
+      <p>The following is not definitive in that I am not going to take the time to test it over and over.  It's something to explore.
+          
+      </p>
+      
+      <p>One reason I mention all this is that now that you have a running, pure partition, possibly with little of your data, you might want to 
+          make a copy and learn how to make that copy runnable.  First, I highly recommend doing the copy itself from another booted system, such 
+          as an install disk running in "Try Ubuntu" mode.  (By the way, when you're in "Try Ubuntu" mode, nothing you save to that system is 
+          permanent.  Saving to other filesystems is permanent, though.)
+      </p>
+      
+      <p>I often do the copy with the GUI: "sudo nautilus"  Nautilus is the "Files" manager.  If you run it as root, it can copy anything.
+          There is a recursive "cp" that does it and preserves dates and users and such, but I 
+          lose track of what all those switches / arguments are.
+          
+      </p>
+      
+      <p>So, make your copy.  You should probably give the copy's parition a name and partition label.  Otherwise, in /media/&lt;your user&gt; you'll 
+          get a UUID and have to figure out which one is which.  In any event, navigate in the command line to the root of the other parition, which 
+          will start as /media/user/something.  Then I give you the commands that are not harmful as long as you exit the shell when you're done, or 
+          at least exit from chroot.  Then I give the last command that is probably not harmful but may be confusing.
+      </p>
+      
+      <p>First, you might want to mark both / and both /home/user with a file indicating which copy is which such as "iam_2022_0115_18_install"
+          
+      </p>
+      
+      <pre># be in the root that you want to make THE root.  That is, pwd shows the relevant root
+sudo mount -t proc /proc proc/
+sudo mount --rbind /sys sys/
+sudo mount --rbind /dev dev/
+sudo chroot .
+      </pre>
+      
+      <p>At this point you will be the root user (indicated by #) and the filesystem root will be the "new" root that you want to make independently 
+          bootable.  Then I *think* a "sudo update-grub" is enough to make it independently bootable.  I would not do this, though, until you are sure 
+          you can boot into a working partition from USB as above.
+      </p>
+      
+      <p>The reason you need to set grub from the new partition is that otherwise all of its mount points are set to the old partition because it is 
+          a copy.  Before grub, the chroot sets / to the new partition, then grub sets the bootloader to recognize this new partition as bootable.
+          
+      </p>
+      
+      <h4>NetworkManager - something I learned today.</h4>
+      
+      <p>I already knew the systemctl commands below, but I didn't know the name of the network service.
+          
+      </p>
+      
+      <p>Somehow when I booted into the broken partition, my active NetworkManager unset itself to a degree as I'll explain.  That is, when 
+      I booted into the active one, I didn't have any network.  I had to both (re)start it and re-enable it to start on boot:</p>
+      
+      <pre>
+sudo systemctl start NetworkManager
+systemctl enable NetworkManager
+      </pre>
+
+</section>
 
 <section>
     <h3>January 14, 2022</h3>
