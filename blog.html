@@ -40,11 +40,200 @@ Eastern Daylight Time (EDT) / summer time, which is in effect almost 8 months ou
 </p>
 
 <section>
+    <h3>January 22 (first entry after 17:03, continuing 18:35)</h3>
+    
+    <p>Apprentice is trying again to run my chat code, as mentioned yesterday.  First, I have a chuckle that "php fatal error" must seem ominous 
+        to him.  On some days I probably get several fatal errors an hour while dev'ing, usually syntax errors.  I'd imagine I've mentioned it before, 
+        but I remember in the C language in 1992 syntax errors could take me 3 - 4 hours to solve.  Helping with such things is what I see as one of my 
+        major jobs as master dev for an apprentice.  I don't think I learned all that much taking 3 - 4 hours to solve syntax errors.  I probably just 
+        got that much closer to getting frustrated and changing majors.  
+     </p>
+     
+     <p>In fact, I know someone who did that in 1985.  At that point, the compiler simply said "syntax error."  No line number.  He'd had enough at that 
+         point.  I at least had a better indication in 1992.  
+     </p>
+     
+     <p>It's rare that syntax errors take me more than a handful of seconds to solve these days.  Some of the most puzzling instances that have taken 
+         longer involved my violating my own rule #2 to the effect of your dev environment should be as close as possible to the live system.  In those 
+         cases, the "Heredoc" PHP string syntax worked differently in PHP 7.4 versus 7.2.  Thus, something worked on my system and gave a mysterious 
+         syntax error on the live system.  Worse yet, the include / require_once() tree was such that a syntax error crashed the whole system.  I only 
+         have one user of that system, and it was late enough at night that I doubt he had any intention of using it, but still.  
+     </p>
+     
+     <p>The difference in "heredoc" was something about whitespace--the higher version of PHP allowed whitespace in places that 7.2 did not.  
+         
+     </p>
+     
+     <p>Anyhow, I have already emailed him back.  I am not tormenting him waiting for this entry.  I still don't know exactly what is wrong because I'd 
+         need to be looking at his system.  However, I can give some (more) general advice and repeat what I said in email.
+      </p>
+      
+      <p>When I say "include," I should clarify even more than I did in email.  Generally speaking in a number of dev languages, an "include" means to 
+          incorporate code.  The precise keyword "include" goes back to C if not before.  To make the history somewhat more complicated, includes work 
+          differently in C because C is compiled.  I'll stick with PHP from here on out.  If I say "include" in PHP, I am using the word in the general 
+          sense to mean incorporating code.  In terms of precise syntax, I almost always mean require_once().  I would state it as a general rule that 
+          one should use "require_once()" unless there is a really good reason not to.  I would guess that I use require_once in 99.7% of cases.  I can 
+          think of one specific case of using include and one case that I can't quite remember the details of.  
+       </p>
+       
+       <p>Anyhow, on to his specific problem and the general debugging methodology.  Once again, in this case I'm using "debugging" more generally because 
+           a debugger may or may not help him in this case.  It may not help because his situation is akin to proving a negative.  He's getting an error 
+           very close to "Class 'dao_generic_3' not found in line 54."  
+       </p>
+       
+       <p>His first problem is very likely my fault to a degree.  
+           dao_generic_3 is my creation in 
+           <a href='https://github.com/kwynncom/kwynn-php-general-utils/commit/1a94eaccd6ec2578280984b3ff02de2d8f6afd67#diff-bf907a173f73d9fef182ae940072bb4b1e9ec78e7c20026ebd46c6b2efd5ebf4'>this file</a>.  
+           I probably should have called it kwynn_dao_generic_3 or something to make it clear that it's my creation. 
+       </p>
+       
+       <p>So let's back up to the more general case.  If a function or class isn't found, the first question is how far from the PHP core / default it is.
+       If the function is in the PHP core / default install, then you should never get a not found.  There are a few classes of functions, though, that 
+       are not installed by default.  So, step 1 in debugging is to search the function / class on <a href=''>php.net</a>.  
+           
+       </p>
+       
+       <p>To take an example that I encounter all too recently, let's try "mysql_escape_string."  The PHP doc will inform you that the function and 
+           "the entire original MySQL extension was removed in PHP 7.0.0." What part of that is unclear?  This is one of several situations that 
+           wasted enormous amounts of my time.  The <a href='https://www.php.net/releases/index.php'>PHP release history page</a> informs us that 
+           PHP 7.0.0 was released on December 3, 2015.  Let's just say that I came across the mysql... function fairly recently.  When I spluttered 
+           incoherently about encountering this problem for the first time in YEARS, I was told "no other developers have complained about this."  Yes, 
+           those would be the developers who are happily charging you $150 / hours (a real figure) to maintain an ancient environment.  
+       </p>
+       
+       <p>Similar indications of madness were that one of the systems--perhaps the live system--had a clock that was several hours off in part because 
+           the system hadn't been rebooted in 900 days or something.  A few hours later I noticed that someone had used the "date" command and reset the 
+           clock.  
+       </p>
+       
+       <p>I don't expect other people to be insane as I am about timekeeping, but *hours* off!?!?!  Having to use the "date" command?!?!?!
+           
+       </p>
+       
+       <p>Anyhow, I digress.  The point being that if you ever have the misfortune to see a "mysql..." function, the PHP documentation will at least 
+           tell you what's wrong.  Solving your problem is a rather bigger issue, especially when the people involved are likely insane.  This 
+           brings up an interesting question.  Can developers diagnose insanity based on years-old functions or hours-off clocks?  Perhaps so.
+                    
+       </p>
+       
+       <p>Now I'll give a much more reasonable example.  In 
+           <a href='https://github.com/kwynncom/kwynn-php-general-utils/blob/1a94eaccd6ec2578280984b3ff02de2d8f6afd67/kwutils.php'>kwutils.php</a> is 
+           getDOMO().  It calls DOMDocument.  The PHP documentation within a few clicks mentions "This extension requires the libxml PHP extension."  
+           This situation is admittedly at least mildly painful until one gets used to such issues.  The solution in this case is "sudo apt install php-xml" 
+           in Ubuntu.  Hopefully Big Evil Goo gives that solution simply.  I knew it from searching my install list.
+       </p>
+       
+       <p>A related problem I've had involves one of the MYSQLI constants, and that's MYSQLI, the current version, as opposed to MYSQL.  I remember chasing
+           my tail for quite a while because a MYSQLI constant wasn't found.  The solution was as above to install mysqli.  Ironcially, it's been so 
+           many years that the install is "sudo apt install php-mysql" rather than mysqli.  Both Ubuntu and PHP assume that it's been so long that 
+           if you're still running the old mysql library you are insane and beyond help.  
+          </p>
+          
+          <p>Anyhow, to continue down the path of undefined stuff, and back to apprentice's specific problem, he would hopefully find that dao_generic_3 
+              is not defined by PHP or anything he can find.  Again, this is an argument that I should have called it kwynn_dao... I should also 
+              perhaps make it more obvious more often that /opt/kwynn on my system is a clone of what I generally call 
+              "<a href='https://github.com/kwynncom/kwynn-php-general-utils'>kwutils</a>."  In his case, he does know these 2 points.  We just 
+              had another exchange while I'm writing this.  My new advice is of general importance.  
+                        </p>
+                        
+        <p>To back up a bit, though.  Sometimes I do something like "cd / && sudo grep -R dao_generic_3"  That would quickly result in 
+            "opt/kwynn/mongodb3.php:class dao_generic_3  {"  Much could be said about that, but let's stick with this specific debugging path:
+
+        </p>
+
+            <p>I didn't demand he recursively grep.   Given that the details of the above are not obvious, I mentioned that the include execution should 
+                go from kwutils.php to mongodb3.php.  
+                The fact that it's not in his case is baffling.  We're both fairly certain he has the latest of both repos of code.  
+            </p>
+            
+            <p>Which brings me to:             
+            </p>
+          
+            <h4 id='e2022_0122_mfd_10'>minimal functionality debugging technique</h4>
+            
+            <p>I want to run around in circles waiving my hands in the air and screaming when I see people post 100 lines to a forum and want 
+                debugging help.  First of all, I not criticizing my apprentice nor even the people posting to a forum.  Because a main job of mine 
+                is to reduce frustration, my apprentice should be asking me sooner than later.  And here we are a while later, and I still don't know 
+                what's wrong in his case.  The solution is not obvious, and even if it was obvious, I don't want him spending large amounts of time 
+                on such things.
+            </p>
+            
+            <p>With that said, for future reference for forum posters and apprentices, the minimal technique goes something like the following.  I am 
+                assuming he is using the debugger and stepping through line by line.  Actually, I'll put this in GitHub.  One moment please....
+            </p>
+            
+            <p>Here is 
+ <a href='https://raw.githubusercontent.com/kwynncom/code-fragments/6ba3e3bc1ebc377f57e45c0a293d7e8bca528a63/debugging_include/d1.php'>
+     my minimal debugging example</a>.  
+               
+            </p>
+            
+
+          
+       
+</section>
+
+<section>
+    <h3>January 21 (2 versions -- 16:39 and 16:56)</h3>
+    
+    <p>This is the part several minutes later.  So that means you have "base" PHP / cli PHP running or you would have gotten an error of program not 
+        found.  As I mention below, server.php has no output yet--that is, it has no output when it's run as PHP.  I should add while I'm at it that 
+        sometimes I'll use "exit(0);" or "return;" (or "continue;") for no apparent reason.  I'm not entirely sure about NetBeans 12.4 and / or the 
+        latest xdebug, but slightly earlier versions needed some code on a given line to make it a breakpoint, so I will write exit or return or continue.  
+        That's why I also created the null function kwynn();  Sometimes I would use "$x = 1;" which causes great gravy grief is one is processing 
+        weather radar data with x and y coordinates.  *sigh*  So THEN sometimes I'll use "$ignore=34523;"
+     </p>
+     
+     <p>The incident with the weather radar took me way too long to debug.  
+         
+     </p>
+    
+     <p>Back to server.php.  No, you don't have to run server.php separately because if Apache PHP is running, the browser calls server.php and thus 
+         runs it.  However, running server.php from the command line is a good idea for debugging purposes, as I mentioned a few weeks ago.  Generally 
+         speaking, there is an argument to be made that web code should also run seamlessly in CLI mode because it's often easier to deal with / debug 
+         code in CLI mode.  That's why I created the kwutils.php function "didCLICallMe" because I set up various files to run standalone in CLI mode.
+         
+     </p>
+     
+     
+     <p>Below is the first ~16:39 entry:</p>
+     
+    <p>I started a web chat app.  I'll point to the 
+        <a href='https://github.com/kwynncom/code-fragments/tree/bfd219d0145cf1c491440b9bd1c9323c0f1b1998'>specific version</a> in question.  
+        When apprentice hits send, he gets an XML parsing error, unclosed tag, in line 1, column 1, from the output of server.php.  That is, he gets 
+        that in the JavaScript console.  I assume that PHP is not running at all, but Apache is very likely returning the Content-Type as text/html in 
+        the return HTTP header.  Apache is doing that based on the .php extension.  
+        So the browser is expecting HTML which these days should be in the form of XML.  If PHP is working, the response 
+        would be completely blank because the whole server file is a PHP application with no output.  I have put my debugger on line 6 and confirmed 
+        that the server is receiving data, so that's a form of output to me for the moment, to know that it's working so far.  kwjssrp() in PHP and 
+        kwjss in JS 
+        are both in /opt/kwynn/js, and the relevant PHP file is included (require_once()) from kwutils.php.  As a reminder to the 
+        hordes of people reading this, /opt/kwynn is a clone of <a href='https://github.com/kwynncom/kwynn-php-general-utils'>my general utils repo</a>.
+    </p>
+    
+    <p>Back to the browser--it sees the &lt; opening tag of php, and the PHP tag is not closed for reasons I have gone over rather exhaustively, below.  
+        If you look at the server.php output in the browser (the HTTP response), it will almost certainly be the precise PHP code rather than executed 
+        code (which in this case would result in '').  The browser is trying to interpret this as HTML / XML.  
+        So, 
+        again, my assumption is that PHP is not running at all through Apache; Apache is just running the raw file.  Given that this is your brand new 
+        install, I assume the solution is  
+     </p>
+     
+     <pre>sudo apt install libapache2-mod-php8.0
+sudo systemctl restart apache2</pre>
+    
+     <p>If you haven't installed base PHP yet, I think the above will do it.  
+         
+     </p>
+    
+</section>
+
+<section>
     <h3>January 15, 2022</h3>
     
     <p>As I'm writing this, as of 18:37, apprentice reports a successful install of Ubuntu 21.10.  It should be recorded as 21.10 rather than 21.1 
         because the Ubuntu format is YY:MM.  Ubuntu releases every 6 months in April (04) and October (10).  The even-numbered years in April are 
-        LTS--long-term support--releases, meaning support for something like 5 years.  The other 3 releases in the cycle are supported for something 
+        LTS (long term support) releases, meaning support for something like 5 years.  The other 3 releases in the cycle are supported for something 
         like 9 months, so that you have 3 months to upgrade.  
     </p>
     
@@ -56,13 +245,14 @@ Eastern Daylight Time (EDT) / summer time, which is in effect almost 8 months ou
         an autoremove message.  There is no need to do the autoremove step, nor is there any harm.  I have never had a problem with autoremove.  Also, 
         it's possible you'll get a message about another process having the lock because "unattended upgrades" may be in progress.  Generally, that's 
         fine; just let the unattended finish.  Sometimes unattended dies, though, and you'll sit there forever waiting.  Usually that only happens 
-        when I'm updating a system running on USB drive plugged into USB 2.0.  (I have old hardware.  I do have a USB 3.1 PCI card and use it all the time, 
+        when I'm updating a system running on a USB drive plugged into USB 2.0.  (I have old hardware.  I do have a USB 3.1 PCI card and use it all the time, 
         but my hardware is old enough that it won't boot off of PCI devices.)
     </p>
     <p>   
            Which brings some more commands, in this case to know when a process like an upgrade has died.  
-        One is "top".  I would play with that relatively soon because it goes in the category of you should know what it usually looks like so you 
-        know how to look for anomalies.  When an upgrade is working, or any other disk-intensive process, the "wa" number will be very roughly 
+        One is "top".  I would play with that relatively soon.  It goes in the category of you should know what it usually looks like, so you 
+        know how to look for anomalies.  When an upgrade is working, or any other disk-intensive process, the "wa" (processes waiting) number will be 
+        very roughly 
         16 - 25% as opposed to near zero.  
         </p>
         
@@ -93,7 +283,8 @@ Eastern Daylight Time (EDT) / summer time, which is in effect almost 8 months ou
     
     <p>As for your immediate problem, I wasn't clear on at least a couple of points.  Just below I go back to immediate solutions.  But, first, to 
         clarify one point: not installing 3rd-party / proprietary software is for future 
-        reference; at the moment, that damage has already been done.  For future reference: when you install Ubuntu, there are only a handful of (sets of) options as you 
+        reference; at the moment, that damage has already been done.  For future reference: when you install Ubuntu, there are only a handful of 
+        (sets of) options as you 
         start the install.  One of them is whether you want to install 3rd party software.  It asks you this about the same time as it asks whether 
         you want to update packages as part of the install.  For future reference, I recommend against installing the 3rd party software, in part 
         because I think it caused your problem.  I suspect it's caused me problems in the past, too.
@@ -109,7 +300,7 @@ Eastern Daylight Time (EDT) / summer time, which is in effect almost 8 months ou
         the last few hours, I booted into my partition that is broken in a similar manner as yours.  I was hoping to start removing packages to 
         definitively record how it's done.  My partition is far more broken than yours, though.  The NetworkManager service was apparently "masked" by 
         the cascading failure I had weeks ago.  I had to look "masked" up.  It's a step beyond "disabled" in systemctl / systemd.  That means I had 
-        no network.  My attempt to "unmask" it (which I may record) deleted it rather than unmasked it.  I have almost no clue what that's about.  
+        no network.  My attempt to "unmask" it deleted it rather than unmasked it.  I have almost no clue what that's about.  
         Without a network to look things up and let Ubuntu load software, I decided it was time to give it up on that partition.
     </p>
     
@@ -137,20 +328,22 @@ Eastern Daylight Time (EDT) / summer time, which is in effect almost 8 months ou
       </p>
       
       <p>I also recommend installing from one USB to another USB such that the second one has a permanent install.  Then you can do work on the 
-          full install.  Also, the full install can be set to boot to your SSD or hd partitions.  You can do multiple installs onto a USB just 
-          like onto any other disk.  Note that when you are trying to boot from A to B, though, A must have a common kernel with B.  Thus, you need to 
+          full install.  Also, the full install can be set to boot to your SSD or hd partitions.  (You can do multiple installs onto a USB just 
+          like onto any other disk.)  Note that when you are trying to boot from A to B, though, A must have a common kernel with B.  Thus, you need to 
           periodically update the USB.  Also, when you are in Grub (just after power-on-reset) you'll notice that there are various options.  Several 
           of those options allow you to look for a common kernel.  If you don't have a common kernel, when you try to boot into a partition, you'll get
           a message to the effect of "cannot load."
       </p>
       
       <p>After you update the USB, "sudo update-grub" is what syncs the USB with what is available to boot to on other disks.  Note that update-grub 
-          will set the partition runnng grub as the default boot partition from that physical device.  This can get confusing if you run grub from 
-          an SSD or hd.  If you had 2 partitons on an SSD and you update-grub from one, it would then be the default, which may not be what you 
+          will set the partition running grub as the default boot partition from that physical device.  This can get confusing if you run grub from 
+          an SSD or hd.  If you had 2 partitions on an SSD and you update-grub from one, it would then be the default, which may not be what you 
           wanted.  
        </p>
       
-       <p>As I mention this, you should look into paritions numbers and disk names (/dev/sda7).  You should know what your / actually is on the /dev level.
+       <p>As I mention this, you should look into partition numbers and disk names (/dev/sda7).  You should know what your / actually is on the /dev level.  The 
+           spacing of this is very precise: "mount | grep ' on / '" and / or just run mount to look at it.  I can't imagine what harm you could do if you run 
+           mount as the standard user (not sudo).
            
        </p>
        
@@ -170,18 +363,17 @@ Eastern Daylight Time (EDT) / summer time, which is in effect almost 8 months ou
       
       <p>One reason I mention all this is that now that you have a running, pure partition, possibly with little of your data, you might want to 
           make a copy and learn how to make that copy runnable.  First, I highly recommend doing the copy itself from another booted system, such 
-          as an install disk running in "Try Ubuntu" mode.  (By the way, when you're in "Try Ubuntu" mode, nothing you save to that system is 
-          permanent.  Saving to other filesystems is permanent, though.)
+          as an install disk running in "Try Ubuntu" mode.  
       </p>
       
       <p>I often do the copy with the GUI: "sudo nautilus"  Nautilus is the "Files" manager.  If you run it as root, it can copy anything.
-          There is a recursive "cp" that does it and preserves dates and users and such, but I 
+          There is a recursive "cp" that does this and preserves dates and users and such, but I 
           lose track of what all those switches / arguments are.
           
       </p>
       
-      <p>So, make your copy.  You should probably give the copy's parition a name and partition label.  Otherwise, in /media/&lt;your user&gt; you'll 
-          get a UUID and have to figure out which one is which.  In any event, navigate in the command line to the root of the other parition, which 
+      <p>So, make your copy.  You should probably give the copy's partition a name and partition label.  Otherwise, in /media/&lt;your user&gt; you'll 
+          get a UUID and have to figure out which one is which.  In any event, navigate in the command line to the root of the other partition, which 
           will start as /media/user/something.  Then I give you the commands that are not harmful as long as you exit the shell when you're done, or 
           at least exit from chroot.  Then I give the last command that is probably not harmful but may be confusing.
       </p>
@@ -347,7 +539,7 @@ layers of open source software.  The dependency graph is much more complex.
     downgrade to PHP 7.4.  I used a PPA that I had success with before going forward, but going backward got out of hand quickly.  I wound up 
     with errors such as "yours" of the day, and I abandoned ship and built another partition.  I can go back to that old partition and start 
     stripping it down to get rid of stuff that doesn't work anyhow.  I did NOT lose data.  It would be difficult, in fact, to use data due to 
-    package issues, even if the system was unbootable.  You could still get at the data with another running system whether on another parition or a
+    package issues, even if the system was unbootable.  You could still get at the data with another running system whether on another partition or a
     USB.
 </p>
 
