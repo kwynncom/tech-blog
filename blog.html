@@ -40,6 +40,78 @@ Eastern Daylight Time (EDT) / summer time, which is in effect almost 8 months ou
 </p>
 
 <section>
+    <h3>January 24, 2022 (20:06 - entry 2; first entry of the day drafting at 02:14)</h3>
+    
+    <section>
+        <h4>entry 2 - 20:06</h4>
+        
+        <p>Going back to the previous entry, I can now delete the .htaccess I created for this directory, because now the whole site is forced to 
+            httpS.  For the record, it looked like this:
+            
+        </p>
+        
+        <pre>
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,NE]           </pre>
+        
+        <p>This evening's main topic, however, is my moving towards creating a new instance for kwynn.com with the Nu HTML validator built in.  
+            I'm going to have to add Java, and that's probably enough of a disk space issue that I should up the disk space while I'm at it.  I've 
+            been bordering on needed to add disk space anyhow.  I have a 12 GB disk which can get around 83% full when updates are pending.  My main 
+            client has a 16 GB disk, and that only ran out once when I was asleep at that particular switch for months and months.  So I'll go to 16 GB.
+         </p>
+         
+         <p>Hmmm... AWS now has an Atlanta data center for EC2.  On one hand, that's tempting.  On the other hand, seems I should keep my system 
+             away from me such that any incident of the century doesn't affect both.  On the gripping hand, the DC area seems somewhat more 
+             vulnerable than it has in decades.  
+             
+         </p>
+         
+         <p>The goal of this next instance is simply exploratory, so I'll stick with Virginia for now.  It looks like t3a.nano is still my 
+             best bet.  The t4 systems violate my rule #2 way below--the live system should be as close as possible to this computer I'm typing on.
+             The t4 systems are ARM rather than x86_64.  
+             
+         </p>
+         
+         <p>Doesn't look like Atlanta is an option.  Their instance type availability is very limited for my purposes.  Boston is also limited; Boston 
+             is relatively new, also.  Anyhow, a quick scan says still in <a href='https://aws.amazon.com/ec2/pricing/on-demand/'>Virginia with a t3a.nano at $0.0047 per hour</a>.
+             
+         </p>
+         
+         <p>To back up a bit, it's not just a matter of space.  I'm concerned about just installing Java in my live environment.  Java is reason 
+             enough to test the environment.
+             
+         </p>
+         
+         <p>How much more expensive is gp3 ssd?  Kwynn.com is currently running the security group labeled launch-wizard-3.  Boy does AWS create a 
+             bunch of those by default.  I will create a new key pair / PEM while I'm at it.
+             
+         </p>
+         
+         <p>Upon entry into new instance, turn off cron jobs.  It appears Nu needs a JDK in addition to JRE because it compiles stuff (javac).  
+             And then 512 MB of memory is not enough to compile.  Time to invoke that .large EC2 type from months ago.  Enable proxy and proxy_http.
+             Open port 9999 in the security config.
+             
+             
+         </p>
+         
+        
+    </section>
+    
+    
+    <section>
+    <h4>entry 1 - 02:14</h4>
+    <p>For kwynn.com, I finally did the server / virtual-host-level rewrite rule to redirect all http to 
+        http<b style='font-size: 115%; '>s</b>.  
+        Here are the 
+        <a href='https://github.com/kwynncom/running-sysadmin-examples/tree/100884727af364bfc1502844e26f3eb941f22f34/apache2/run_kwynn_com'>running Apache config files</a>.
+   I may have aged a little bit just before I restarted Apache to see what would happen.
+    </p>
+    </section>
+    
+</section>
+
+<section>
     <h3>January 22 (first entry after 17:03, continuing 18:35)</h3>
     
     <p>Apprentice is trying again to run my chat code, as mentioned yesterday.  First, I have a chuckle that "php fatal error" must seem ominous 
