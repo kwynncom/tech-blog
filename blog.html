@@ -7,7 +7,7 @@
 <script src='UbuntuSymphony.js'></script>
 <style>
 body { font-family: sans-serif }
-h3   { margin-top: 1.7ex; margin-bottom: 0ex; font-size: 125%; }
+h3   { margin-top: 2.0ex; margin-bottom: 0ex; font-size: 125%; }
 h4   { font-size: 112%; margin-top: 0.7ex; margin-bottom: 0.6ex; }
 h5   { font-size: 105%; margin-bottom: 0ex;  margin-top: 0.4ex; }
 h6   { font-size: 102%; margin-bottom: 0ex;  margin-top: 1.3ex;}
@@ -40,7 +40,422 @@ Eastern Daylight Time (EDT) / summer time, which is in effect almost 8 months ou
 </p>
 
 <section>
-    <h3>January 24, 2022 (20:06 - entry 2; first entry of the day drafting at 02:14)</h3>
+    
+    <h3>January 31, 2022 - Earth counters Luna (02:07)</h3>
+    
+    <p>Going back to yesterday's moon entry, I have begun 
+        <a href='https://github.com/kwynncom/code-fragments/tree/ad4de0b1d84ff5c90d8280bf63da4ff37a50e025/moon'>
+            my counterattack</a> against the moon.  There is nothing live yet because it's all back end so far.  
+            I have the Python ephemeris working.  I feed Python output (painfully) into PHP and load it into the 
+            database for better sorting and querying.  I have all the data I thought I had earlier.  This time I've tested it 
+            down to the minute, several weeks into the future. I have a 
+            <a href='https://github.com/kwynncom/code-fragments/blob/ad4de0b1d84ff5c90d8280bf63da4ff37a50e025/moon/notes.txt'>
+            notes file</a> with some installation notes. 
+     </p>
+     
+     <p>In Python, <a href='https://rhodesmill.org/skyfield/'>SkyField</a> deals with something called NumPy (?) that seems to have a problem serializing a simple array.  Specifically, 
+         I can't simply json.dump() it.  So I preg_match_all() in PHP, which is an obnoxious way to do business.  It seemed faster than 
+         decoding NumPy, though.  
+     </p>
+     
+     <p>There is a noticeable calculation time with the almanac SkyField function; less than a second, but noticeable.  That's not a complaint; I'm 
+         starting to get some notion of how complicated that calculation is.  That's one reason I'm saving the result in the database. 
+     </p>
+     
+     <p>I'll eventually write code to tell JavaScript when Python should be called again for data days enough in the future.  I'm starting to think 
+         the easiest way to do 
+         asynchronous calls is not surprisingly with Asynchronous JavaScript and XML (AJAX).  The alternative is to try to exec() in the 
+         background, but weird things generally happen when I do that--either directly or the debugger won't work.  One day maybe I'll 
+         figure that issue out in PHP.  Anyhow, when the data goes "down" to JS, the JS is "told" if it should do an AJAX query back to PHP 
+         to update the database.  That's another weird way to do business, but, again, it's called async for a reason.
+         
+     </p>
+    
+
+    
+    
+    <h3>January 30, 2022 - when to collect from a client</h3>
+    
+    <p>This is the 3rd topic today.  Should I have a separate blog for the business of technology?  Mostly what I'd have to say is what not to do.
+        </p>
+        
+    <p>Financially and perhaps more importantly psychologically, for a project of any substance, I need some payments before it's done.  The project 
+        needs to be divided into benchmarks where some aspect of it works--a proof of competence.  Also, we can use an escrow service.  Escrow.com 
+        charges a lot less than what I saw years ago.  They have an "A" rating with BBB, last I checked.  An escrow service would help, but I 
+        would still need interim payments.
+    </p>
+    
+    <p>Put another way, bill early and often in small increments.  
+        
+    </p>
+    
+    <p>I can go on about this at some length--both historically and for the future.  I'll wait for your reply.  How big a problem is this for you?  
+        
+    </p>
+    
+    
+    <h3>January 30, 2022, one of several entries today - new topic</h3>
+    
+    <p>I had never thought to check, but the "mysql" command is a symbolic link to "mariadb"  Yes, you are correct, I should start referring to the 
+        mariadb command line as such.  I'm sure I'm going to slip, though, and refer to "MySQL."  It should be understood that I always mean 
+        MariaDB.
+    </p>
+    
+    <p>Did you set the MarDB password with sudo mariadb?  You must have.  The logic may have changed over the years, or it might not have.
+        Apparently once you set a MarDB root user password, you have to use that password even if you're Linux root.  Maybe you've come across 
+        something I haven't, but that seems it could lead to trouble.  Is there an override as Linux root?  You might consider unsetting the 
+        MarDB root password and using specific MarDB users for each database or several databases.  I have done it both ways over time.  
+        When I set a MarDB root password, I save it in a file only accessible by Linux root in the Linux root user's home directory.  I do 
+        not have a MarDB root password set on my dev machine.  I created a user for "main project."  
+        
+    </p>
+    
+    
+    <h3>January 30, 2022 - return to the moon</h3>
+    
+    <h4>part 1 - when I still thought it worked or was about to work</h4>
+    
+    <p>That would be returning to the moon in an anti-gravity ship, not that rocket silliness.  To quote the Cthaeh, "Such silliness."
+    </p>
+    
+    <p>The moon phase UNICODE characters didn't show up that night because I hadn't gotten that far yet.  It was almost certainly not a mobile 
+        issue.  
+    </p>
+    
+    <p>In the following, I'm much more making fun of myself, not you.  You asked about "hundredth millionths of a second" precision.  Given that 
+        I have spent an enormous amount of time on time (sic), I will seriously address your question.  I realize you probably meant the point 
+        hyperbolically.  
+        
+    </p>
+    
+    <p>Yes, the count from 0 to 1 is in real time.  No, it's not displaying "hundredth millionths of a second" precision.  It's not that precise for 
+        several reasons.  For one, pop quiz: what is the refresh interval?  The numbers are not blurring to the eye.  I wrote the refresh interval 
+        specifically not to blur.  I want to user to immediately see that the calculation is in motion, but I don't want it to be blurring.  The 
+        refresh interval is 7 orders of decimal magnitude from what you said.  
+     </p>
+     
+     <p>To continue the pop quiz, what is the unit of the numerical argument to the function in question--the "refresh" function?  That's 5 orders 
+         of magnitude.  If you send an input below 1 unit, will it make any difference, or will the unit be interpreted as an integer?  That's 
+         a very good question.  I don't know the answer.
+     </p>
+     
+     <p>Also, 1 represents a lunar month.  I am displaying 8 digits to the right.  If I have the math right, that's displaying down to increments of 
+         25ms out of the lunar month (7 orders of magnitude), but the refresh interval is several times higher than that.  
+      </p>
+      
+      <p>I'm pretty sure the answer is the precision is equal to the refresh interval, but I may have lost track of the question.
+     </p>
+     
+     <p>Then there is the question of whether I could keep track of hundreds of millionths if I wanted to.  In a compiled language, I am 
+         fairly sure the raw numbers in the CPU would keep up with real time to that precision, but by the time it was displayed in any manner, 
+         it would be several orders of magnitude off.  If it were a fancy display using a GPU, then it would come down to that max refresh interval.  
+         I understand those are getting faster and faster, but when do they stop and conclude the human eye can't perceive anymore?  Or are they 
+         going beyond that as supplemental CPUs?  I guess the latter, but I'd have to dig.
+     </p>
+     
+     <h4 id='2022_0130_abandon_lunar_ship'>part 2 - such silliness indeed</h4>
+     
+     <p>Hopefully I am not under the influence of the Cthaeh.  On one hand, he would do much worse.  On the other hand, it's hard to say what 
+         the effects will be.  
+     </p>
+     
+     <p>After mucking about way too much, I did a check against a reliable source and realized that the "lunation" of the moon is rather complicated.
+         I had assumed it was close enough to linear only in the sense that earth days and years are constant down to an absurd number of decimal 
+         places.  (There are leap seconds every few years.)  I thought the lunation period was the same.  Silly me.  Such silliness.  
+         "...the actual time between lunations may vary from about 29.18 to about 29.93 days" 
+         (<a href='https://en.wikipedia.org/wiki/Lunar_month'>WikiP</a>).  Any time I cite the WikiP I must warn that quite a few of its entries in 
+         absolute numbers, if not relative, will get you killed if you 
+         believe them.  I most certainly checked against <a href='https://www.timeanddate.com/moon/phases/usa/atlanta'>another source</a>.  
+      </p>
+      
+      <p>As for your second email on the subject, hours ago: like many applications, there is the external goal that you are trying to calculate or 
+          track or assist with, and then there is the implemenation.  In answer to one of your points, the "technical part" in terms of the 
+          orbital mechanics went over my head, too.  Perhaps worse yet, I made a silly assumption and didn't even think about or look into the 
+          orbital mechanics.  With that said, there are probably some decent tricks in my code such that once I have valid input, the processing of 
+          that input had some merit.
+      </p>
+      
+      <p>When and if I ever have valid input, Rob Dawson's "<a href='http://codebox.org.uk/pages/html-moon-planet-phases'>Moon/Planet Phases</a> in 
+          JavaScript" code looks very interesting.  It would be more realistic than my using a handful of UNICODE characters and opacity CSS.  
+           
+      </p>
+      
+      <p>As for getting valid input, I will hold my nose and grudgingly admit that this is one of a handful of situations where the best code is in, 
+          ..., rrrrrrr..., I don't want to type it......  Python.  Not too deep in the bowels of my "code-fragments" repo, there is a 
+          Python script that uses a powerful ephemeris library.  
+      </p>
+      
+      <p>I would likely write everything I can in JavaScript and PHP and then call Python with the exact data in the exact format that the library 
+          needs.  
+          
+      </p>
+         
+       
+    
+        
+      
+</section>
+
+<section>
+    <h3>January 29, 2022 - howl-dev-ing at the moon</h3>
+    
+    <p>It became critical to know when I turn into a werewolf.  Although, come to think of it, I didn't add that feature.  Hmmm...  
+        We need a definition.  One becomes a werewolf when the moon closest to full rises at one's location?  That will take more work 
+        involving location--fairly easy--and location-specific moon calculations, probably not as easy, perhaps not so hard, either.
+     </p>
+     
+     <p>The whole disk of the moon rises, I guess?  Seems that a sliver isn't enough.</p>
+     
+     <p>It should be emphasized that the Quileutes are not werewolves.  Edward pointed out to Caius that it was the middle of the day.  This 
+         fact surprised Jacob.  (I don't remember if that fact made the movie.)  Me, read the book?  Nah.     </p>
+     
+     <p>Anyhow, I worked on it for about 2 hours after you signed off.  The version at that point has 7 different UNICODE moon symbols with 
+         the sky going dark at new moon and brighter towards full moon.  It's only 3 columns now--date, UNICODE character on a background of 
+         varying blackness, and the 2-word description of the phase--waning crescent, waning [and close to] new, waxing crescent, etc.  
+     </p>
+     
+     <p>Oh yes, here is the <a href='https://kwynn.com/t/22/01/moon.html'>live version</a>, and here is the 
+         <a href='https://github.com/kwynncom/code-fragments/blob/79aadd8512c0ac2298c1bfa4870596d75eae194b/moon.html'>snapshot</a> of that code.
+         Just after linking to that version, I moved the style tags back into the HTML rather than an external CSS.  I'll get around to deleting the 
+         CSS eventually.  Then I made a few more small fixes.
+     </p>
+     
+     <p>This is one main way to build HTML elements--by creating them as objects in JavaScript and appending them to the preexisting document.  
+         Note that cree() is defined in /opt/kwynn/js/utils.js.  I mentioned this weeks ago in the context of various ways to handle MVC and 
+         4 layers of code.  The other way is to write the HTML directly in PHP, keeping HEREDOC string format in mind.  They each have their 
+         cases and merits. 
+      </p>
+      
+      <p>In this case, everything is (client-side) JavaScript.  If you were building HTML in JS starting from a database, one method goes something 
+          like the following 
+          (<a href='https://github.com/kwynncom/chrony-measurements/blob/16eee6757b7bae5024cab221f611c5f7c1d2def1/front/template.php'>all source 
+              code</a>):
+      </p>
+      
+      <pre>&lt;script&gt; &lt;?php	echo("\t" . 'var KW_G_CHM_INIT  = ' . json_encode($KW_G_TIMEA    ) . ';' . "\n" );  &lt;/script&gt;</pre>
+      
+      <p>A possibly better example would be when you init a larger array that the JavaScript cycles through and creates a row for each member of 
+          the array.  You still init it the same way as above.
+       </p>
+     
+</section>
+
+
+<section>
+    <h3>January 28, 2022 (first entry 17:14, entry 2: 17:52)</h3>
+    
+    <p>Entry 2: Note to self regarding my goaround with OAUTH2 recently: a rewrite rule would partially solve the XDEBUG flag from Google when 
+        it sends an OAUTH code.  That code expires in a matter of tens of ms or less, though, so if the debugger stops processing before a 
+        certain point, the code won't work.  At least, in my reading I learned that a system clock being off by 5 ms could invalidate the code.
+        So maybe there IS a practical reason to keep good time; imagine that.
+        
+    </p>
+    
+    <p>Yes, setting up an environment--databases, libraries, debugger, etc.--is painful the first few times you do it, and even then it can be 
+        painful.  Helping with that is one my jobs, so it's best not to do such things while I'm asleep.
+    </p>
+    
+    <p>Otherwise put, expect such things to be a pain for the first several times you do them.  Take notes; keep those notes in a very accessible 
+        place--perhaps publicly online or in GitHub.  If you don't do it for months and months, then it can still be a pain when you forget.
+        
+    </p>
+    
+    <p>When you ran sudo systemctl status mariadb , the results were somewhat puzzling.  I had assumed that installing the mariadb server 
+        will install the client.  Now I'm not so sure.  So, for the record:
+    </p>
+    
+    <pre>apt list --installed | grep mariadb
+mariadb-client-10.5/impish-updates,impish-security,now 1:10.5.13-0ubuntu0.21.10.1 amd64 [installed,automatic]
+mariadb-client-core-10.5/impish-updates,impish-security,now 1:10.5.13-0ubuntu0.21.10.1 amd64 [installed,automatic]
+mariadb-common/impish-updates,impish-updates,impish-security,impish-security,now 1:10.5.13-0ubuntu0.21.10.1 all [installed,automatic]
+mariadb-server-10.5/impish-updates,impish-security,now 1:10.5.13-0ubuntu0.21.10.1 amd64 [installed,automatic]
+mariadb-server-core-10.5/impish-updates,impish-security,now 1:10.5.13-0ubuntu0.21.10.1 amd64 [installed,automatic]
+mariadb-server/impish-updates,impish-updates,impish-security,impish-security,now 1:10.5.13-0ubuntu0.21.10.1 all [installed]    </pre>
+   
+    <p>When you see version numbers, you generally do not want to use those.  You almost always want the latest available.  The situation gets 
+        even more puzzling:
+     </p>
+     <pre>sudo apt install mariadb-server
+# already latest
+sudo apt install mariadb-client
+# something new was installed.  Huh?</pre>
+     
+<p>Whatever the case, does the "mysql" command exist?  I realize you are going to use MySQL Workbench as a client, but you'll want that 
+    mysql command.  "sudo mysql" will get you in as the root mysql user so that you can set the root password for non-root Linux users.  
+    That is, mysql (mariadb) assumes a relationship between the Linux user and the db user unless you specify otherwise.  You can get into 
+    mysql as mysql-user-root with sudo, but MySQL Workbench will need a MySQL root user password because you should not be running MySQL 
+    Workbench as root; it's just bad form.
+</p>
+
+<p>I am puzzled why your mariadb status talked aobut the "mysql" (client) program at all.  My does not.  It was somewhat unconnected that 
+    I suggested what was wrong with your Workbench connection.
+</p>
+
+<p>For future reference, I'm not sure how clear the distinction is in MySQL Workbench between "server not running" and "server is running but 
+    I, Workbench" cannot connect to it. In some ideal world one of us would take the time to document that.  That distinction led to some 
+    confusion over the last few days.  
+</p>
+
+<p>As I think about it, your status results were even more puzzling.  This is what I get:
+    
+</p>
+
+<pre>systemctl status mariadb
+● mariadb.service - MariaDB 10.5.13 database server
+     Loaded: loaded (/lib/systemd/system/mariadb.service; enabled; vendor preset: enabled)
+     Active: active (running) since Fri 2022-01-28 02:50:44 EST; 14h ago
+       Docs: man:mariadbd(8)
+             https://mariadb.com/kb/en/library/systemd/
+   Main PID: 1179 (mariadbd)
+     Status: "Taking your SQL requests now..."
+      Tasks: 9 (limit: 9458)
+     Memory: 217.9M
+        CPU: 1.779s
+     CGroup: /system.slice/mariadb.service
+             └─1179 /usr/sbin/mariadbd
+
+Jan 28 02:50:44 ubu2110 mariadbd[1179]: 2022-01-28  2:50:44 0 [Note] InnoDB: 10.5.13 started; log sequence number 862675097; transaction id 15437
+Jan 28 02:50:44 ubu2110 mariadbd[1179]: 2022-01-28  2:50:44 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+Jan 28 02:50:44 ubu2110 mariadbd[1179]: 2022-01-28  2:50:44 0 [Note] Plugin 'FEEDBACK' is disabled.
+Jan 28 02:50:44 ubu2110 mariadbd[1179]: 2022-01-28  2:50:44 0 [Note] Server socket created on IP: '127.0.0.1'.
+Jan 28 02:50:44 ubu2110 mariadbd[1179]: 2022-01-28  2:50:44 0 [Note] Reading of all Master_info entries succeeded
+Jan 28 02:50:44 ubu2110 mariadbd[1179]: 2022-01-28  2:50:44 0 [Note] Added new Master_info '' to hash table
+Jan 28 02:50:44 ubu2110 mariadbd[1179]: 2022-01-28  2:50:44 0 [Note] /usr/sbin/mariadbd: ready for connections.
+Jan 28 02:50:44 ubu2110 mariadbd[1179]: Version: '10.5.13-MariaDB-0ubuntu0.21.10.1'  socket: '/run/mysqld/mysqld.sock'  port: 3306  Ubuntu 21.10
+Jan 28 02:50:44 ubu2110 systemd[1]: Started MariaDB 10.5.13 database server.
+Jan 28 02:50:45 ubu2110 mariadbd[1179]: 2022-01-28  2:50:45 0 [Note] InnoDB: Buffer pool(s) load completed at 220128  2:50:45</pre>
+
+<p>In my case, it tells you the port is 3306.  Or:</p>
+<pre>sudo netstat -tulpn | grep -i mariadb
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      1179/mariadbd  </pre>
+
+<p>Your router is not at issue.  The router has no part in the "network" traffic inside your computer.  One diagnostic would have been to 
+    run "mysql" and / or "sudo mysql" 
+    
+</p>
+
+
+</section>
+
+   
+    <section>
+    <h3>January 27, 2022</h3>
+    
+    <p>As with a week or two ago, cue "*autistic screeching*".  If I haven't said it before, I hate OAUTH2.  So, for the record, if you add 
+        a redirect URL in Google Cloud Console, you have to add the URL to your client_secret file 
+        <span style='font-weight: bold; font-size: 140%; color: red; '>IN THE SAME ORDER!!!!</span> Otherwise, you get 
+        '{"error":"redirect_uri_mismatch","error_description":"Bad Request"}'.  Here is 
+        <a href='https://github.com/kwynncom/positive-gmail-check/commit/0d48a8bb6674407383dc6b8e67731543adec28a9'>my debugging code</a>.  
+        
+    </p>
+    
+    <p>To make matters worse, I am using debugging code in part because I could not think of a good way to conform to my rule #1.  That is, given 
+        that the redirect URL is called from Google, how do you get Google to put a precise URL query in the URI such that it invokes the 
+        debugger?  I tried putting the xdebug query in there, and I'm fairly sure it simply told me it was an invalid URL.  I found instructions 
+        for getting Google to pass data in a "state," but not a literal, precise URL query.  The debugging code shows were I use file_put_contents 
+        with FILE_APPEND.  It led me close to the problem, and then it occurred to me that order might matter.  At least, I'm 87% sure that's the 
+        problem.  I am not going to reverse it right now just to check.
+     </p>
+     
+     
+     <p>This is almost reason in itself to get away from Big Evil Goo and run my own mailserver on my own domain.
+         
+     </p>
+     
+    </section>
+
+<section>
+
+    <h3>January 26, 2022 - ongoing entries, 17:15, then 19:26</h3>
+    
+    <h4>debugging MariaDB connect issues</h4>
+    
+    <p>If MySQL Workbench can't find the service, the service probably isn't running.  Usually a service starts when it's installed, but not always.  
+    </p>
+    
+    <pre># no harm in doing a restart if it's already running
+sudo systemctl restart mariadb
+sudo systemctl status mariadb
+# ...      Status: "Taking your SQL requests now..."
+# That's funny.  I've never noticed that before.
+ps -Af | grep -i mariadb
+# 7278 is the process ID.  Yours will be different in all probability
+# mysql       7278       1  0 19:27 ?        00:00:00 /usr/sbin/mariadbd
+sudo netstat -tulpn | grep -i mariadb
+# 3306 is the port I would expect
+# tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      7278/mariadbd       </pre>
+        
+        
+    
+    <h4>snap versus apt 2; Firefox 2</h4>
+    
+    <p>A double installation was not the problem I had.  It was something much more subtle.  If I may be so bold, your whole email should be
+        entered into the record.  You're anonymous for now, so I'll just do it.
+     </p>
+     
+     <p>I have spent well over half and hour doing all sorts of such things.           
+     </p>
+    
+    <blockquote>
+        <p>funny, the only issue i had with snap vs apt was exactly that, firefox. i just had to apt remove firefox, because somehow i had 2 copies of 
+            firefox floating around... randomly, (well probably not random at all) in certain apps when I would click a link (like discord or thunderbird) 
+            it would open in the older firefox (apt) version, and the rest in my new firefox (snap install). the only reason I could differentiate the 2, 
+            and know which one to uninstall, was when I went to help/about in firefox, it actually said it was a snap package.. so I knew to remove 
+            the apt 
+            version. 
+            
+        </p>
+        <p>
+  previously to that, i wasted about a half hour trying to find out how to set the default browser to load in thunderbird when a link is clicked, 
+  and sadly i didn't find any way to do it.            
+        </p>
+    </blockquote>
+    
+    <h4>snap versus apt</h4>
+    
+    <p>The trend appears to be towards snap, so if there is a snap, go with it.  I was playing with something once that was causing 
+        trouble as a snap versus an apt, but it wasn't that important an issue.  I think it was Firefox, but I'm not even sure.  
+    </p>
+    
+    
+    
+    
+    <h4>MySQL, MariaDB, and MongoDB continued</h4>
+    
+    <p>In response to your email a few hours ago...  You may have misunderstood the choice I was positing.  If you're using Ubuntu, MariaDB is the 
+        way to go.  There are supported packages for MariaDB.  MySQL was abandoned by much or most or almost all of the open source community over 
+        concerns that Oracle would corrupt it.  (Oh, Oracle is a funny coincidence, huh?)
+    </p>
+    <p>As best I remember, every site I've seen over years has moved to MariaDB, except perhaps for the insane people who were still using PHP 5.x.     
+    </p>
+    
+    <p>Yes, I do recommend installing MySQL Workbench directly from Oracle.  I don't think there is an Ubuntu package for it anymore.  MySQL Workbench 
+        gives you an enormously prettier SQL command line to work with, as opposed to the pure "mysql" command line.  Even though I'm using MariaDB, 
+        the commands have stayed the same, so it's still mysql.  MySQL Workbench will "express" "confusion" over connecting to MariaDB, and it will 
+        warn that it's not supported, but it will work.
+    </p>
+    
+    <p>So, going back, the choice I was positing was not between MariaDB and MySQL.  The choice was between MariaDB and MongoDB.  I have probably 
+        a few hundred lines of working MongoDB code in my repos.  I have 0 MySQL code on GitHub.  I drank the MongoDB (object oriented database) 
+        Kool-Aid in 2017, and I've started using it whenever I have the choice.  I won't be using MySQL for my main (part-time) project for much 
+        longer.  As soon as I free it from Drupal, I'm done with MySQL.
+    </p>
+    
+    <p>MySQL is not going anywhere, though, and I'm in the minority of PHP and MongoDB users.  MongoDB is much more closely associated with Node.js 
+        (MEAN / MERN stack).  MySQL will have much better examples out there, too.  
+    </p>
+    
+    <p>I said that there would probably be some grumbling on my part if you chose relational (MySQL) over OO.  We'll see when and if the grumbling 
+        begins.
+        
+    </p>
+    
+     
+     
+</section>
+
+<section>
+    <h3>January 24 - 26, 2022 (20:06 - entry 2 1/24; first entry of the day drafting at 02:14 1/24, posted 1/26)</h3>
     
     <section>
         <h4>entry 2 - 20:06</h4>
@@ -92,6 +507,11 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,NE]           </pre>
              And then 512 MB of memory is not enough to compile.  Time to invoke that .large EC2 type from months ago.  Enable proxy and proxy_http.
              Open port 9999 in the security config.
              
+             
+         </p>
+         
+         <p>My conclusion for now is that Java and / or Nu are too much of a RAM pig to put on a t3a.nano instances with 512 MB RAM.  When testing, 
+             everything worked, but at one point Nu hung for something like 30 seconds.  Right now on my local machine Nu / Java takes 300 MB.  
              
          </p>
          
