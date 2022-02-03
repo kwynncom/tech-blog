@@ -40,7 +40,64 @@ Eastern Daylight Time (EDT) / summer time, which is in effect almost 8 months ou
 </p>
 
 <section>
+<h3>Feb 3, 2022 (starting 01:01)</h3>
+
+<p>In answer to my disappearance over the last several hours, the lunacy took me again.  
+    Another apprentice came online who is in another timezone.  So, my fun tonight started out considering adding a timezone offset 
+    from JavaScript (the user's browser) so that he would get times in his local timezone.  
+    This led to separating calculation from data 
+    acquisition (from the Python ephemeris) and storage.  That led to cleaning up the various "magic numbers" where I'm trying to make sure to 
+    always have enough days of data.  I also took my advice to use AJAX: I created a data buffer so that any given user is unlikely to 
+    suffer a delay when the almanac (ephemeris) loads.  The almanac takes about 0.5s to load, so after every call to the app, there is an async call 
+    that makes sure there are plenty of days in the database.  The user won't see any of that unless they are using dev tools, although they might see 
+    a spin somewhat away from my HTML doc.  Do browsers show any spin (spinners) under those conditions?  I don't know.  I'll see what it looks like over time.
+ </p>
+
+ <p>The alternative is to set a cron job.  I might do that.        
+ </p>
+
+<p>Anyhow, when I had everything working locally, I broke the live system for roughly 15 minutes.  A violation of Rule #2 burned me.  
+    Locally I'm running MongoDB 4.4.  (I can't run 5.0 because my CPU is too old.)  Kwynn.com is running v3.6.  
+</p>
+
+<p>The violation of Rule #2 led to my having to seriously bend Rule #1.  One can run a debugger remotely, but it strikes me as a bad idea.  So I 
+    had to go do what is generally a gross violation of Rule #1.  My 
+    <a href='https://github.com/kwynncom/astronomy/blob/d32676a9108dbc0cdfab0849918eb825deb309e7/data.php'>current code</a> in GitHub still has a 
+    file_put_contents() on line 29.  The error was on the current calc.php (not data) line 41.  $ala[0] did not exist.  I did the file_put 
+    to see the data.  The algorithm assumes that the data is in earliest to latest timestamps.  It would appear that locally MongoDB was sorting in the 
+    order the data was put in the database, which is what I wanted.  I could not at a glance figure out what the earlier MongoDB version was doing, but 
+    it wasn't in the order I needed.  So the solution was to add an explicit sort, which is what I should have done in the first place.
+</p>
+
+<p>The code is somewhat cleaner now, but I'm not sure that whole exercise was worth it.
+
+</p>
+     
+     
+</section>
+
+<section>
+<h3>February 2, 2022</h3>
+
+<p>I have posted my <a href='https://kwynn.com/t/22/01/moon/'>working lunar calendar</a>.  </p>
+
+<p>You said, "I desperately need to start adding repos to GitHub in case these clients want to actually look at it."  I'm not sure anyone 
+    in that context has looked at my GitHub, despite my mentioning it a number of times.  It seems the people I most wanted to look didn't 
+    respond at all.  I doubt that's because they looked at my GitHub and then decided not to respond, although I can't be sure.  
+</p>
+
+<p>I have learned over decades to be very careful what I do for that sort of reason.  If you are working on something that does not 
+    absolutely have to be secret, then post it publicly to GitHub.  Why not?  *Maybe* someone will look at it one day.  It serves as a backup and 
+    version control if nothing else.  The effort to go backwards in time to post stuff should be nowhere near "desperate," though.
+</p>
+
+<p>I have found GitHub to be very motivating, and it continues to be motivating even though it doesn't seem to have served the purpose you mentioned.
+When I have posted to GitHub, I have "published" in the academic sense, even if there is no peer review and even if no one ever looks at it.  It's 
+on the record.  I also like the idea of SatanSoft paying for it.  If they want to host my code for free, I'll take them up on it.  
+</p>
+</section>
     
+<section>
     <h3>January 31, 2022 - Earth counters Luna (02:07)</h3>
     
     <p>Going back to yesterday's moon entry, I have begun 
