@@ -16,6 +16,8 @@ pre  { margin-top: 0; margin-bottom: 0; }
 h1   { margin-top: 0; margin-bottom: 0; }
 ul	{margin-top: 0.5ex}
 li   { margin-bottom: 0.7ex; }
+.intron { margin-top: 1ex; font-size: 120%; margin-bottom: 0ex; }
+.iibl {  display: inline;  }
 </style>
 </head>
 <body>
@@ -23,21 +25,172 @@ li   { margin-bottom: 0.7ex; }
 <section>
 
 <div style='margin-bottom: 2.5ex; '>
-<h1  style='display: inline-block'>tech blog</h1>
-<div style='display: inline-block; margin-left: 0.6ex; position: relative; top: 0.9ex; '>
+    <h1  style='display: inline-block'>tech blog</h1>
     
-<a href='https://validator.w3.org/check?uri=https://kwynn.com/t/7/11/blog.html'>
-                                                        
-        <img style='transform: scale(0.81, 0.81);' src="../../5/02/html5_valid.jpg" alt="HTML5 valid" width="103" height="36" /></a>
+    <div style='display: inline-block; margin-left: 0.6ex; position: relative; top: 0.9ex; '>
+        <a href='https://validator.w3.org/check?uri=https://kwynn.com/t/7/11/blog.html'>
+            <img style='transform: scale(0.81, 0.81);' src="../../5/02/html5_valid.jpg" alt="HTML5 valid" width="103" height="36" /></a>
+    </div>
 </div>
-</div>
-    
-<p>Drafts / previous versions of <a href='https://github.com/kwynncom/tech-blog'>this page are on GitHub</a>.  For time zone purposes, I am near Atlanta and use my 
-local timezone.  Atlanta is the same as New York (America/New_York), or UTC -5 / Eastern Standard Time (EST) in winter and UTC -4 during Daylight Saving Time / 
-Eastern Daylight Time (EDT) / summer time, which is in effect almost 8 months out of the year.</p>
 
-<p>Starting sometime in December, 2021, many entries are in response to one of my apprentices, so he is the "you" I'm speaking to initially.
+<section>
+<h2 class='intron iibl'>introductory notes: </h2>
+<p class='iibl'>1. For time zone purposes, I am near Atlanta and use my local timezone.  Atlanta is the same as New York (America/New_York).</p>
+<p class='iibl'>2. Starting sometime in December, 2021, I am often addressing one of my apprentices; he is the "you."</p>
+<p class='iibl'>3. Drafts / previous versions of <a href='https://github.com/kwynncom/tech-blog'>this page are on GitHub</a>.  Usually the live version is way ahead of 
+    GitHub.  Note that my other repos are "nearby" that one.  I refer to my repos often.
 </p>
+</section>
+  
+<section>
+    <h3>Feb 16, 2022 (starting early 17th)</h3>
+    
+    <p>I was battling PayPal's simple, few-lines-of-JavaScript button for about 5 hours.  I first wrote 8 hours because it feels like that 
+        and more.  Then I went back to look at a discussion I was having, so 5 hours is correct.
+    </p>
+    
+    <p>I'll come back to my shrieking about PayPal.  I got <a href='/t/22/02/donate.html'>BitCoin and Ethereum working</a>, I hope.
+        
+    </p>
+    
+    <p>As for PayPal, I was having problems in sandbox mode.  I hope that sandbox mode is far more problematic than live.  The problem I was
+         having was that the popup window kept crashing / closing.  There was a 500 error, but that was rather useless for diagnosis.  Even 
+         when it worked, various steps could take something like 40 seconds.  
+                The solutions, 
+        in approximate order of importance, were something like:
+        
+    </p>
+    
+    <ul>
+        <li>Clear all cookies of all sites on the button page.</li>
+        <li>Hard refresh the page (shift-F5 in Firefox).</li>
+        <li>In Brave, take shields down.</li>
+        <li>It may or may not be useful to remove all cookies from the PayPal popup.</li>
+        <li>Make sure you accept cookies on the popup.  The cookie prompt can be slow, and I suspect trying to skip ahead of it was part 
+        of my problem.</li>
+        <li>You'll wait.  Perhaps 40 seconds for certain steps, perhaps more.</li>
+    </ul>
+    
+    <p>Here is my 
+        <a href='https://github.com/kwynncom/code-fragments/blob/f887e45fb55e749dba65158c7688374bce2ea046/PayPal_rc/index.html'>
+            release candidate code</a>.  Hopefully I'll go live in around 16 hours.
+        
+    </p>
+    
+</section>
+    
+<section>
+<h3>Feb 13, 2022 (starting 18:58, PS started 19:55) - Zoom</h3>
+
+<p>I see an ad for someone who wants to learn a given dev language.  It's not one that I've done, but I've done 8 professionally and two 
+    others without pay, so I can probably help.  I tell him just that, and I ask for some source code, so that I can get a feel of 
+    the situation.  He mentioned he had a bug, so I figured the place to start might be to solve the bug.  Given that he's just 
+    learning, I can't imagine that the code is sensitive.  
+</p>
+
+<p>So I ask for source code, and I get back precisely, "Can we do a zoom [sic] session to discuss?"  This is an example of why 
+I shouldn't be gig hunting without help.  Here is the ultra sarcastic version of my response.  I have no intention of sending it 
+to the unlikely to-be client.  
+</p>
+    
+<p>I understand that the ad was for teaching, but I need to deal with the objective part first.  I'd like to see some relevant 
+    snippets of the language first.  Software dev is not improv; it's not live stage acting.  Software dev in itself is not real time like 
+    driving.  I like time to think about what I'm doing.  There is simply not much to say to this person until I see some code and 
+    decide if I want to go down the path.  
+</p>
+
+<p>Furthermore, what the hell is it with Zoom?  I suppose I'm going go off the "professional" reservation, but the whole world 
+    is off the reservation.  I'd never heard of Zoom until Billuminati Gates' Satanic Crusade.  I can't get excited about the 
+    crime of war profiteering because arguably no wars fought by the US after 1815 were legitimate.  I was trying to find historical 
+    instances of executions for such, but the closest I found off hand was 17 years in prison for David H. Books of DHB Industries, who 
+    died in prison in Danbury, CT in 2016.  He sold ineffective vests that were not bulletproof.  (Oh, of course, the $10M 
+    party was a <i>bat mitzvah</i> party.  See my personal blog for "the preface" on that.)
+ </p>
+ 
+ <p>Twitter and YouTube and company are so fond of their "misinformation" disclaimers.  If Zoom wanted to make the following disclaimer, that 
+     would be one thing:
+ </p>
+ 
+ <blockquote>After due process of law, we deem it near certain that Dr. Fauci would be convicted of multiple capital offenses and possibly executed.  Until that time, 
+ however, we will try to help keep life going with our service.
+     </blockquote>
+ 
+ <p>If they did that, I would probably be satisfied.  Off hand, I see no such statement on their home page.  Surprisingly, I don't see masks, so that's something, but 
+     not enough.  The point being that I see Zoom as "Covid" profiteers, and I do get excited about that.
+  </p>
+
+  <p>Also, Zoom goes in a similar category to SatanSoft and Satan's Operating System even before SatanSoft was obviously funding a war against humanity.  Why on 
+      earth do people install proprietary software when there are free and open source alternatives?  Even if you were using Zoom 3 years ago, why would you do that?
+   </p>
+   
+   <p>I asked you for source code.  Until I have source code and have studied it and debugged it, no, I don't want to go live to discuss, and I certainly don't want to 
+       go live on Zoom.  </p>
+   
+   <h4>possible solutions</h4>
+   
+   <p>To my apprentice, no, lurking in the background won't do.  As I said, I am not going live until I get what I asked for.  One potential solution is that you 
+       contact him and tell him we're connected.  You can call me autistic or Asperger's or anti-social or shy or even a crazy conspiracy theorist.  You can call 
+       me quirky and touchy and eccentric or even an asshole.  You can say that I am incapable of politely asking for source code AGAIN, so you are politely asking 
+       for source code.
+    </p>
+    
+    <p>Another option is you do what you did with Flutter.  At least this time we have a response.  You don't have to mention his response to me; the point is this guy 
+        is responding.  
+        
+        See what you make of the language.  Possibly install a debugger.  
+        Then see if he'll talk to you.  You can make a similar arugment to me in that you've been at it in a number of languages for a very long time.  I'm not 
+        necessarily encouraging you to take that risk, although as I said in the email to him, R looks like it's worth learning.  I've responded to perhaps 5 R ads in the 
+        last year or two, but I think this is my first response.
+      </p>
+      
+      <h4>PS - 19:55</h4>
+
+      <p>I mentioned a checklist.  In some contexts, that would be useful.  In this case, I've already made my checklist.  I want some blanky blank source code.  
+          That's the one item on my list.
+          
+      </p>
+      
+</section>
+    
+<section>
+    <h3>Feb 5, 2022 (starting 22:57; posting 23:45)</h3>
+    
+    <p>That may be some of the more satisfying dev I've ever done.  The code is in GitHub.  For reasons that would depress this entry, I corrupted 
+        my local database of my web server access logs, going back to late October.  When I reloaded the file, it had become 400MB and 
+        1.7 million lines.  My loading program ate 2 - 4 GB RAM and was swapping and was depressing to watch the "top" results of and took 5 - 10 minutes.  
+        Now it takes 6 seconds and consumes minimal memory. I am not quite comparing apples to apples, but I'll get there.  
+    </p>
+    
+    <p>I'm not quite comparing apples to apples because the old version did the line parsing--separated the parts of a line and give them digital meaning 
+        where appropriate.  The new version only chops up the file into lines and puts them in a database with enough line number information to 
+        reconstruct the line numbers later.
+    </p>
+    
+    <p>The old version loaded the whole file into memory, so that was one problem.  The new version sets as many cores / hyperthreads as 
+        one has digging into the file at the same time.  The processes are reading the file line by line, so I am not loading multiple lines into memory.  
+        More precisely, I may load parts of two lines into memory, but that's it.
+     </p>
+     
+     <p>Another large improvement was to abstract "insert one" into "insert many."  I learned that trick over 20 years ago, and it still works.  
+         If you insert a few hundred rows in an array with one command, that is tremendously faster than inserting hundreds of rows with individual 
+         insert commands.  I created an "inonebuf"--insert one with buffering--such that the user can queue individual rows, and the buffering and inserting 
+         is done for them.
+     </p>
+     
+     <p>I created classes to simplify forking (multi-process / multi-core) perhaps 2 years ago.  Now I've put those in kwutils (in the general sense, not the 
+         file).  They work splendidly as written years ago.
+         
+     </p>
+    
+</section>
+
+<section>
+    <h3>Feb 3, 2022 (starting 03:32)</h3>
+    
+    <p>The moon phases are now in the user's / browser's local time.
+        
+    </p>
+</section>
 
 <section>
 <h3>Feb 3, 2022 (starting 01:01)</h3>
