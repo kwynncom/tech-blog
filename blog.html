@@ -18,6 +18,7 @@ ul	{margin-top: 0.5ex}
 li   { margin-bottom: 0.7ex; }
 .intron { margin-top: 1ex; font-size: 120%; margin-bottom: 0ex; }
 .iibl {  display: inline;  }
+.ghr4 { font-size: 105%; margin-top: 1.5ex; }
 </style>
 </head>
 <body>
@@ -40,8 +41,167 @@ li   { margin-bottom: 0.7ex; }
 <p class='iibl'>3. Drafts / previous versions of <a href='https://github.com/kwynncom/tech-blog'>this page are on GitHub</a>.  Usually the live version is way ahead of 
     GitHub.  Note that my other repos are "nearby" that one.  I refer to my repos often.
 </p>
+<p class='ghr4'>4. Often I'm posting to GitHub and not commenting here.  If you click on <a href='https://github.com/kwynncom?tab=repositories'>my repos</a>, they are sorted by the 
+    latest changes.
+    
+</p>
 </section>
-  
+
+<section>
+<h3>Feb 22, 2022, starting 18:33</h3>
+
+<p>The madness has been on me for several days, although both my moon page and my eyes tell me the moon is days waning away from full, so presumably the 
+    madness is neither lunacy nor lycanthropy.  The madness meaning that I am obsessed with various tasks of my pet, personal, non-paid projects.  
+</p>
+<p>So my web log loader loads efficiently, and in the last few days the verification is working more and more efficiently.  I decided, though, that a 
+    2 - 3 second delay due to ssh making the connection is not good enough.  I also decided against a web app because there would be all sorts of 
+    permissions mucking between the www-data Apache user and the "adm" group that can get into /var/log/apache2.  In the past I solved web access with a 
+    tiny C program that uses setuid() / the setuid bit.  In that case I wanted C to call a very simple application with no parameters or complexity.  
+    This would involve empowering a relatively complex program, so I decided against web access.  Also, given that I'm wanting to whittle down from a 
+    few seconds, the web path would cause its own delays.
+</p>
+
+<p>So I have created a dedicated background PHP program / process that listens on a highly secret port number (that is sitting right there on my 
+    public repo).  I minimize RAM with an input buffer and proc_open() into "$ openssl md4"  I am using md4 because a combination of web searching and 
+    testing demonstrated it's fastest.  In other words, the program sits there with the log file already open and already running, waiting to md4 
+    hash a second of the web log to compare against what's in my local database.
+</p>
+
+<p>While I was at it, I refined my password hash interface to easily create passwords and hashes.  The socket listener authenticates the request with 
+    0.02 seconds of password hashing.  
+</p>
+
+<p>In short, it's pretty spiffy.  I think it's done, but I haven't set it live yet.  On second thought, I can probably live with 3 seconds.  The app 
+    I created is a good model for future "listeners," though.
+</p>
+
+<p>Several days ago I set the verification process to fork such that the database md4 and file md4 happen at the same time.  I created a new 
+    forking class for this purpose that is more specific and thus simpler than the more general fork process in kwutils.
+</p>
+
+<p>On my part-time, few-hours-a-week paid project, I've had a productive few days in terms of efficient coding.  The timecard specification has 
+    plagued me.  It seems that I now have complex logic whittled down to about 11 lines.  It only took me 5 years of intermittent work to achieve that.
+    The overall phase of that project is that I am partially rewriting the application to extract it from Drupal.  A quick search says that I've 
+    talked about this to some degree, going back to last July or so.  
+</p>
+
+<p>Only extracting from Drupal, though, I have deemed not good enough.  I spent a lot of time making sure my save-on-edit (keystroke) process was 
+    totally reliable.  When I started dev'ing again, I immediately got 2 cases of false positives--a save indication when there was none.  That 
+    makes a certain amount of sense given how drastically I have changed things, but I decided it wasn't good enough, so I have dug into a deeper 
+    rewrite, which of course led yet deeper.  I should have vastly better code when I'm done.  
+</p>
+
+<p>Between what I call Brook's Second Law and Raymond's Corollary, plan to keep rewriting it, because you'll keep rewriting whether you plan on it or 
+    not.  (<a href='https://en.wikipedia.org/wiki/Brooks%27s_law'>Brook's [First] Law</a>).  What I call the Second Law involves rewriting.  What I 
+    call Raymond's Corollary is in his classic 
+    <i><a href='http://www.catb.org/~esr/writings/cathedral-bazaar/cathedral-bazaar/'>Cathedral and the Bazaar</a></i>.
+</p>
+
+</section>
+        
+    
+<section>
+<h3>Feb 19, starting 18:52</h3>
+
+<p>Going back to my previous entry, the sequence process I had would work fine assuming that the sequence existed before multiple processes would start using it.  Last 
+    night I put more code in GitHub where I trivially demonstrated the potential problem.  If the sequence did not exist before a heavy multi-process load, 
+    there would be many failures.  
+</p>
+<p>I am usually referring to codename "recent CS grad" apprentice.  Two nights ago "sales guy" apprentice read my previous entry.  In answer to some of his questions, and 
+    to elaborate on this issue:
+</p>
+
+<p>A real-world example is how to generate a sequential invoice number (1, 2, 3, ...) when there are multiple users who might hit "buy" at the same time.  Some physical 
+    few bits of some computer somewhere must be dedicated to keeping track of which number the sequence is on.  But it gets more complicated than that.  The operation 
+    to check and then add to that number must be "atomic," or it must be a "transaction" in the database technical sense.  An atomic operation is one that breaks or 
+    makes a mess if it does not complete all its steps. In this case, the operation is checking the existing number and then adding one.  If one process checks and 
+    then another process checks and adds before the first one adds, then two customers will get the same number.
+</p>
+
+<p>At some point, sitting on a toilet (under some conditions) becomes atomic.  You have to finish the cleanup step, 
+    or you have a mess.  In the data world, the data is either wrong or otherwise corrupted if an atomic operation fails and does not "roll back."  </p>
+
+<p>If you go looking, the classic example of an atomic operation / transaction is when a husband and wife with a joint account show up at two bank branches at the same 
+    time.
+    If the timing of checking the account balance versus giving them their cash is precisely wrong, they overdraw their account.  (Look it up.)
+</p>
+
+<p>My code last night demonstrated the equivalent problem with a brand new sequence.  I have a bit of code where if I only do the loop body once, the sequence 
+    can fail.  If I loop twice, then one of the two iterations is guaranteed to work, and my code bears that out.  
+</p>
+
+<p>Some time perhaps I'll elaborate on this.  The point for my geeky purposes is that I finally have a sequence process that will work under all reasonable 
+    conditions.  As I said in my previous entry, my musing over this issue has led me to all sorts of fun and games.  I might have saved myself some time if I 
+    had done last night's code roughly two years ago.  Then again, I did some cool stuff along the way.
+    
+</p>
+
+<p>Getting back to the real-world problem, note that Amazon makes absolutely no attempt to give their customers sequential numbers starting (decades ago) with 1.  
+    A quick search shows that as of several weeks ago, Amazon does almost 19 orders per second.  We are at 1.6+ billion seconds and counting into the UNIX Epoch 
+    (seconds since the start of 1970 UTC).  That's a 10 digit number.  Even if Amazon had done 19 orders a second going back decades before it existed, that's an 
+    11 digit number.  As of March, 2021, I have an Amazon receipt with a 17 digit order number.
+</p>
+
+<p>The format is 3 numerical digits, then 7, then another 7.  The first one might be a server number.  It would make sense that the individual server would be 
+    preventing duplicates.     
+</p>
+    
+</section>
+    
+<section>
+<h3>Feb 18, starting 01:21</h3>
+
+<p>I got my PayPal donation page working.  For most of my work "day," Paypal's systems were working fine.  Based on their system status, 
+    it seems they were having problems late on the 16th which caused me problems.  Later in my day, the sandbox system died again, so I 
+    stopped messing with it.  It's working fine.  
+</p>
+
+<p>Today my bigger irritant with PayPal is that it seems very difficult to correlate the "Transaction ID" with anything you can access 
+    "programmatically."  The transaction ID is what both the payer and payee see, but it's hard to get at.   I thought the difficulty was 
+    only because I'm using the simple client-side JavaScript button widget.  Upon research, though, 
+    it's not necessarily easy to correlate with the full API. 
+    </p>
+    
+<p>As I investigated the API, it was hard to tell again whether PayPal was having problems or I wasn't getting my queries right.  
+    There is a transaction history function / API call, but I was either having difficulty formatting the time right, or there is a 
+    long delay until the data is available, or the sandbox was having problems.  
+
+</p>
+
+<p>I did some experiments with an "invoice ID."  Both the payer and payee see that, too.  I got that working (in the test version) 
+    in that I could create an invoice ID, but then there is the question of uniqueness.  That question has been plaguing me in 
+    various forms for something like 2 years now.  
+</p>
+
+<p>So, my latest sermon on unique IDs...  Most of the IDs I've been exploring lately are absurdly too long for an invoice ID; they are meant 
+  to be unique in all of time and space.  I want the ID to be intelligible to my customers.  So that brings me back to sequences (1, 2, 3, ...).  
+</p>
+
+<p>It was in part my uncertainty over getting sequences out of MongoDB that set me on the path towards my PHP extension to get a unique ID from 
+time, the CPU clock's tick since boot, and the CPU (core / hyperthread) number.  
+</p>
+
+<p>So, after all this time, I decided to revisit MongoDB sequences.  My fork class is easier and easier to use, so that means I can 
+    fairly easily set any task to use all my CPUs / cores / hyperthreads.  So the setup is to set all the CPUs "demanding" a sequence at once, 
+    in a very tight loop.  In my "code fragments" repo, I have posted the code.  
+</p>
+
+<p>MongoDB's instructions (indirectly) on sequences are somewhat vague, but now I can say with a reasonable degree of certainty that they work.  
+    MongoDB went to 500% CPU usage (6 of my 12 hyperthreads: 6 cores X 2 for hyperthreading).  My 12 PHP threads divided the rest of 
+    the CPU usage.  That was MongoDB doing a lot of work resolving locking issues.  I demonstrated again that it takes a long time to 
+    resolve locking issues.  That is, a sequence is not an option if the system is going to be banged on.  However, if I asked for 950,000 
+    sequence calls, the sequence at the end was precisely 950,000.  (I started the sequence with 0 internally; the first call would get a 1.)
+</p>
+
+<p>When I just "asked" Mongo for the sequence, that took much longer than actually writing rows with Mongo's default _id or my nanopk().  
+I will try to remember that I can "objectify" my array and use that directly as an _id.  I'm almost certain that arrays aren't allowed.  
+I suppose in future editions of nanopk() I should see how hard it is to return an object.
+    
+</p>
+
+</section>
+    
+    
 <section>
     <h3>Feb 16, 2022 (starting early 17th)</h3>
     
