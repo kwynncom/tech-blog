@@ -38,20 +38,188 @@ li   { margin-bottom: 0.7ex; }
 <h2 class='intron iibl'>introductory notes: </h2>
 <p class='iibl'>1. For time zone purposes, I am near Atlanta and use my local timezone.  Atlanta is the same as New York (America/New_York).</p>
 <p class='iibl'>2. Starting sometime in December, 2021, I am often addressing one of my apprentices; he is the "you."</p>
-<p class='iibl'>3. Drafts / previous versions of <a href='https://github.com/kwynncom/tech-blog'>this page are on GitHub</a>.  Usually the live version is way ahead of 
-    GitHub.  Note that my other repos are "nearby" that one.  I refer to my repos often.
+<p class='iibl'>3. Drafts / previous versions of <a href='https://github.com/kwynncom/tech-blog'>this page are on GitHub</a>.  Usually the live version 
+    is way ahead of 
+    GitHub. 
 </p>
-<p class='ghr4'>4. Often I'm posting to GitHub and not commenting here.  If you click on <a href='https://github.com/kwynncom?tab=repositories'>my repos</a>, they are sorted by the 
+<p class='ghr4'>4. Often I'm posting to GitHub and not commenting here.  If you click on 
+    <a href='https://github.com/kwynncom?tab=repositories'>my repos</a>, they are sorted by the 
     latest changes.
-    
 </p>
 </section>
 
 <section>
+<h3>March 1, 2022 - continuing from yesterday (starting 21:07)</h3>
+
+<p>The credit card processing is now a very few steps from live.  One big accomplishment is that I have for the first time used Apache virtual hosts exactly 
+how they were meant to be used.  I've used the "VirtualHost" tag a zillion times, but I've never set the same machine (and IP address) to serve two domains.  
+I've never had a 
+reason to before.  It's sort-of-kind-of as easy as <a href='https://httpd.apache.org/docs/2.4/vhosts/examples.html'>Apache's very first example</a>.  I give 
+some "gotchas" below.  One 
+criticism I would make of their example is that www. should work via the "*" DNS A record.  There should be no mention of www anywhere in DNS or Apache config 
+or anywhere else.  That's so 1990s.  Oh wait...  It's not that simple:
+</p>
+
+<p>I would about to say that www.kwynn.com works just fine, but given my recent http to https redirect, it does not work just fine.  I have the RedirectRule set 
+    to preserve the www or anything else.  The routing works fine, but given that "www.kwynn.com" does not exactly match "kwynn.com," the security cert process 
+    rejects it.  I have a solution for that!
+    
+</p>
+
+
+<p>/etc/apache2/sites-available/000-default.conf  old version: "RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,NE]"  
+    New version: "RewriteRule ^ https://kwynn.com%{REQUEST_URI} [L,NE]"
+</p>
+
+<pre>
+sudo apachectl configtest
+Syntax OK
+sudo apachectl graceful
+</pre>
+
+<p>Then it works.  Ok, with that said, I repeat my statement.  "www" is so 1990s.  STOP USING IT!  STOP REFERENCING IT!  
+    </p>
+    
+<p>With that said, my client's site still has multiple references to www.  I vaguely remember this coming up years ago.  At the time, I was too inexperienced and /or 
+    chicken to 
+    deal with it severely.  Right this moment, I don't want to confuse issues.  I want the credit card code to be fully implemented.  Then one day I will 
+    deal with extreme prejudice with "www."  
+</p>
+
+<p>I started the process of VirtualHost "B" by copying a .conf file.  I removed the security references to the exact site, but it turns out that leaving the 
+    "Include /etc/letsencrypt/options-ssl-apache.conf" was a bad idea when I was just setting up site B.  It passed configtest, but it brought down both sites 
+    when I activated it and restarted Apache.  So no references to security until you get farther down the path.
+</p>
+
+<p>So, to get VirtualHosts working for both sites A and B, start with a stripped-down .conf file for the new site B.  This worked:
+    
+</p>
+
+<pre>
+ubuntu@ip...:/etc/apache2/sites-available$ more payt1.conf
+# the following should be the result once created / edited:
+
+&lt;VirtualHost *:80&gt;
+
+        DocumentRoot  /home/ubuntu/payments_www
+        &lt;Directory /home/ubuntu/payments_www&gt;
+                DirectoryIndex index.php index.html
+                Require all granted
+                AllowOverride All
+        &lt;/Directory&gt;
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+ServerName payments.example.com
+ServerAdmin buessresume@gmail.com
+&lt;/VirtualHost&gt;
+# end file
+
+sudo a2ensite payt1.conf
+sudo apachectl configtest
+sudo apachectl graceful
+sudo certbot certonly --apache --dry-run
+
+# for real:
+sudo certbot --apache
+
+# it's fine to let certbot do the rewrite / redirect from http to https
+# that last command does the a2ensite and restarts apache
+
+</pre>
+
+<p>After that, there is one last annoyance.  It's not really a "Gotcha!" but it acts like one, and you could do a lot of wheel spinning if you don't realize 
+    what's happening.  Now that I think about it, I'm pretty sure the only annoyance comes if you are testing the non-secure http when any https sites are involved.  
+    Firefox and presumably other browsers will be assuming a previous 301 permanent redirect from a given IP address to a URL.  If you try to go to the non-secure 
+    site B and maybe the secure site B, you'll get redirected to the original site A.  The solution may or may not be 
+    as simple as going directly to the https URL of the new site B.  My solution was to use Brave instead of Firefox.  I hadn't been to either site in a long while 
+    on Brave.  After 10 - 20 minutes, the https version of site B worked fine in Firefox, but I'm not sure if that was due to some sort of timeout / expiration or 
+    because I went to the secure URL.
+</p>
+
+<p>Next is another solution for 301 problems.  Note that in the Control - Shift - I "Network" tab you can see the 301 redirect.  Anyhow, another solution is 
+    in Firefox, go to history, then hover over the site in question, then right click and "Forget About This Site."   You may have to do that for several variants 
+    of the site. I don't think that messes with your saved password, but I'm not entirely sure, so keep that in mind.
+</p>
+
+
+
+
+
+</section>
+
+    
+    
+<section>
+<h3>Feb 28, 2022 - a day or a few hours in the life (starting 17:59; update starting 18:25)</h3>
+
+<p>Today / very soon I hope to get back to my main client's credit card processing.  That is the main client whose project has always been part-time.  
+    I still need more work.  I have one source that's looking promising for a bit of work, but it will only be a bit.  I've also been getting nibbles for 
+    fairly big projects, but we'll see what happens.  
+</p>
+
+<p>For years my client has used the same credit card processor.  (I only got involved with that side of the project very recently.) Apparently it has worked fine, 
+    so that's much of what matters.  They are not a 
+    big name, though, and their documentation is not public.  Non-public documentation is generally enough reason in my mind not to use a provider.  
+    In fact, I was heading towards suggesting this to my client.  He created a login for me, though, and the documentation behind the login wall 
+    was quite reasonable.  Their PHP example was straightforward and worked right out of the box, which is more than I can say for many such 
+    situations.  
+</p>
+
+<p>I have whittled on the example and am approaching an end to that phase.  "Whittled" means I confirmed that I can assume a US billing address and whole-dollars only 
+    (no cents).  I removed the fax number field (!?!?).  And I'm otherwise cleaning up their code.  It was plenty good enough as an example, but I want it to be 
+    cleaner.
+</p>
+
+<p>
+The immediate task is to improve their final result handling.  The example simply dumps 1,000 characters of raw XML, which is not exactly comforting or useful to 
+shod muggles.</p>
+
+<p>I have never worked on the site that will use the credit card processor.  The site is in the much-despised Drupal.  I more-or-less flatly refused to touch 
+    Drupal anymore.  What I did is took one of his pages and saved it to disk.  Then I whittled out all the stuff specific to that page so that I could turn it 
+    into the payment page(s).  I cleaned up the HTML to some degree, but it was deemed not worth the time to clean it completely.  My plan is to put the form on a 
+    subdomain.  I made my "new" page pixel-perfect such that no one will notice from the page itself that they have moved to a subdomain.  Given that it's a subdomain, 
+    I can stay away from damned Drupal.
+</p>
+
+<p>I should also mention that the example and thus working version is a different technique than my PayPal form.  The PayPal form is meant to be very "simple" to 
+    implement with front-end JavaScript only.  It accomplishes that, but I don't really like that format.  Neither does my client.  In the case I'm working on now, 
+    everything is on the back end, so I have much more and easier control.  I am almost certain PayPal can do it that way, but at the time I was trying to do it the 
+    quick way.  Given that their sandbox was having major problems, though, I probably would have been just as well off to do it in the back end.  Even if the sanbox 
+    was having problems, the nature of the problem would have been clearer from the back end, too.
+    
+</p>
+
+<h4>update, starting 18:25</h4>
+
+<p>For years my client has been using a 3rd party's form to interact with the credit card processor.  When he sends people the link to the form, though, it's 
+    usually eaten as spam.  I suggested linking to it from his website, but he said that it's dated anyhow, and he wants the form(s) redone.  When I looked at the 
+    existing form, I was having a lot of trouble figuring out where the money went--who are these people?  Obviously it's going to him, but it shouldn't be that 
+    hard to figure out from the outside.  I couldn't figure out who they were, let alone find documentation.  That's when I suggested using someone else.  That's 
+    also when he said he doesn't like PayPal's "simple" form.  And that's when he made me account that I found very useful in making progress.  
+</p>
+
+<p>Even though their lack of public doc annoys me, I was about to link to them here.  Their system has worked for years, their example is quite good, and their 
+    documentation is somewhere between plenty good enough and near perfect.  When I went into the login system, though, I STILL had trouble finding their public 
+    site.  Someone in fact has registered a similar domain that outranks the real one on Big Evil Goo; the fake one is a God-knows-what probable mischief site.  
+    The second result is very likely the real site, but they aren't even using an SSL cert.  Given that even I finally started using an SSL cert some time ago, and 
+    then I finally did "the redirect" a few weeks ago, I'm going to discriminate.  (I chickened out and did the 302 redirect so far.  I suppose the 301 is in order 
+    very soon, given that the 302 shows every sign of working.)
+</p>
+
+<p>So I'm going back in part to my original position.  I would imagine they will continue to work fine long enough, but I have gotten the impression from the start 
+    that it's a dying product.  They are supporting current customers, but they aren't looking for more under that brand.  I have some loose indication that they 
+    are associated with Wells Fargo.  Maybe they got bought out and re-branded.  
+</p>
+
+</section>
+    
+<section>
 <h3>Feb 22, 2022, starting 18:33</h3>
 
-<p>The madness has been on me for several days, although both my moon page and my eyes tell me the moon is days waning away from full, so presumably the 
-    madness is neither lunacy nor lycanthropy.  The madness meaning that I am obsessed with various tasks of my pet, personal, non-paid projects.  
+<p>The madness has been on me for several days, although both my moon page and my eyes tell me the moon is days (waning) away from full, so presumably 
+    the madness is neither lunacy nor lycanthropy.  The madness meaning that I am obsessed with various tasks of my pet, personal, non-paid projects.  
 </p>
 <p>So my web log loader loads efficiently, and in the last few days the verification is working more and more efficiently.  I decided, though, that a 
     2 - 3 second delay due to ssh making the connection is not good enough.  I also decided against a web app because there would be all sorts of 
@@ -63,16 +231,17 @@ li   { margin-bottom: 0.7ex; }
 
 <p>So I have created a dedicated background PHP program / process that listens on a highly secret port number (that is sitting right there on my 
     public repo).  I minimize RAM with an input buffer and proc_open() into "$ openssl md4"  I am using md4 because a combination of web searching and 
-    testing demonstrated it's fastest.  In other words, the program sits there with the log file already open and already running, waiting to md4 
-    hash a second of the web log to compare against what's in my local database.
+    testing demonstrated it's fastest.  In other words, the program sits there already running with the log file already open waiting to md4 
+    hash a section of the web log to compare against what's in my local database.
 </p>
 
-<p>While I was at it, I refined my password hash interface to easily create passwords and hashes.  The socket listener authenticates the request with 
-    0.02 seconds of password hashing.  
+<p>While I was at it, I refined my password hash interface to more easily create passwords and hashes.  The socket listener authenticates the request with 
+    0.02 seconds of password hashing.  I want to spend minimal time on that, but I want it to be some time to turn cracking the password into an 
+    age-of-the-universe level task.
 </p>
 
 <p>In short, it's pretty spiffy.  I think it's done, but I haven't set it live yet.  On second thought, I can probably live with 3 seconds.  The app 
-    I created is a good model for future "listeners," though.
+    I created is a good model for future "listeners," so it was helpful and fun even if I never deploy it.
 </p>
 
 <p>Several days ago I set the verification process to fork such that the database md4 and file md4 happen at the same time.  I created a new 
@@ -82,7 +251,7 @@ li   { margin-bottom: 0.7ex; }
 <p>On my part-time, few-hours-a-week paid project, I've had a productive few days in terms of efficient coding.  The timecard specification has 
     plagued me.  It seems that I now have complex logic whittled down to about 11 lines.  It only took me 5 years of intermittent work to achieve that.
     The overall phase of that project is that I am partially rewriting the application to extract it from Drupal.  A quick search says that I've 
-    talked about this to some degree, going back to last July or so.  
+    talked about this to some degree, going back to last July.  
 </p>
 
 <p>Only extracting from Drupal, though, I have deemed not good enough.  I spent a lot of time making sure my save-on-edit (keystroke) process was 
@@ -92,7 +261,7 @@ li   { margin-bottom: 0.7ex; }
 </p>
 
 <p>Between what I call Brook's Second Law and Raymond's Corollary, plan to keep rewriting it, because you'll keep rewriting whether you plan on it or 
-    not.  (<a href='https://en.wikipedia.org/wiki/Brooks%27s_law'>Brook's [First] Law</a>).  What I call the Second Law involves rewriting.  What I 
+    not (<a href='https://en.wikipedia.org/wiki/Brooks%27s_law'>Brook's [First] Law</a>).  What I call the Second Law involves rewriting.  What I 
     call Raymond's Corollary is in his classic 
     <i><a href='http://www.catb.org/~esr/writings/cathedral-bazaar/cathedral-bazaar/'>Cathedral and the Bazaar</a></i>.
 </p>
