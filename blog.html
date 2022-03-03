@@ -49,6 +49,89 @@ li   { margin-bottom: 0.7ex; }
 </section>
 
 <section>
+<h3>March 2, 2022 - .php versus .html (start 23:03)</h3>
+
+<p>My apprentice is about to bring MariaDB (MySQL fork) data into a web page.  That is, he's going to try.  I'm sure he'll get it fairly soon, but that's the 
+    sort of thing that doesn't go smoothly the first time you ever, ever do it.  With that said, he may have accomplished that particular "Hello, world!" already.
+</p>
+
+<p>His page was index.html.  He couldn't get any PHP to work inside a .html file, which is not surprising.  By default, Apache won't execute PHP inside a .html 
+    file.  In almost every case I've seen, PHP runs from a .php file.  
+    
+    I think there are a small number of extensions that will execute PHP.  I *think* .tphp or .phpt will work, where that's a PHP template, 
+    but I'm pushing my knowledge / memory.  Remember that included (required) files are already in the PHP context or they won't work, so you could call an 
+    include file anything, although I can think of very few reasons not to stick with .php.  That is, an include file is only meaningful if it's coming from a 
+    PHP context, so there must be a .php file somewhere down that call stack.  Similarly, if PHP is file_get[ting]_contents() a file, it can be called anything.
+</p>
+
+<p>So the short answer is change it to .php.  I have never done anything different.  You asked about speed.  I'll address that further below.  There are some 
+    interesting issues around that, but they are all very, very minor relative to what you care about right now.
+</p>
+
+<p>He asked whether it is possible to run PHP from .html.  I'm fairly sure you can override something in Apache, but I don't think I've ever seen it done.  
+</p>
+
+<p>With that said, some sites suppress .php.  I just tested and found that one of the systems that shall not be named will let you do example.com/index.php  
+    I find that the most "popular" system that shall not be named will not.  ("WordPest" is not strong enough.)  It will redirect (301) /index.php to /   I think the redirect is done within the 
+    bowels of the application and not in the Apache .htaccess, but I'm not entirely sure because I'm not fluent in rewrite rules.  To the extent I understand 
+    them, I put it at a 70% chance that it's done in the "bowels."
+</p>
+
+<p>I'll call the "popular" one WordPlague.  Word pest, word pestilence, Word Plague, or simply The Plague.  That works.  I'll call the other one Stoopal because it will cause 
+    your development skills to stoop until you're dependent on the cane / crutch of it.  You'll never be able to walk properly or run after too much use.
+    
+</p>
+
+<p>In any event, as best I understand without digging too much, often you don't see ".php" because all of the URLs are written with the assumption of a 
+    "single page" application and / or other redirects / rewrites.  In both the cases of The Plague and Stoopal, most HTTP requests are rewritten and sent through 
+    index.php.  index.php in turn starts a series of includes and conditional includes that processes the request.  This is a case where looking at the 
+    superglobals in a debugger would explain a lot, but I'm not sure I can bring myself to care much about the content manglement (sic) systems.
+    
+</p>
+
+
+<p>You asked about a speed difference.  That is not worth a second of thought or hesitation.  I will delay renaming .html to .php until I'm sure using PHP directly
+    in the file is the right answer.  That's a matter of clarity, though.  It doesn't make sense to use .php unless you're specifically using PHP.  
+</p>
+
+<p>To do a fair test of a speed difference, you would want to run precisely the same content with .php and .html.  You can set your /var/log/apache2/access.log to 
+    show microseconds.  I've done it, as should not be surprising.  The example is in my "sysadmin-examples" repo or whatever I call it.  If you call a page twice 
+    using the same method, it would give you an idea.  Or call it 1,000 times.  
+</p>
+
+<p>I'm not sure you would detect a difference.  If you did, it was be too small for human detection.  It's just not a consideration.  There may be situations 
+    where you want to load some of your data with AJAX after the page has loaded, but that's a mostly separate issue.  You're asking about very similar files as 
+    .php versus .html.  You're also asking about tiny amounts of data pulling from only slightly larger data into a page.  I see no problem pulling it directly 
+    from a speed perspective.
+</p>
+
+<p>I have never tried to detect those sorts of speed differences and have not worried about that.  There is an interesting consideration, though, between .html and 
+    .php that has been in the 
+    back of my mind for a very long time.  When Apache serves an .html file, the Date-Modified in the HTTP reply header is the date of the file modification, 
+    and the ETag is based on the contents.  That makes it easy for Apache to serve up a 304 response.  304 means that the browser sent an "If-Modified-Since" and 
+    / or "If-None-Match" the ETag.  The browser is reporting what it has in its cache.  Apache serves the document if it has changed or else send back "304 Not Modified.
+</p>
+
+<p>Contrariwise, if the exact same content were in a .php versus a .html, I don't think the .php has an ETag automatically, and the Date-Modified will be "now."  
+If you want to generate those properly and serve "If-None-Match" and such properly, you have to do it yourself in PHP.  I have dug at that a little bit in 
+kwutils.php, but I haven't fleshed it all out.
+</p>
+
+<p>If it's a borderline case between .html and .php, I consider it obnoxious to leave off those features.  It's been one of my hesitations in creeping towards 
+    a "single page" website.  I see the merit in single page.  That is not one of my issues with manglement (sic) systems.  
+    
+</p>
+
+<p>I'll try to wind this down.  I'll remind you again that there are whole sections of this blog--perhaps 70%, perhaps more--that I don't expect to entirely 
+    make sense right now.  I'm recording thoughts for the long term.  I'm not sure there is a point in reading it over and over.  Perhaps once every 6 - 10 weeks 
+    at the rate you're going.  Perhaps we should make an interactive application to help you track where you are with each subject.  
+    
+</p>
+
+</section>
+    
+    
+<section>
 <h3>March 1, 2022 - continuing from yesterday (starting 21:07)</h3>
 
 <p>The credit card processing is now a very few steps from live.  One big accomplishment is that I have for the first time used Apache virtual hosts exactly 
@@ -67,13 +150,15 @@ or anywhere else.  That's so 1990s.  Oh wait...  It's not that simple:
 </p>
 
 
-<p>/etc/apache2/sites-available/000-default.conf  old version: "RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,NE]"  
-    New version: "RewriteRule ^ https://kwynn.com%{REQUEST_URI} [L,NE]"
-</p>
+<pre>/etc/apache2/sites-available/000-default.conf  
+# old version: 
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,NE]
+# New version: 
+RewriteRule ^ https://kwynn.com%{REQUEST_URI} [L,NE]
+# end change
 
-<pre>
 sudo apachectl configtest
-Syntax OK
+# Syntax OK
 sudo apachectl graceful
 </pre>
 
@@ -91,7 +176,9 @@ sudo apachectl graceful
     when I activated it and restarted Apache.  So no references to security until you get farther down the path.
 </p>
 
-<p>So, to get VirtualHosts working for both sites A and B, start with a stripped-down .conf file for the new site B.  This worked:
+<p>So, to get VirtualHosts working for both sites A and B, start with a stripped-down .conf file for the new site B.  The following worked.  Note that before 
+    you run certbot, the new site B has to work with http (see gotcha below).  That is, the "certbot" process has to be able to access a non-secure version 
+    to verify ownership.  By "working" that means in part you have your DNS A and / or AAAA records pointed to the right IP address.
     
 </p>
 
@@ -138,8 +225,8 @@ sudo certbot --apache
     because I went to the secure URL.
 </p>
 
-<p>Next is another solution for 301 problems.  Note that in the Control - Shift - I "Network" tab you can see the 301 redirect.  Anyhow, another solution is 
-    in Firefox, go to history, then hover over the site in question, then right click and "Forget About This Site."   You may have to do that for several variants 
+<p>Next is another solution for 301 problems.  Note that in the Control - Shift - I "Network" tab you can see the 301 redirect.  Anyhow, another solution 
+    in Firefox: go to history, then hover over the site in question, then right click and "Forget About This Site."   You may have to do that for several variants 
     of the site. I don't think that messes with your saved password, but I'm not entirely sure, so keep that in mind.
 </p>
 
