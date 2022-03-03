@@ -94,12 +94,30 @@ li   { margin-bottom: 0.7ex; }
     in the file is the right answer.  That's a matter of clarity, though.  It doesn't make sense to use .php unless you're specifically using PHP.  
 </p>
 
+<p>Months ago, I might have leaned towards .php to leave me the flexibility, but I'm getting better at rewrite rules, so I'm not as worried about that.  In fact, 
+    I did a 
+    <a href='https://github.com/kwynncom/web-server-access-log-analysis/blob/72b1f23b02ccaf9fff645462dcabd7db458efc7e/agents_sa/agents_sa_live_2106/.htaccess'>
+        rewrite from .html to .php recently</a>.  It's very profound, isn't it?  Note that using .htaccess files in various ways requires a specific "AllowOverride" 
+        in the virtual host's .conf file.  All that stuff is in my <a href='https://github.com/kwynncom/running-sysadmin-examples'>sysadmin repo</a>. If the 
+        machine in question is yours, I don't see a problem with very loose AllowOverride.  The potential problems come with shared hosting where you are the 
+        host.
+    
+</p>
+
 <p>To do a fair test of a speed difference, you would want to run precisely the same content with .php and .html.  You can set your /var/log/apache2/access.log to 
     show microseconds.  I've done it, as should not be surprising.  The example is in my "sysadmin-examples" repo or whatever I call it.  If you call a page twice 
     using the same method, it would give you an idea.  Or call it 1,000 times.  
 </p>
 
-<p>I'm not sure you would detect a difference.  If you did, it was be too small for human detection.  It's just not a consideration.  There may be situations 
+<p>I should add that I've given some thought to turning microseconds back off.  I was hoping they would provide a unique line identifier, but they do not.  
+    A 408 HTTP response (request timeout) will show up twice in the same &micro;s.  As best I understand, a 408 is Apache not-so-politely telling a browser to 
+    shove off and disconnect.  That's all deep inside Apache.  I'd have to dig to start to understand the context.  In any event, those two lines are completely 
+    identical including the microsecond.  
+    
+</p>
+
+<p>In any event, I'm not sure you would detect a time difference.  If you did, it would be way too small for human detection.  It's just not a consideration.  
+    There may be situations 
     where you want to load some of your data with AJAX after the page has loaded, but that's a mostly separate issue.  You're asking about very similar files as 
     .php versus .html.  You're also asking about tiny amounts of data pulling from only slightly larger data into a page.  I see no problem pulling it directly 
     from a speed perspective.
@@ -109,7 +127,8 @@ li   { margin-bottom: 0.7ex; }
     .php that has been in the 
     back of my mind for a very long time.  When Apache serves an .html file, the Date-Modified in the HTTP reply header is the date of the file modification, 
     and the ETag is based on the contents.  That makes it easy for Apache to serve up a 304 response.  304 means that the browser sent an "If-Modified-Since" and 
-    / or "If-None-Match" the ETag.  The browser is reporting what it has in its cache.  Apache serves the document if it has changed or else send back "304 Not Modified.
+    / or "If-None-Match" the ETag.  The browser is reporting what it has in its cache.  Apache serves the document if it has changed or else send back 
+    "304 Not Modified.
 </p>
 
 <p>Contrariwise, if the exact same content were in a .php versus a .html, I don't think the .php has an ETag automatically, and the Date-Modified will be "now."  
@@ -122,9 +141,18 @@ kwutils.php, but I haven't fleshed it all out.
     
 </p>
 
-<p>I'll try to wind this down.  I'll remind you again that there are whole sections of this blog--perhaps 70%, perhaps more--that I don't expect to entirely 
-    make sense right now.  I'm recording thoughts for the long term.  I'm not sure there is a point in reading it over and over.  Perhaps once every 6 - 10 weeks 
-    at the rate you're going.  Perhaps we should make an interactive application to help you track where you are with each subject.  
+<h4>more immediate issues</h4>
+
+<p>I'll try to wind this down.  I'll remind you again that there are whole sections of this blog--perhaps 70%, perhaps more--that I don't expect to make sense 
+    right now.  I'm recording thoughts for the long term.  I'm not sure there is a point in reading it over and over.  Perhaps once every 6 - 10 weeks 
+    at the rate you're going.  Your rate is fine; I just don't want to waste your time.  Perhaps we should make an interactive application to help you track 
+    where you are with each subject.  
+    
+</p>
+
+<p>As for your comment, "I feel like it's gonna start coming to me really fast, really soon."  It has been my guess that there are parts of the learning curve 
+    that are exponential or perhaps x^3.  But then you are pretty much guaranteed to be banging your head on various new issues, unless you ask for help (hint hint).
+    Yes, I think quite a few things will start to make sense soon.  
     
 </p>
 
