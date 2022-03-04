@@ -48,6 +48,38 @@ li   { margin-bottom: 0.7ex; }
 </p>
 </section>
 
+
+<!-- ************** CURRENT ************************************************************************* -->
+
+<section>
+    <h3>March 3, 2022 - commutative hashes / XOR by line (begin 18:45)</h3>
+    
+    <p>To quote Colonel Hannibal, "I love it when a plan comes together."  (Although Captain Reynolds naked in the desert--"Yeah. That went well."--that might 
+        be yet better.)    I suppose, while I'm at it, I should mourn the loss of General Hannibal of Carthage.  The world would likely be a better place if 
+        Carthage had won, but I'm not sure they stood a chance under the circumstances.  My vague memory is the world might have been a better place if Carthage 
+        had committed to total war.  Hmmm..  There is discussion on the "What If?" and it is likely infinitely more honest than equivalent situations in the last 
+        100 years.  Might make for interesting reading.  But I digress.
+    </p>
+    
+    <p>So I have been musing over this issue of quickly validating my web server access log database versus the source file(s).  One problem is that all the hashes 
+        I can quickly find are linear in the sense of a VHS tape--they are only useful with one long string.  They can't be parallelized.  So I got the notion of 
+        XORing each line and then XORing the lines together.  That is parallelizable.  (That may not be a word, historically speaking.  It is now.)  I started 
+        in PHP.  Right this moment, I don't remember why I went to C.  At first I was concerned about 64 bit unsigned versus signed.  That may have been it.  
+        PHP doesn't have an unsigned.  Then I, dare I say, "circled back" and used signed in C.  (I use "circle back" in mockery.)
+     </p>
+     
+     <p>In any event, I now have XOR working as planned in both C and PHP.  (The code was in GitHub before I started writing this.)  C and PHP match both 
+         forwards ("$ cat") and backwards ("$ tac").  This heavily implies they will match with the lines in any order--thus, parallelizable.  
+         C is 100+ times faster than PHP.  I'm not sure I've ever known that the situation was quite that 
+         "bad."  Our hardware is just stunning these days to create a situation such that I don't know that.
+     </p>
+
+     
+</section>
+
+    
+    
+    
 <section>
 <h3>March 2, 2022 - .php versus .html (start 23:03)</h3>
 
@@ -71,14 +103,16 @@ li   { margin-bottom: 0.7ex; }
 <p>He asked whether it is possible to run PHP from .html.  I'm fairly sure you can override something in Apache, but I don't think I've ever seen it done.  
 </p>
 
-<p>With that said, some sites suppress .php.  I just tested and found that one of the systems that shall not be named will let you do example.com/index.php  
-    I find that the most "popular" system that shall not be named will not.  ("WordPest" is not strong enough.)  It will redirect (301) /index.php to /   I think the redirect is done within the 
-    bowels of the application and not in the Apache .htaccess, but I'm not entirely sure because I'm not fluent in rewrite rules.  To the extent I understand 
-    them, I put it at a 70% chance that it's done in the "bowels."
+<p>With that said, some sites suppress .php.  I just tested and found that one of the systems that shall not be named will let you do 
+    example.com/index.php . I find that the most "popular" system that shall not be named will not.  ("WordPest" is not strong enough.)  
+    It will redirect (301) /index.php to /   I think the redirect is done within the 
+    bowels of the application and not in the Apache .htaccess, but I'm not entirely sure because I'm not fluent in rewrite rules.  To the extent 
+    I understand them, I put it at a 70% chance that it's done in the "bowels."
 </p>
 
-<p>I'll call the "popular" one WordPlague.  Word pest, word pestilence, Word Plague, or simply The Plague.  That works.  I'll call the other one Stoopal because it will cause 
-    your development skills to stoop until you're dependent on the cane / crutch of it.  You'll never be able to walk properly or run after too much use.
+<p>I'll call the "popular" one WordPlague.  Word pest, word pestilence, Word Plague, or simply The Plague.  That works.  I'll call the other one 
+    Stoopal because it will cause your development skills to stoop until you're dependent on the cane / crutch of it.  You'll never be able to 
+    walk properly or run after too much use.
     
 </p>
 
@@ -94,7 +128,7 @@ li   { margin-bottom: 0.7ex; }
     in the file is the right answer.  That's a matter of clarity, though.  It doesn't make sense to use .php unless you're specifically using PHP.  
 </p>
 
-<p>Months ago, I might have leaned towards .php to leave me the flexibility, but I'm getting better at rewrite rules, so I'm not as worried about that.  In fact, 
+<p>Months ago, I might have leaned towards .php to leave myself the flexibility, but I'm getting better at rewrite rules, so I'm not as worried about that.  In fact, 
     I did a 
     <a href='https://github.com/kwynncom/web-server-access-log-analysis/blob/72b1f23b02ccaf9fff645462dcabd7db458efc7e/agents_sa/agents_sa_live_2106/.htaccess'>
         rewrite from .html to .php recently</a>.  It's very profound, isn't it?  Note that using .htaccess files in various ways requires a specific "AllowOverride" 
@@ -105,7 +139,7 @@ li   { margin-bottom: 0.7ex; }
 </p>
 
 <p>To do a fair test of a speed difference, you would want to run precisely the same content with .php and .html.  You can set your /var/log/apache2/access.log to 
-    show microseconds.  I've done it, as should not be surprising.  The example is in my "sysadmin-examples" repo or whatever I call it.  If you call a page twice 
+    show microseconds.  I've done it, as should not be surprising.  The example is in my sysadmin repo.  If you call a page twice 
     using the same method, it would give you an idea.  Or call it 1,000 times.  
 </p>
 
