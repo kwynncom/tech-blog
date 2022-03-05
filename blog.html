@@ -52,6 +52,97 @@ li   { margin-bottom: 0.7ex; }
 <!-- ************** CURRENT ************************************************************************* -->
 
 <section>
+<h3>March 5, 2022, starting 13:04, continuing 13:18 after sending a preview</h3>
+
+<p>"PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /...path/[implied index.php]"  You are using PHP 8.x, right?  Or 
+    at least 7.x?  Have they already aliased the 1990s "mysql_connect()" to be mysqli_connnect()?  The PHP documentation does not indicate that.
+    In any event, I would use mysqli_connect().  You'll give old-timers like me hives just looking at the thought of the old mysql_connect().
+    Note that the <a href='https://www.php.net/manual/en/function.mysql-connect.php'>"old" mysql_connect() is deprecated, per the doc</a>.  
+</p>
+        
+<p>I ranted about this several weeks ago.  CERTAIN CLIENTS who sent me screaming were still using the original mysql... functions in PHP 5.x.  The 
+    original mysql functions were deprecated in roughly 2013 and removed from the language in 2015.  (The years are from memory.)    
+</p>
+
+<pre>apt-cache policy php-mysql
+php-mysql:
+  Installed: 2:8.0+82~0build1</pre>
+
+<p>This leads me to believe that mysql_connect is an alias, but, still, for my peace of mind, if nothing else, consider using mysqli...  If you want to 
+    do some research and see where it's documented as an alias, I'd probably live with it, but, given that the documentation still shows deprecation, 
+    I would avoid the mysql... functions.
+    
+</p>
+
+<p>With all that said, I just got a reply that he's using mysqli... now.  Good.
+    
+</p>
+
+<p>Now, back to the error itself.  I'm not sure when (or if) it became relatively clear to me that it meant you had to install something separately.  
+    I've had variants of this drive my nuts fairly recently, though.  
+</p>
+
+<p>One thing to consider for future reference is the difference between the 
+    <a href='https://www.php.net/manual/en/mysqli.installation.php'>mysqli doc</a> and 
+    <a href='https://www.php.net/manual/en/strings.installation.php'>substr() (or string functions generally) doc</a>.  The mysqli doc natters on at some 
+    length.  That's a hint that something needs installing.  I would probably not recommend reading all that nattering.  Given that you're reading the 
+    general PHP doc, it may not be helpful towards the simple question of "How do I install this in Ubuntu?"  Also, there are all sorts of references to 
+    "--with-mysqli" and related switches that I have never needed to worry about because I'm not compiling PHP from scratch.  When you install php-mysql, 
+    it does the same thing as the switch.</p>
+
+<p>It is harder than it should be to know which package to install in Ubuntu.  Big Evil Goo usually answers it easily enough, but it's the sort of thing 
+    that may be quicker when I'm around to show you what I have installed.  
+    
+</p>
+
+<p>By contrast, the string functions say, "There is no installation needed to use these functions; they are part of the PHP core."</p>
+
+<p>One variant that drove me nuts was when one of the MYSQL(I) constants was not defined.  I didn't know if that was a PHP package thing or a Stoopal thing.  
+    It turned out that I hadn't installed mysqli.  That was not obvious to me.
+</p>
+
+<p>A worse variant is when the rewrite engine isn't active.  The manglement (sic) systems should go out of their way to check that it's working.  I wrote 
+    code to do it fairly quickly, so they can.  Otherwise, you get the damnest errors.  I might have spent 3 hours fussing with one of them until I finally 
+    realized from relatively subtle signs, 
+    using the debugger, that the lack of rewrite engine was the cause.  These issues are some of the many issues I have with manglement.
+    
+</p>
+
+<p>On an apprentice procedural note, my theoretical standard for something like the error above is to spend 20 minutes thumping on it.  Then ask me.  
+    It's not worth that sort of frustration.  I'm not sure you learn anything from it.  I've said it before, but it's worth repeating: I remember spending 
+    3 hours in 1992 trying to figure out SYNTAX errors.  It would have been lovely to have someone point them out.  I don't think I learned much from 
+    all that.  I just got very frustrated and probably would have gotten out of dev if I weren't so damn stubborn.  I think I've told the story here of 
+    someone who did quit dev in 1985 because his compiler simply said "syntax error" with no line number or hints or specific syntax violations.  
+</p>
+
+<p>In 1992, I sort of kind of learned to break code into smaller and smaller pieces--isolate the problem more and more tightly--to figure out where 
+    the problem is.  It would have been nice to have someone state that in the context of my problem as a general rule.  I sort of learned it, but 
+    I'm not sure it really stuck for a while.  I think I've complained before of people who post to StackOverflow with 100 lines of code.  Their problem 
+    is within 3 lines, and they should have isolated that before asking the question.  That applies to StackOverflow, though.  In the case of asking me, 
+    I'll go with the 20 minute rule for now.  And maybe that should be 10 - 15 minutes.
+ </p>
+ 
+ <p>To recent CS grad apprentice, do you want me to link to your blog?  I'll do it if you want, but...  I suppose I can ask this openly because it 
+     goes to any apprentices.  You may have noticed that I'm getting more and more, shall we say, testy, on this website.  I'm getting closer to the 
+     point where I say publicly what I might have only said privately in the past.  I stand the risk of eventually being deplatformed or condemned by the 
+     ADL--those being about the same thing.  I am at risk of being put in the same category as Putin and Foreign Minister Lavrov are right now.  So, 
+     do you want to be literally linked to (or from) me?  I would not be at all offended if you said "no."  
+  </p>
+
+  <p>In other news, CS-g apprentice wore a hoodie to a recent job interview, and even "swore a little bit."  He is doing an experiment in being one's self.
+      Maybe there is hope for me, but maybe not.  He's not a fan of Putin and Lavrov.  I'm not trying to be insulting, but I doubt he has consciously 
+      heard of Lavrov.  Indeed, Lavrov has likely been somewhat obscure until the last few weeks.  I know of him because friends who keep much better track 
+      than I do have been a fan of Lavrov's for many years.  I didn't know until just now that Lavrov has been FM since 2004, so I've heard about him 
+      for quite a while.
+  </p>
+  
+
+
+    
+</section>
+
+
+<section>
     <h3>March 3, 2022 - commutative hashes / XOR by line (begin 18:45)</h3>
     
     <p>To quote Colonel Hannibal, "I love it when a plan comes together."  (Although Captain Reynolds naked in the desert--"Yeah. That went well."--that might 
