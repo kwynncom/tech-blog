@@ -136,6 +136,106 @@ php-mysql:
       for quite a while.
   </p>
   
+  <p>Russian military fandom aside, I suppose my equivalent would be barefoot for an interview.  Decades ago I heard a reliable report of an office in Orlando being 
+      commonly barefoot.  
+  </p>
+  
+  <p>Anyhow, where were we?</p>
+  
+  <p>You mentioned PHP and (client-side) JavaScript and loosely implied that learning them was in conflict, or that server-side (PHP) code had much 
+      higher priority.  Many weeks ago I talked about the potential for 4 layers of code filtering from the database to the front-end.  PHP and 
+      client-side JavaScript are part of the same team to process web data.  Sometimes it makes sense to do most of the processing on the server-side 
+      and sometimes on the client side, and sometimes it isn't clear which is better.
+  </p>
+  
+<blockquote>
+    <p>Things are processed on server side (whatever the code is), and then the result is then sent over to the client. The client doesn't see any code, just 
+   the output. you'd think i would already have known that but man it didn't click until a couple days ago.</p>
+    <p>Now, i'm guessing JS is processed on client side? </p>
+</blockquote>
+  
+<p>Correct on both points.  More specifically, client-side JavaScript, which is what you're talking about in context, is processed in the browser.  
+    That's why you see it debugged in the browser's dev tools, and you can't see the JS execute on the server-side.  
+
+</p>
+
+
+<p>Which leads me to Node.js.  Node.js is server-side JavaScript.  Just in the last few weeks it's finally started to fully sink in WHY the MEAN stack 
+    goes together.  It's somewhat of an equivalent to your "revelation" above, but I don't have an excuse for not having my revelation much sooner.  
+    An apprentice guideline, to repeat, is that Kwynn is not all-knowing, and I suppose I can sometimes be kinda dumb.
+</p>
+
+<p>Actually, let's leave Angular and Express aside.  Angular is a client-side JavaScript library, so the JS part matters.  MongoDB's equivalent of 
+    SQL is JSON (BSON) formatted.  The distinction of what exactly it is--JSON for BSON--isn't at issue for this limited discussion.  I'll just call it 
+    JSON for now.  In any event, queries including data entry are JSON formatted.  A query result is essentially a JS object with some portion of the 
+    JS language to operate upon it.  I don't yet know the extent of JS in Mongo objects.  
+ </p>
+
+ <p>One point being that I've been doing all sorts of machinations to harmonize PHP and Mongo.  My life might be easier if I just learned Node.  
+     To this end, I installed a Node debugger early this morning.  Let us all repeat in chorus, Kwynn's Rule of Dev #1: never dev without a debugger.  
+ </p>
+
+ <p>I spent 2 - 3 hours researching various debuggers, re-installed Eclipse, and tried getting Node to work in Eclipse.  So there's Rule #1, and then 
+     there is my dedication to open source tech.  So, when those two come up against my disgust and perhaps hatred of SatanSoft, it seems that I 
+     go with open source and Rule #1.  After resiting it, I installed the MIT / open source licensed Visual Studio Code for Node.  It works.  Perhaps I 
+     should set some apprentice or another on finding a non-SatanSoft product.
+ </p>
+
+ <p>"You keep saying don't code (such as php) without a debugger. How important is this over say doing 'php index.php' and having it give you the errors at 
+     the terminal?"  They are not equivalent.  Running PHP as CLI is different than using a debugger.  There is no substitute for a debugger.  
+     Just to be clear on terms, by a debugger I mean software that allows you to set breakpoints, step through code, and watch variables as you step 
+     through.
+ </p>
+
+ <p>I should explain why they are different.  First, I'll back up and discuss CLI PHP versus "web" PHP.  Remember that those two types of PHP have 
+     separate php.ini files.  Also remember that if you change the /etc/php/8.0/apache2/php.ini, you have to restart Apache for the change to take 
+     effect.  Anyhow, for dev purposes you should turn on "Display_Errors" or whatever the .ini variable is for showing errors in web PHP.  That is, you 
+     should see the same error in both CLI and web.  
+ </p>
+
+ <p>By default, display errors is off in the web version because in theory you don't want the public to see the errors, because it could give an 
+     attacker insight into how to attack your site.  Depending on what you're doing, I vote for turning display on even for a public site.  I am 
+     almost certain display errors is on for kwynn.com.  
+  </p>
+
+<p>With that said, one of the reasons why it's helpful to run CLI on a web application is that the error may not show up in the HTML output, even if 
+    display errors is on.  Sometimes you'll get a totally blank HTML page.  kwutils.php changes the way errors are handled, so I'm somewhat confused 
+    on this point because I'm usually using kwutils these days.  But, as I remember, you get blank when the error is upstream of the page that was 
+    GET / POSTed from the browser.  I think this is because by default errors go to stderr and not stdout.  The HTML display is from stdout.  That is, 
+    the PHP program "crashes" before there is any stdout.  
+  </p>
+
+  <p>Similarly, you won't see an error sometimes (even if display errors is on) unless you view source, because the error message may not be proper 
+      HTML.  There is also a setting where errors are specifically HTML formatted, but, again, I've kinda lost track of this because I handle errors 
+  differently.</p>
+  
+  <p>Anyhow, using CLI rather than web to "debug" is a minor point versus using a debugger for CLI, web, or ANYTHING ELSE.  But, let me finish on the 
+      CLI versus web part, first.  The reasons that it's often helpful to use CLI to "debug" are something like:
+      
+  </p>
+
+  <p>As above, display errors might be off (although you should turn it on), the error might not otherwise show in the HTML (stderr vs. stdout), or it might 
+      be embedded 
+      within HTML in a way that doesn't display.  There are other reasons.  Even if you're debugging, you're going back and forth to the browser, and 
+      just the browser being involved at all makes things slightly more complicated.  I'll try to think about this.  My guideline on this weeks ago was 
+      that it's often best to dev in CLI mode until you're ready to bring it into HTML.  And it's often best to separate all the processing until you 
+      combine the HTML and PHP.
+  </p>
+  
+  <p>On a related point, don't forget /var/log/apache2/error.log or whatever you may have overridden error.log to.  Sometimes very helpful PHP errors 
+      and warnings will show up in error.log.  And, on a related point, when you turn display errors on, also turn on display E_ALL types of errors / 
+      warnings / notices.  Occasionally you'll have to hide notices because they pop up in places that are not useful.  
+ </p>
+ 
+ <p>So back to debugging with a debugger.  In some cases seeing an error message is all you need.  The debugger comes in for situations were it's not 
+     working but there are no messages.  In other words, a debugger helps solve your logic errors more so than PHP language errors.  I think you once 
+     asked about echo / print / console.log.  Your code will get cluttered with more and more of such if you go that route.  Then there is the problem 
+     of your code never getting to the output points.  I had that happen the hard way when I was trying to debug Ruby without a debugger.  I was getting 
+     a distorted picture of what was happening because my biggest problems bypassed my "print" (or whatever it is in Ruby) entirely.  In a debugger, 
+     you're running the code line and line and know EXACTLY what is happening and where in the code.
+     
+ </p>
+      
 
 
     
