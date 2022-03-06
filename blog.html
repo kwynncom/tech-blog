@@ -52,12 +52,13 @@ li   { margin-bottom: 0.7ex; }
 <!-- ************** CURRENT ************************************************************************* -->
 
 <section>
-<h3>March 5, 2022, starting 13:04, continuing 13:18 after sending a preview</h3>
+<h3>March 5, 2022, starting 13:04, winding down (maybe) at 16:26, with many long breaks in between, maybe posting 19:06</h3>
 
 <p>"PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /...path/[implied index.php]"  You are using PHP 8.x, right?  Or 
-    at least 7.x?  Have they already aliased the 1990s "mysql_connect()" to be mysqli_connnect()?  The PHP documentation does not indicate that.
+    at least 7.x?  Have they already aliased the 1990s "mysql_connect()" to be mysqli_connnect()?  (MySQL goes back to '95.)  The PHP documentation 
+    does not indicate that.
     In any event, I would use mysqli_connect().  You'll give old-timers like me hives just looking at the thought of the old mysql_connect().
-    Note that the <a href='https://www.php.net/manual/en/function.mysql-connect.php'>"old" mysql_connect() is deprecated, per the doc</a>.  
+    Note that the <a href='https://www.php.net/manual/en/function.mysql-connect.php'>"old" mysql_connect() is gone, per the doc</a>.  
 </p>
         
 <p>I ranted about this several weeks ago.  CERTAIN CLIENTS who sent me screaming were still using the original mysql... functions in PHP 5.x.  The 
@@ -68,21 +69,21 @@ li   { margin-bottom: 0.7ex; }
 php-mysql:
   Installed: 2:8.0+82~0build1</pre>
 
-<p>This leads me to believe that mysql_connect is an alias, but, still, for my peace of mind, if nothing else, consider using mysqli...  If you want to 
+<p>This leads me to believe that mysql_connect is an alias, but, still, for my peace of mind, if nothing else, consider using mysqli.  If you want to 
     do some research and see where it's documented as an alias, I'd probably live with it, but, given that the documentation still shows deprecation, 
-    I would avoid the mysql... functions.
+    I would avoid the mysql functions.
     
 </p>
 
-<p>With all that said, I just got a reply that he's using mysqli... now.  Good.
+<p>With all that said, I just got a reply that he's using mysqli now.  Good.
     
 </p>
 
 <p>Now, back to the error itself.  I'm not sure when (or if) it became relatively clear to me that it meant you had to install something separately.  
-    I've had variants of this drive my nuts fairly recently, though.  
+    I've had variants of this drive my nuts fairly recently, though.  I'll come back to that.
 </p>
 
-<p>One thing to consider for future reference is the difference between the 
+<p>For future reference, consider the difference between the 
     <a href='https://www.php.net/manual/en/mysqli.installation.php'>mysqli doc</a> and 
     <a href='https://www.php.net/manual/en/strings.installation.php'>substr() (or string functions generally) doc</a>.  The mysqli doc natters on at some 
     length.  That's a hint that something needs installing.  I would probably not recommend reading all that nattering.  Given that you're reading the 
@@ -101,7 +102,7 @@ php-mysql:
     It turned out that I hadn't installed mysqli.  That was not obvious to me.
 </p>
 
-<p>A worse variant is when the rewrite engine isn't active.  The manglement (sic) systems should go out of their way to check that it's working.  I wrote 
+<p>A worse variant is when the rewrite engine isn't enabled.  The manglement (sic) systems should go out of their way to check that it's working.  I wrote 
     code to do it fairly quickly, so they can.  Otherwise, you get the damnest errors.  I might have spent 3 hours fussing with one of them until I finally 
     realized from relatively subtle signs, 
     using the debugger, that the lack of rewrite engine was the cause.  These issues are some of the many issues I have with manglement.
@@ -123,7 +124,7 @@ php-mysql:
  </p>
  
  <p>To recent CS grad apprentice, do you want me to link to your blog?  I'll do it if you want, but...  I suppose I can ask this openly because it 
-     goes to any apprentices.  You may have noticed that I'm getting more and more, shall we say, testy, on this website.  I'm getting closer to the 
+     goes for any apprentices.  You may have noticed that I'm getting more and more, shall we say, testy, on this website.  I'm getting closer to the 
      point where I say publicly what I might have only said privately in the past.  I stand the risk of eventually being deplatformed or condemned by the 
      ADL--those being about the same thing.  I am at risk of being put in the same category as Putin and Foreign Minister Lavrov are right now.  So, 
      do you want to be literally linked to (or from) me?  I would not be at all offended if you said "no."  
@@ -136,8 +137,9 @@ php-mysql:
       for quite a while.
   </p>
   
-  <p>Russian military fandom aside, I suppose my equivalent would be barefoot for an interview.  Decades ago I heard a reliable report of an office in Orlando being 
-      commonly barefoot.  
+  <p>Russian military fandom aside, I suppose my equivalent would be barefoot for an interview.  Decades ago I heard a reliable report of an office in 
+      Orlando being commonly barefoot.  Actually, I would be wearing my 2009 Holy Name Cadets Drum and Bugle Corps hoodie and barefoot during a light snow.
+      
   </p>
   
   <p>Anyhow, where were we?</p>
@@ -149,8 +151,8 @@ php-mysql:
   </p>
   
 <blockquote>
-    <p>Things are processed on server side (whatever the code is), and then the result is then sent over to the client. The client doesn't see any code, just 
-   the output. you'd think i would already have known that but man it didn't click until a couple days ago.</p>
+    <p>Things are processed on server side (whatever the code / language is), and then the result is then sent over to the client. The client doesn't 
+        see any code, just the output. You'd think i would already have known that but man it didn't click until a couple days ago.</p>
     <p>Now, i'm guessing JS is processed on client side? </p>
 </blockquote>
   
@@ -160,7 +162,7 @@ php-mysql:
 </p>
 
 
-<p>Which leads me to Node.js.  Node.js is server-side JavaScript.  Just in the last few weeks it's finally started to fully sink in WHY the MEAN stack 
+<p>Which leads me to Node.js.  Node.js is server side JavaScript.  Just in the last few weeks it's finally started to fully sink in WHY the MEAN stack 
     goes together.  It's somewhat of an equivalent to your "revelation" above, but I don't have an excuse for not having my revelation much sooner.  
     An apprentice guideline, to repeat, is that Kwynn is not all-knowing, and I suppose I can sometimes be kinda dumb.
 </p>
@@ -209,7 +211,7 @@ php-mysql:
       HTML.  There is also a setting where errors are specifically HTML formatted, but, again, I've kinda lost track of this because I handle errors 
   differently.</p>
   
-  <p>Anyhow, using CLI rather than web to "debug" is a minor point versus using a debugger for CLI, web, or ANYTHING ELSE.  But, let me finish on the 
+  <p>Anyhow, using CLI rather than web mode to "debug" is a minor point versus using a debugger for CLI, web, or ANYTHING ELSE.  But, let me finish on the 
       CLI versus web part, first.  The reasons that it's often helpful to use CLI to "debug" are something like:
       
   </p>
@@ -224,7 +226,8 @@ php-mysql:
   
   <p>On a related point, don't forget /var/log/apache2/error.log or whatever you may have overridden error.log to.  Sometimes very helpful PHP errors 
       and warnings will show up in error.log.  And, on a related point, when you turn display errors on, also turn on display E_ALL types of errors / 
-      warnings / notices.  Occasionally you'll have to hide notices because they pop up in places that are not useful.  
+      warnings / notices.  Occasionally you'll have to hide notices because they pop up in places that are not useful, but I've had to do that 3 - 4 times 
+      in many years.
  </p>
  
  <p>So back to debugging with a debugger.  In some cases seeing an error message is all you need.  The debugger comes in for situations were it's not 
@@ -232,13 +235,56 @@ php-mysql:
      asked about echo / print / console.log.  Your code will get cluttered with more and more of such if you go that route.  Then there is the problem 
      of your code never getting to the output points.  I had that happen the hard way when I was trying to debug Ruby without a debugger.  I was getting 
      a distorted picture of what was happening because my biggest problems bypassed my "print" (or whatever it is in Ruby) entirely.  In a debugger, 
-     you're running the code line and line and know EXACTLY what is happening and where in the code.
-     
+     you're running the code line by line and know EXACTLY what is happening and where in the code.
  </p>
       
+ <p>In other news, I hope I can declare my XOR processing as good as it's going to get in any reasonable amount of dev time.  One tentative conclusion 
+ is that mongo CLI / mongosh is not particularly efficient at output.  Although it's not apples to apples because I was running that output as a "$ mongo" 
+ shell command, and running any command through shell_exec() or the equivalent is relatively slow.  In any event, I went back to queries being done 
+ from PHP and outputted downstream from proc_open().  With 12 hyperthreads / "cores" (6 real cores X 2 for hyperthreading), my XOR processing takes about 
+ the same time as one core does to XOR the raw file.  Although that is also not apples because I have an old computer versus Amazon's spiffy new ones.  
+  </p>
+  
+  <p>I also did some buffering both to limit the number of cursor queries and the number of fwrite()s.  It appears that my entire CPU capacity pegs for 
+      somewhere around one second.  Perhaps that's the best one can get, as opposed to the CPUs waiting on RAM or disk.  There were some indexes that 
+      help a lot.  Of course those same indexes slow down inserts.  I need to whittle down my indexes and try to find that balance.  
+  </p>
 
-
+  <p>The Mongo .explain() is helpful, although I'm not used to how it works versus relational.  It was making some odd index choices that I had to curb.  
+      I simply deleted the index it was using and added another one that improved the situation dramatically.
+  </p>
+  
+  <p>Back to the email series.  As I said, messing around with data types in advance in a database table is one reason I switched to MongoDB.  In Mo, you 
+      simply chuck an array or object into the database. 
+    </p>
     
+    <p>The number in VARCHAR(30) is the maximum number of characters--in this case, 30--the field can hold.  The number is up to you.  
+        How many bytes are in each character is a 
+        separate issue.  In Mongo, you don't have to worry about this stuff.  What is UNICODE up to now?  Is it up to 8 bytes?  Once upon a time, a character 
+        was a byte.  The modern issue with VARCHAR and related data types is that one byte doesn't remotely cover all the characters in all the languages on 
+        earth.  You need a set for Cyrillic, Mandarin, Hindi, Arabic, etc.  You can restrict your database to the "original" characters, though.
+    </p>
+    
+    <p>This issue might have cost me a lot of money.  I was once offered a 30 hour project, with possible extension.  I was loaned a laptop with a working 
+        MySQL or MariaDB.  It was enough years ago that it might have been either one of them.  My KVM connectors and such were buried at the time.  (I'm 
+        not sure if I could get at them now or not.)  A laptop keyboard is almost useless to me.  I couldn't get the database to load on my desktop.  Given 
+        the nature of the restore program, the specific error was not easy to figure.  I finally found out that it had to do with UNICODE.  The 
+        other dev had left an email address as 255 characters.  It was something that did not have to be anything close to 255 chars.  He had 
+        an index on that field.  His database was set to Latin-whatever-number-it-is or some such.  By default, my database was set to multi-byte 
+        UNICODE, and I think it was 4 bytes at the time.  The problem was that MySQL or MariaDB didn't allow an index on a field above something like 768 
+        bytes.  Not chars, but bytes.  So it wasn't allowing the table creation with unique index.  Now that I think about it, I didn't see the error 
+        because the import did not terminate.  It just kept going after failing to load the test email addresses.  It took me a while to set things up to 
+        see the error properly.  
+    </p>
+    
+    <p>I had already been questioning whether I wanted to use relational again, and I wasn't sure I wanted to deal with Laravel, either.  By the time I got 
+        the db loaded, I decided to walk away from the project.  If he had given my access to the data file and not loaned me a laptop, I probably would 
+        have solved it.  I kept going back and forth from desktop to laptop, though, and everything about the laptop was painfully slow.  One problem was 
+        I didn't have a good place to put the laptop.  It was a weird combination of events.  It's one of those "What ifs?"
+        
+    </p>
+    
+        
 </section>
 
 
