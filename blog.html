@@ -48,8 +48,49 @@ li   { margin-bottom: 0.7ex; }
 </p>
 </section>
 
-
 <!-- ************** CURRENT ************************************************************************* -->
+
+<section>
+    <h3>June 10, 2022 - moving my AWS instance</h3>
+    
+    <p>I'm in the process of moving this site's AWS EC2 instance from one EBS block to another.  My goals are twofold.  One, I am complying with my 
+        own dev rule #2 that the computer I'm typing on should be as close as possible to Kwynn.com's system.  My site's Ubuntu version is getting 
+        behind, and thus so is my PHP version.  I'm typing locally on Ubuntu 22.04 with PHP 8.1, and my site is on 20.04 and 7.4.  My other goal is to 
+        increase my disk space.  I am running on 12 GB right now, and that's getting too close to filling up the disk.  My main client has been 
+        running on 16 GB with no problems, but I'm going up to 18 GB.  I actually don't completely remember how I wound up with 18, but I already have 
+        an Ubuntu-upgraded EBS block stored, so I'm committed in terms of the time I spent on the upgrade.  I moved it to the smallest "compute" type 
+        instance (that I list way below) to do the upgrade, and it still took over an hour, as best I remember.  It may have been 1.5 or maybe 2 hours.
+     </p>
+     
+     <p>I immediately came across one bug in my testing.  My <a href='/t/22/04/btcpr/BTCprice.html'>BitCoin price widget</a> died in PHP 8.1 with 
+         " file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages: error:0A000126:SSL routines::unexpected eof while reading ..."
+         There is a fix moving down the PHP 
+         pipeline, but I fixed it my using cURL instead of file_get.  See the 
+         <a href='https://github.com/kwynncom/code-fragments/blob/262f30b067e1e88ec64489dd0e849107d6c201d4/btcpr/BTCpriceServer.php'>specific version 
+             of my BTC widget</a>.  To confuse the issue a bit, I had another problem to solve, too.  
+         
+     </p>
+     <p>For the record, here is the <a href='https://github.com/php/php-src/pull/8558'>GitHub listing of the OpenSSL problem</a>.  Last I checked, 
+         this appeared to be fixed in php-8.1.7RC1 dated May 24.  I am current for Ubuntu, and I am still on 8.1.2.  
+     </p>
+     
+     <p>So here is a checklist of items to do / test / consider as I continue my testing, before making the new 18GB Ubuntu 22.04 block live.          
+     </p>
+     
+     <ul>
+         <li>rsync the local version of my DOCUMENT_ROOT tree</li>
+         <li>git pull /opt/kwynn from <a hef='https://github.com/kwynncom/kwynn-php-general-utils'>my general utilities</a></li>
+         <li>test <a href='/t/9/12/sync/'>my clock</a>.  Usage seems to be down, but people still use that, I think.</li>
+         <li>test chrony and the accuracy of the clock</li>
+         <li>test the redirect / rewrite for my resume</li>
+         <li>route a temporary URL with SSL cert</li>
+         <li>add that URL to my email check widget so I can test that</li>
+         <li>test my own other "favorites"</li>
+         <li>test the numerology calculator, I suppose, but that is very unlikely to break (It's all client-side.)</li>
+     </ul>
+     
+</section>
+
 
 <section>
     <h3>June 6, 2022 - Mr. Zoom continued, and Mr. D. (started June 2)</h3>
