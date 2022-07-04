@@ -43,8 +43,8 @@ li   { margin-bottom: 0.7ex; }
 <p class='iibl'>3. Drafts / previous versions of <a href='https://github.com/kwynncom/tech-blog'>this page are on GitHub</a>.  Usually the live version 
     is way ahead of 
     GitHub. 
-</p>
-<p class='ghr4'>4. Often I'm posting to GitHub and not commenting here.  If you click on 
+    
+4. Sometimes I'm posting to GitHub and not commenting here.  If you click on 
     <a href='https://github.com/kwynncom?tab=repositories'>my repos</a>, they are sorted by the 
     latest changes.
 </p>
@@ -53,50 +53,136 @@ li   { margin-bottom: 0.7ex; }
 <!-- ************** CURRENT ************************************************************************* -->
 
 <section>
-    <h3>June 14, 2022 - ranting about the "real world" job hunt</h3>
+    <h3>July 3, 2022 - creating an AWS IAM user to stop and start a test instance</h3>
     
-    <p>This guy was Indian, although American recruiters have rarely proven to be any better.</p>
+    <p>I left my main client's test machine running overnight.  This cost roughly 20 cents, but it's the principle.  I get a bit paranoid 
+        turning it off for fear of turning the live machine off.  Note that you can easily "Name" instances (virtual machines) on the far 
+        left side of the instances list.  Just hover over the space and you'll get an edit icon.  Naming "live" and "test" helps, but it's 
+        still not good enough.  
+    </p>
+    
+    <p>My IAM solution was not all that I hoped for, but it does the job.  If I had enough budget, the answer would be to write a program 
+        to automatically shut it down and use the same IAM policy.  
+    </p>
+    
+    <p>You can use the visual policy maker, but note that some of the relevant permissions can't be restricted by a resource such as an 
+        instance ID.  If you try to restrict them, the policy will break.  This is what I came up with:
+        
+    </p>
+    
+    <pre>{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:StartInstances",
+                "ec2:StopInstances"
+            ],
+            "Resource": "arn:aws:ec2:us-east-1:123456789012:instance/i-abcdef012345"
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeInstances",
+                "ec2:DescribeInstanceStatus"
+            ],
+            "Resource": "*"
+        }
+    ]
+}   </pre>
+    
+    <p>The permissions with the "*" resource are the ones that can't be restricted.  A login user with that policy can see the instance 
+        list and stop and start the relevant instance.  One can also see other instances in the account, and the "stop" button is there, but 
+        pushing the stop button leads to an error; in this case, an error is the correct answer.  
+        
+    </p>
+    
+    <p>When using the limited user, note that you'll see all sorts of "API Error" messages and other red-colored errors because the user has 
+        very limited access.  It also helps to click the instance you want, and then you can stop it.  That's probably a good idea 
+        in any event--using any sort of user.
+        
+    </p>
+    
+    
+    
+    
+</section>
+
+<section>
+    <h3>June 18, 2022</h3>
+    
+    <p>I made 2 changes to my June 11 "job / gig application" entry.  I added "project flag" as an example, and I removed my defense of a usage 
+        of "he."  I <a href='/t/21/12/personal_blog.html#e2022_0618_pronouns_pb'>comment on that removal</a> on my personal blog.  
+        
+    </p>
+</section>
+
+<section>
+    <h3>note on June entries through late June 17, 2022</h3>
+    
+    <p>As of June 17, 22:50 my time, I hadn't posted any June entries until a few minutes ago.  I left them with their original dates, though, as 
+        they sat lonely on my SSD.  I had backed several version up to GitHub, though.  As I note and link to at the top of this page, I sometimes 
+        save drafts there.
+    </p>
+</section>
+
+<section>
+    <h3>June 14, 2022 - ranting about the "real world" job hunt</h3>
     
     <div>
         <p class='emq'>&gt;&gt; [my email] 9:01 PM</p>
-        <p class='emq'>&gt;&gt; I started my work "day" at 7:30pm.  I am a night owl and need to minimize work during business hours or daylight, for that matter. </p>
+        <p class='emq'>&gt;&gt; I started my work "day" at 7:30pm.  I am a night owl and need to minimize work during business hours or daylight, for 
+            that matter. </p>
         <p class='emq'>&gt; [recruiter's email] 9:15 AM</p>
         <p class='emq'>&gt; Would you be available for a quick call in the next hour or so[?]</p>
 
         <p class='emq'>No, I will not: neither today nor any other day at such an hour, unless you have a relevant answer to my point.  Even if you did 
             have an answer, it would have to be quite convincing for me to consider talking to you before 10:15am.</p>
     </div>
+    
+     <p>This guy was Indian, although American recruiters have rarely proven to be any better.</p>
+
 
 </section>
 
-<section>
+<section id='CL2022-0611-WP-LA-gig-application'>
     <h3>June 11, 2022 - This is a job / gig application.</h3>
 
     <p>"Please send at least 5 examples of [relevant] sites you have made, or worked on stating what your role was."</p>
     
-    <p><b>EXAMPLE:</b> For the last six years, 5 - 10 hours a week, I have been enhancing a web application that is a literal digital assistant for a 
+    <p><b>EXAMPLE:</b> For the last six years, 5 - 10 hours a week, I have been developing and enhancing a web application that is a literal digital assistant for a 
         law office.  I say enhancing because I didn't start the project, but I've reworked it so much that I can call it "mine."  My work on the 
         system 
         is cheaper than hiring a human assistant, and it makes a human assistant unnecessary.  It's Linux, Apache, PHP, and started as MySQL.  I have 
         been moving the data to MongoDB.  Soon I 
         might get around to moving some of the code to Node.js, which is more compatible with Mongo than PHP is.  The application is hosted on 
         AWS EC2, so that makes me a perhaps-beyond-full stack developer down to the Linux sysadmin level.  The system started in Drupal, but 
-        I am in the process of liberating it from Drupal.  
+        I am liberating it from Drupal.  
         
         More details are on 
     <a href='/t/22/05/resume/Buess_resume.html'>my resume</a>.  
     </p>
     
-    <p>The job description on hand "might" require references.  My lawyer client will certainly serve as a reference.</p>
+    <p>The job description on hand "might" require references.  My lawyer client will certainly serve as a reference, and I can think of several others.</p>
     
-
+    <p>Regarding troubleshooting skills, I did that more or less full time from 1997 - 1999, and those skills have only gotten better.  I've done 
+        plenty of troubleshooting since.  
+        
+    </p>
+    
+    
+<p>Given the zillion lines of code <a href='https://github.com/kwynncom?tab=repositories'>I have in GitHub</a>, I think that demonstrates I can use Git.
+</p>
     
     <p>I list some (client-side) JavaScript examples below.  In part to demonstrate that I am not delusional, 
 as I implied, I tend towards full-stack business web applications rather than front-end "make me a pretty, public-facing website."  I make no 
         claim to be any sort of 
         visual artist.  There have been a number of times, though, that my "art" was close enough if the 
-        client knew more or less what he wanted to see.  (I am thinking of my specific 
-        "he" lawyer client.)  I have zero to little original artistic vision, but I can at least sometimes implement another's vision.  
+        client knew more or less what he wanted to see.  
+        I have zero to little original artistic vision, but I can at least sometimes implement another's vision.  
     </p>
     
     <p><b>EXAMPLE:</b> Speaking of artistic vision, I'd like to think that my numerology calculator "icon" is somewhat pretty:
@@ -163,6 +249,11 @@ margin-bottom: 1ex;
 </p>
 </section>
 
+<p><b>EXAMPLE:</b> The "flag project" parts <a href='/t/20/06/flag/pt1/'>1</a> and <a href='/t/20/06/flag/pt2/'>2</a> were visually demanding for my talent, or lack thereof.  A 
+    client gave me a very detailed visual spec, and I did it such 
+    that he paid me for the mockup.  
+    
+</p>
 
 <p><b>EXAMPLE: </b>I hope <a href='/t/9/12/sync/'>my clock</a> is a nice JavaScript example. There is some work on the back end of that, too.  
     As I argue at some length, it should be a very accurate clock, and I make arguments that it's probably better than the official US NIST clock.
@@ -181,6 +272,13 @@ margin-bottom: 1ex;
     applications I wrote.  Some of them are just links to external sites.  
 </p>
 
+
+<p><b>EXAMPLE:</b>  Regarding Bootstrap, here is an 
+    <a href='https://tl1.knightsofcode.net/t/20/08/dates/phpdoc/doc.html'>example where I boiled down a zillion characters of Bootstrap CSS</a> until I 
+    had what I needed.  I was horrified at the thought of all that CSS for one example.
+</p>
+
+
 <section>
 <h4>WordPress, part 2</h4>
 
@@ -189,14 +287,14 @@ margin-bottom: 1ex;
     and do WordPress than work 9 - 5 doing anything.  
 </p>
 
-<p>I should remind myself that WordPress is open source, it uses an open-source language (PHP) and database (MariaDB / MySQL), and it runs on Linux.  
+<p>I should remind myself that WordPress is open source, it uses an open-source language and database, and it runs on Linux.  
     There are almost infinitely worse technologies and companies to work with.
 Also, if I am around WordPress fans, I might question them and see what they have done in it and come to appreciate it.  
 </p>
 
-<p>I could elaborate on WordPress, but I think this will do for now.
-    
-</p>
+<p>I could elaborate on WordPress, but I should let it rest for now.</p>
+
+
 
 
 </section>
@@ -6383,4 +6481,7 @@ like AWS does.  I am reasonable sure getting a 2nd IP address with Linode or Rac
 </p>
 
 </body>
+
+<!-- 22:35 6/17 - unreliable stamp for confirming the version in the HTML validator -->
+
 </html>
