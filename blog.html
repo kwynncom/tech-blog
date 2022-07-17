@@ -52,6 +52,101 @@ li   { margin-bottom: 0.7ex; }
 
 <!-- ************** CURRENT ************************************************************************* -->
 
+<section>
+    <h3>July 16, 2022 - I crashed this site this morning</h3>
+    
+    <p>It seems that the latest updates of Ubuntu 20.04 and / or around the 5.15.0-41-generic kernel finally exhausted the 0.5 GB RAM of a t3a.nano 
+        instance.  Ubuntu 22.04 server requests 1 GB RAM, but I didn't go back to 20.04.  
+    </p>
+    
+    <p>In the AWS EC2 web instances list, if you're on the instances list with an instance checked, or else drilled down on a specific instance, Actions -> 
+        Monitor and Troubleshoot -> Get system log is helpful.  It seems that it takes several minutes to update, though.  The message 
+        "[    3.159381] Out of memory and no killable processes..." is a big hint, but it was somewhat hard to find.  The last message, 
+        "[    3.169146] ---[ end Kernel panic - not syncing: System is deadlocked on memory ]---" is less clear, but it helped me figure it out.
+        
+    </p>
+    
+    <p>I almost always reboot by creating an image.  By default, creating an image causes a reboot because then the image can be completely consistent 
+        because it's not a running instance.  (You can change that option in the image screen.)  It was very handy to have created an image because I 
+        picked up where I left off, at least in terms of data.  I upgraded a number of items while I was at it, but I'll come back to that.
+        
+    </p>
+    
+    <p>I have found that something like 1 in every 100 boots goes badly for who knows what reason.  I've found that most often on desktops.  With EC2, 
+        sometimes boots go badly due to the network card not syncing correctly, but that's probably more like 1 in 150 boots, maybe 300.  
+        
+    </p>
+    
+    <p>In any event, when several minutes went by without ping starting to work or any other sign of life, I first tried a combination of rebooting and 
+        stopping and force stopping and then rebooting.  Given the log delay, I eventually saw that I was going around in a circle with the same failure.  
+        
+    </p>
+    
+    <p>Then I tried launching an earlier image.  That worked.  I started upgrading the software of the image to see if I would indeed have the same problem.
+        I eventually confirmed that I did.  At one point, the update took a very long time--maybe 7 minutes.  Once upon a time, some types of instances started 
+        with CPU credits.  The t3a.nano and t3a.micro do not.  That was probably part of the problem, but I think the settings were such that I was simply 
+        charged a few cents for the extra CPU rather than the system slowing way down waiting for the credits to rise.  In any event, I seemed to be pegging 
+        the CPUs (I didn't even run top to be sure.)</p>
+    
+    <p>I started a c5ad.large image to see if the horsepower (a funny image) would help.  Then I think I was up against EBS delay because it took a long time 
+        there, too.
+        
+    </p>
+    
+    <p>I think I found that the upgrade worked on the .large, so right around the time it occurred to me to boot the image I had just made with a t3a.micro 
+        with 1 GB RAM.  That worked and had all my data, minus a few moments when I think kwynn.com was pointed at another image.  
+        
+    </p>
+    
+    <p>I was down for roughly 30 minutes.  
+        
+    </p>
+    
+    <p><b>Lesson learned: </b> Consider your DNS TTL (time to live) settings, especially for IPv6 in the case of AWS.  More below.
+        
+    </p>
+    
+    <p><b>Lesson learned: </b> Periodically clean up the various "Security Groups" that crop up even with light usage such as mine.  The have names 
+        like "launch-wizard-22."  Those are the firewall rules.  By default, one is created with each instance launch.  I was having mild trouble 
+        finding / remembering which one I was actually using and selecting it.  They don't let you delete the "default" even though one is almost 
+        never using it.  Then label the remaining ones by clicking in the "Name" field that is "-" by default.  I just took my own advice and deleted 
+        roughly 23 of them and labeling the one "live20to2207etc".
+    </p>
+    
+    <p><b>Lesson learned: </b> When you select an image to launch, the quick launch screen does not by default prompt you to select a 
+        <a href='https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html'>role</a>.  It's in the 
+        advanced screen.  This is generally not a big deal.  It just affected <a href='https://kwynn.com/t/9/10/cpu/'>my CPU usage widget</a>.  
+        A role gives an instances permissions like a specific user, or a role can have an IAM policy, where IAM is a very fine grained permissions 
+        mechanism in AWS.  
+        
+    </p>
+    
+    <section>
+    <h4>IPv6 / AAAA DNS record TTL</h4>
+    
+    <p>
+        
+    </p>
+    </section>
+    
+    <section>
+        <h4>items to research</h4>
+        
+        <li>Is there an IPv6 equivalent of Elastic IP?</li>
+    
+    </section>
+    
+</section>
+
+
+<section>
+    <h3>July 11, 2022</h3>
+    
+    <p>I expanded my June 11 entry into more <a href='/t/22/07/front_end.html'>front end examples</a>.  
+        
+    </p>
+</section>
+
 <section id='e_2022_0704_Zoom_up_note_night_owl'>
     <h3>July 4, 2022</h3>
     
@@ -196,6 +291,13 @@ li   { margin-bottom: 0.7ex; }
 
 <section id='CL2022-0611-WP-LA-gig-application'>
     <h3>June 11, 2022 - This is a job / gig application.</h3>
+    
+    
+    <p><b>Update</b>: a month later I expanded this more <a href='/t/22/07/front_end.html'>front end examples</a>.  
+        
+    
+        
+    </p>
 
     <p>"Please send at least 5 examples of [relevant] sites you have made, or worked on stating what your role was."</p>
     
