@@ -56,12 +56,12 @@ li   { margin-bottom: 0.7ex; }
     <h3>July 16, 2022 - I crashed this site this morning</h3>
     
     <p>It seems that the latest updates of Ubuntu 20.04 and / or around the 5.15.0-41-generic kernel finally exhausted the 0.5 GB RAM of a t3a.nano 
-        instance.  Ubuntu 22.04 server requests 1 GB RAM, but I didn't go back to 20.04.  
+        instance.  Ubuntu 22.04 server requests 1 GB RAM, but I didn't go back to look at 20.04.  
     </p>
     
     <p>In the AWS EC2 web instances list, if you're on the instances list with an instance checked, or else drilled down on a specific instance, Actions -> 
-        Monitor and Troubleshoot -> Get system log is helpful.  It seems that it takes several minutes to update, though.  The message 
-        "[    3.159381] Out of memory and no killable processes..." is a big hint, but it was somewhat hard to find.  The last message, 
+        Monitor and Troubleshoot -> Get system log is helpful.  It seems that it takes several minutes to update, though.  The message <br/>
+        "[    3.159381] Out of memory and no killable processes..." is a big hint, but it was somewhat hard to find.  The last message, <br/>
         "[    3.169146] ---[ end Kernel panic - not syncing: System is deadlocked on memory ]---" is less clear, but it helped me figure it out.
         
     </p>
@@ -73,7 +73,7 @@ li   { margin-bottom: 0.7ex; }
     </p>
     
     <p>I have found that something like 1 in every 100 boots goes badly for who knows what reason.  I've found that most often on desktops.  With EC2, 
-        sometimes boots go badly due to the network card not syncing correctly, but that's probably more like 1 in 150 boots, maybe 300.  
+        sometimes boots go badly due to the network card not syncing correctly.  That happens once every year or two. 
         
     </p>
     
@@ -83,22 +83,24 @@ li   { margin-bottom: 0.7ex; }
     </p>
     
     <p>Then I tried launching an earlier image.  That worked.  I started upgrading the software of the image to see if I would indeed have the same problem.
-        I eventually confirmed that I did.  At one point, the update took a very long time--maybe 7 minutes.  Once upon a time, some types of instances started 
+        I eventually confirmed that I did.  At one point, the update took a very long time--maybe 7 minutes.  Once upon a time, some types of instances 
+        started 
         with CPU credits.  The t3a.nano and t3a.micro do not.  That was probably part of the problem, but I think the settings were such that I was simply 
         charged a few cents for the extra CPU rather than the system slowing way down waiting for the credits to rise.  In any event, I seemed to be pegging 
-        the CPUs (I didn't even run top to be sure.)</p>
+        the CPUs (I didn't even run top to be sure.)  Although I may have been pegging the EBS disk.  See below.</p>
     
-    <p>I started a c5ad.large image to see if the horsepower (a funny image) would help.  Then I think I was up against EBS delay because it took a long time 
+    <p>I started a c5ad.large image to see if the horsepower (a funny image) would help.  Then I think I was up against EBS delay because it took a 
+        long time 
         there, too.
         
     </p>
     
-    <p>I think I found that the upgrade worked on the .large, so right around the time it occurred to me to boot the image I had just made with a t3a.micro 
-        with 1 GB RAM.  That worked and had all my data, minus a few moments when I think kwynn.com was pointed at another image.  
+    <p>I think I found that the upgrade worked on the .large, so right around that time it occurred to me to boot the image I had just made with a t3a.micro 
+        with 1 GB RAM.  That worked and had all my data, minus a few minutes when I think kwynn.com was pointed at another image.  
         
     </p>
     
-    <p>I was down for roughly 30 minutes.  
+    <p>I was down for roughly 30 minutes.  I could look at the web logs to be sure, but meh.
         
     </p>
     
@@ -113,6 +115,10 @@ li   { margin-bottom: 0.7ex; }
         roughly 23 of them and labeling the one "live20to2207etc".
     </p>
     
+    <p>I add this because selecting among the security groups while I kept launching instances was very annoying.
+        
+    </p>
+    
     <p><b>Lesson learned: </b> When you select an image to launch, the quick launch screen does not by default prompt you to select a 
         <a href='https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html'>role</a>.  It's in the 
         advanced screen.  This is generally not a big deal.  It just affected <a href='https://kwynn.com/t/9/10/cpu/'>my CPU usage widget</a>.  
@@ -124,16 +130,54 @@ li   { margin-bottom: 0.7ex; }
     <section>
     <h4>IPv6 / AAAA DNS record TTL</h4>
     
-    <p>
+    <p>In an effort to be kind, until this incident, all my DNS settings had a 24 hour time to live / expiration.  For 32 bit (IPv4) addresses, the 
+        Elastic IP address can be pointed at any instance you want.  Years ago, I had some trouble getting IPv6 to work at all.  Once I did, I never 
+        looked into assigning specific addresses equivalently to Elastic IP.  I just booted up and then got the IPv6 from ifconfig or the instance 
+        dashboard.  
         
     </p>
+    
+    <p>It took IPv6 about 17 hours to refresh.  Lack of a working IPv6 did not seem to hurt anything; browsers / DNS services just use what's working.  
+        I still found it disconcerting and was very happy to see the browser finally use IPv6 again.
+    </p>
+    
     </section>
     
     <section>
         <h4>items to research</h4>
-        
-        <li>Is there an IPv6 equivalent of Elastic IP?</li>
+        <ul>
+            <li>Is there an IPv6 equivalent of Elastic IP?  Perhaps a 1 IPv6 address subnet?</li>
+        </ul>
+    </section>
     
+    <section>
+        <h4>upgrades</h4>
+        
+        <p>One bit of good news was that I upgraded to 18 GB, and I think it's called gp2 as in general provisioned SSD, version 2.  gp2 is I assume a 
+            faster SSD.
+            Now I'm that much closer to my upgrade to 22.04, which I wrote about a few weeks ago, below.
+            
+        </p>
+    </section>
+    
+    <section>
+        <h4>pro solutions</h4>
+        
+        <p>In the "real world," if I were running a larger operation, the answer would be to have several machines running a site.  And / or to 
+            move back and forth between 2 instances as one is rebooted.  
+        </p>
+        
+        <p>The point being that I know how to prevent that sort of thing happening to a more important site.  I'm not sure how many more measures 
+            I'll take, though.  I have other fish to fry.  
+        </p>
+    </section>
+    
+    <section>
+        <h4>final (?) thoughts</h4>
+        
+        <p>There is probably more to say on this, but I'll post this.
+            
+        </p>
     </section>
     
 </section>
@@ -6655,6 +6699,6 @@ like AWS does.  I am reasonable sure getting a 2nd IP address with Linode or Rac
 
 </body>
 
-<!-- 22:35 6/17 - unreliable stamp for confirming the version in the HTML validator -->
+<!-- 01:27 7/17 - unreliable stamp for confirming the version in the HTML validator -->
 
 </html>
