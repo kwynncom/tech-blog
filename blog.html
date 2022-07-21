@@ -54,6 +54,273 @@ li   { margin-bottom: 0.7ex; }
 
 <!-- ************** CURRENT ************************************************************************* -->
 
+<section>
+    <h3>July 21 - Kwynn.com Ubuntu 22.04 upgrade update (ongoing updates)</h3>
+    
+    <p>First posted around 01:20, then updating 01:36.  Actually I'm posting the 2nd version around 2:04am.  I may be losing some coherence.  
+        
+        
+    </p>
+    
+    <p>Going back to my June 10 entry, I just changed this on kwynn.com, so keep it in sync!!
+        
+    </p>
+    
+    <p>To elaborate on a comment below, which I wrote earlier, 
+        I have to test it with a micro instance anyhow because that is part of the point of the operation.
+        
+    </p>
+    
+    <p>This is the bug that I sometimes get with network interfaces, or something like it, 
+        "A start job is running for Raise ne…rk interfaces (5min 6s / 5min 31s)"  I'm not sure why the text is garbled.  This message is repeated 
+        dozens of times.</p>
+    
+    <p>
+        
+        I am correct 
+        that it took 
+        5 - 10 minutes to see the log.  I'm rebooting at 1:43 to try again.  
+        
+    </p>
+    
+    <p>"For boot or networking issues, use the EC2 serial console for troubleshooting. Choose the Connect button to start a session."  That 
+        needs to be set up separately.  There is some security button to push.  I should look into that.  Ok, it's one little button to push.
+        Off hand, that's not getting me any more data than the system log does.  At 1:49 I rebooted again with the serial connection open.  
+        This time I see the traffic.  
+        
+    </p>
+    
+    <p>The serial console shows it's working, and then ssh worked.  Oh, I forgot to use my own "launch wizard" security group, so it won't 
+        receive ping.  
+        
+    </p>
+    
+    <p>Note to remove unwanted keys from ~/.ssh/authorized_keys.  When you create a new key, AWS simply appends it to the existing files.  
+        If you came from an image with another key, that key will also still work.  The keys are nicely named, though, with the name of 
+        the PEM file, so it's easy to tell which one to remove.
+        
+    </p>
+    
+    
+    
+    <p>I learned a trick with Apache config variables that almost does what I want in terms of abstracting the domain name.  I need to 
+        abstract it so that I can test a domain with an SSL cert and then turn it into kwynn.com.  I'm using a "Define," but that isn't 
+        quite what I want.  I'm looking for a way to use ServerName later in the config file.  No luck so far.
+        
+    </p>
+    
+    <p>No matter what I do with the above, certbot is going to bulldoze it if I let it, and letting it is easiest.  So the answer is 
+        probably to let certbot bulldoze the SSL config, then come back with the variable and test it.  Note to self to capture those 
+        certbot commands.
+        
+    </p>
+    
+    <p>I should test on a micro instance because the compute instances don't have a CPU quota.
+        
+    </p>
+    
+    <p>Remember to disable PHP 7.4 (or whatever) and enable the latest version as an Apache mod.  
+        
+    </p>
+    
+    <p>This attempted stalled out because I have to upgrade my nanotime PHP extension.  That isn't hard, but I think I've had enough for the 
+        "day," or at least for now.
+        
+    </p>
+    
+</section>
+
+
+
+<section>
+    <h3>July 20 - database theory</h3>
+    
+    <p>I have updates from my "usual apprentice" who got a title something like that about 8 months ago.  For about 10 months he's been working for 
+        one of the big tech companies.  It's not one of the really big household names, but it is very famous in tech circles, and it was a major 
+        power decades ago.  
+     </p>
+     
+     <p>His first job did not go very well, but he transferred within the company a few weeks ago.  Now he's very happy.         
+     </p>
+     
+     <p>His new job led him to some questions about databases.  They were of the sort that I suppose should get a blog entry, based on our tradition 
+         months ago.
+         
+     </p>
+     
+     <p>He's asking about ACID and normalization (3rd normal form).  "[Do] you apply these principles when doing database design[?]"  Yes, I do, 
+         with a lecture and perhaps a long lecture.
+         
+     </p>
+     
+     <p>I'm getting somewhat away from the question, but ultra-normalization is one of the designs that drove me crazy with Drupal.  I guess it's 
+         still driving me crazy because I'm still writing the migration scripts from Drupal MySQL (MariaDB) to MongoDB.  Drupal version 7 has this 
+         concept of a "field collection" which is one of the more perverse designs I've ever seen.
+     </p>
+     
+     <p>Thankfully there were only 2 field collections before I got involved with the project.  The most annoying one contained the main billing fields--which 
+         legal case the hours are billed to, notes on what was done, the broad category (jury trial, trial prep, writing legal briefs, interview with 
+         client, etc.), and then the hours billed.  (There are other fields that made for an interesting design spec from my client, but those are 
+         the basics.)
+         
+     </p>
+     
+     <p>I'm not going to take the time to think through the formalism, but the field collection is probably very correct in terms of 3rd normal form. There 
+         are likely other ways to have achieved that, though.  What I had to deal with was a case of people following rules in an inappropriate context.  
+         Although that isn't even quite correct.  The data format (schema, design) worked well enough for its one intended purpose, but the problem was 
+         that I needed to use the data in another context.  The main purpose was to interact with the data on the screen.  I needed to do batch, back-end-only  
+         operations, though.  It took insane queries to get at the data directly with SQL.  
+     </p>
+     
+     <p>That sort of problem is one of several reasons why I say that CMSs are only worthwhile if they can do 90% of what you want with the core product 
+         plus existing plugins.  Drupal did maybe 40%, and some of that it did badly.  
+     </p>
+     
+     <p>A large part of the problem is that Drupal needed to be very, very general and handle any type of data.  This goes to my saying about CMSs that 
+         they are so general that they don't successfully do anything specific.  (The saying is based on a comedian's saying from decades ago.  I 
+         think I've referenced that elsewhere.)  Whatever benefit Drupal gave to get the project started, it's on net cost the project an enormous amount 
+         of money as I undo the damage of starting with Drupal.
+         
+     </p>
+     
+     <p>One point being to think through all the things your data needs to do and the ways it needs to do it.  If you're first designing for user interaction, 
+         test the back-end queries you may need to use to make sure that your design covers both scenarios.  
+     </p>
+
+     <p>To head back towards the original question, on one hand, I barely remember the formal definition of 3rd normal form.  The saying I learned was that 
+         the data in a table should be relevant to "the key, the whole key, and nothing but the key."  "Key" in that sense means the unique index, which 
+         may be several fields.
+         
+     </p>
+     
+     <p>It's been a long time since I did RDMBS table design because I've done all new work in MongoDB for 5+ years now.  One of the benefits of 
+         MongoDB is that you don't have to worry about the design while you're prototyping.  You don't have to "CREATE TABLE" in MongoDB--you just 
+         toss data into a collection.  That has the theoretical potential of being a horror show, but my RDBMS training helps me stay disciplined.  
+         The biggest problem I've had is that I make mistakes around integers coming from an HTML form as strings ("3"), writing that string to 
+         MongoDB, and then that fails a query match with integer 3.  That zapped me enough times that I get more and more disciplined about 
+         always putting my IDs through a validation function.  I have one in my client's system called vidord()--valid ID or die.  
+         
+     </p>
+     
+     <p>I should add that there is a question whether IDs should ever be integers.  You never do math on IDs, so why should it be a number?  A system 
+         may be more flexible if it doesn't require integers.  First of all, I'm not talking about the '_id' in MongoDB.  The '_id' is the required unique 
+         index 
+         in MongoDB.  
+         That is almost always a 
+         string both in my case and by default.  I tend to use separate IDs for querying purposes; I'm talking about that separate ID.  In my systems, 
+         I make the '_id' a human-readable string so that I can see what's going on 
+         at a glance in the Robo3T MongoDB tool.  Robo3T is a direct equivalent of MySQL Workbench.  By default, the rows (documents) list themselves 
+         by _id in Robo3T (or the command line), so  it's nice to have something human-readable.  I can make my own IDs unique indexes (keys) with 
+         createIndex(..., ['unique' => true]).
+     </p>
+     
+     <p>In any event, Drupal used sequential integer IDs, and in this case I don't see a problem continuing that.  For one, it would be more difficult 
+         than it's worth to change it, even though I'm migrating to MongoDB.  For another, I got burned decades ago by inflexible numeric IDs, but 
+         this is my system with a specific purpose; I don't need to be general.  
+     </p>
+     
+     <p>The integer IDs in MongoDB brings up the ACID issue.  The question of sequential IDs in MongoDB was a thorn for a few years.  That doesn't 
+         mean I spent 4,000 hours trying to solve the problem, just that it rolled around in my head on and off for years.  MongoDB does not have 
+         a native AUTO_INCREMENT, nor can you lock a collection (table) like you can in an RDBMS.  
+     </p>
+     
+     <p>AUTO_INCREMENT is a built-in guarantee of atomicity, the A in ACID.  The RDB takes care of the potential race condition for you.  
+         
+     </p>
+     
+     <p>In MongoDB, the answer is most likely to avoid sequential IDs *IF* you're starting from scratch.  Otherwise put, if you're starting from 
+         scratch, you might as well use the required _id, although I think it's a good idea to add human-readable elements as opposed to the default
+         _id (a hex number that turns out to have useful properties, but that is not at all obvious, nor is it at all human-readable).
+     </p>
+     
+     <p>As I said, though, I am going to continue using integers with my lawyer client's system.  There are a number of decent ways to solve the problem 
+         in MongoDB.  The one I'm using is to do a Linux level semaphore lock using the DAO file's path to ID the lock itself.  I do all the processing 
+         I can without the ID, then I get the lock, find the max existing integer with a findOne sorted by descending index, add one for the new ID, 
+         write the new row, and then unlock.  It's a really good idea to already have a descending-sort unique index on the ID field anyhow, for data 
+         integrity purposes.  Thus, that query will always be as fast as it can get.
+         
+     </p>
+     
+     <p>To go back to the original question again, yes, when I was using MySQL I thought about what needed to be a bridge table (many to many) and 
+         otherwise how to arrange the data.  Something close enough to 3rd normal form was burned into me decades ago such that I'm not consciously 
+         thinking about it, but yes, I am unconsciously thinking about it.
+         
+     </p>
+     
+     <p>Another benefit to MongoDB is that in many cases you don't have to normalize.  The fundamental structure is different, or at least it *can* be 
+         different.  You could write MongoDB collections just like RDB tables.  MongoDB does not have referential integrity constraints, though.  
+     </p>
+     
+     <p>You don't have to normalize in the sense that often you can get the data you need in one document without the equivalent of joining and pulling 
+         from related tables.  Put another way, I moved to MongoDB in 2017 in part to avoid normalizing.  
+     </p>
+     
+     <p>With that said, a few weeks ago I found myself normalizing in MongoDB, and I'm probably about to do it again, both within my lawyer client's project.  I 
+         recently posted a drag and drop example where the ordering is kept as a float.  I decided that the ordering table (collection) 
+         should stand on its own rather than being part of the billing data collection.  This goes to "the key, the whole key, and nothing but the key."  
+         The billing data is associated with a bill line item ID.  The ordering is based on the ID of the whole timecard because the order 
+         represents the order of the line items on the screen.
+     </p>
+     
+     <p>It would probably take me a few minutes to think through why I decided to "normalize" the ordering, but not now.  
+         
+     </p>
+     
+     <p>In some cases I've needed to consider lots of data coming from an HTML form nearly at once, and I had to consider how to reject network packets 
+         getting out of order.  In other words, I don't want older data to overwrite newer data.  I use HTML "data-blah" attributes / JavaScript DOM 
+         element.dataset.blah variables to add both a sequence and a ms timestamp, from the client's clock.  I know for a fact that two keystrokes when 
+         typing can get the same 
+         ms.  If you go read the fine print of JavaScript threading, I *think* with the sequence you are safe from race conditions.  For 
+         further projection, though, I also have a feedback loop that doesn't turn the field green ("OK" color) until the data that the database 
+         wrote matches 
+         the current value of the field.  In some cases I wait until 2 seconds after typing stops and then check one more time.  
+     </p>
+    
+     <p>So, that is all to say that yes, I consider normalization and ACID, even in MongoDB.
+         
+     </p>
+     
+     <p>One day perhaps I'll add links, but I should at least list all of the solutions I came up with to the MongoDB sequence problem.  They are all 
+         in my GitHub, but they are scattered among several repos and obscure corners thereof.  You can easily write a "find one and increment" in 
+         MongoDB.  That process is different than an AUTO_INCREMENT, though.  It's a loop that runs either once or twice.  I don't remember that exact 
+         logic, but you are guaranteed to get the next sequence the second time around if not the first.  I ran it with all my cores at once and proved 
+         the before and 
+         after.  
+         It works, and the logic is sound, too, although I don't remember exactly what it is right now.  This solution assumes that you have a 
+         document whose only purpose is to keep track of the next integer.
+         
+     </p>
+     
+     <p>The "before and after" means that without the loop, the sequencing would trivially fail with all cores banging.  With the loop, every number 
+         between 1 and several million were assigned.  
+         
+     </p>
+     
+     
+     <p>As above, the Linux level semaphore works as along as all code doing the increment is using the same lock, which in my case is the same file of 
+         PHP code.
+     </p>
+     
+     <p>I wrote a PHP extension to get each core's clock tick plus the core ID.  That will get you unique integers that always ascends (between boots), but 
+         they will 
+         not be sequential.  The clock tick resets with each reboot, so you need to add another field such as ns time or even s time.  Second time will 
+         work fine assuming your system cannot reboot and start running the application within 1 second.  To be unique among different machines or VMs, 
+         you'll also need a field to ID the VM.  
+         
+     </p>
+     
+     <p>As I remember, if you're banging away with all cores in a tight loop all trying to get the next sequence, the core tick is much, much faster 
+         because there are no locking issues.  
+     </p>
+     
+     <p>That's plenty enough nattering.
+         
+     </p>
+     
+     
+    
+</section>
+
 
 <section>
     <h3>July 18 - Kwynn.com system upgrade, continued</h3>
@@ -6712,6 +6979,6 @@ like AWS does.  I am reasonable sure getting a 2nd IP address with Linode or Rac
 
 </body>
 
-<!-- 01:27 7/17 - unreliable stamp for confirming the version in the HTML validator -->
+<!-- 02:02 - unreliable stamp for confirming the version in the HTML validator -->
 
 </html>
