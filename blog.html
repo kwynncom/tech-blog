@@ -63,6 +63,16 @@ RewriteRule ^htval$    /htval/ [R=302,L]   # do NOT use P for this!!! ****
 RewriteRule ^htval/$ 	 http://localhost:8888/ [R=302,L,P]
 RewriteRule ^htval/(.+)$ http://localhost:8888/$1 [R=302,L,P]
     </pre>
+    
+    
+    <pre>
+&lt;Location /htval&gt;
+	RewriteEngine On
+	RewriteRule htval$   /htval/ 				     [R=302,L] 
+	RewriteRule htval/$ 	http://localhost:8888/ 	 [R=302,L,P]
+	RewriteRule htval/(.+)$ http://localhost:8888/$1 [R=302,L,P]
+&lt;/Location&gt;
+    </pre>
 </section>
 
 <section>
