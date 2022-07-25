@@ -49,13 +49,261 @@ li   { margin-bottom: 0.7ex; }
     latest changes.
 </p>
 </section>
-
+    <section> <!-- 2022 -->
 <h2>2022</h2>
 
 <!-- ************** CURRENT ************************************************************************* -->
 
 <section>
-    <h3>July 21 - Kwynn.com Ubuntu 22.04 upgrade update (ongoing updates)</h3>
+    <h3>July 25</h3>
+    
+    <pre>
+RewriteEngine On
+RewriteRule ^htval$    /htval/ [R=302,L]   # do NOT use P for this!!! ****
+RewriteRule ^htval/$ 	 http://localhost:8888/ [R=302,L,P]
+RewriteRule ^htval/(.+)$ http://localhost:8888/$1 [R=302,L,P]
+    </pre>
+</section>
+
+<section>
+    <h3>July 24</h3>
+    
+    <p>After getting the new home of kwynn.com working, I realized I was still using, rather embarrassingly, MongoDB v3.6.  It seems that 
+        hasn't bitten me yet.  I decided, though, not to wait around for it to bite me.  Locally I am running v4.4 which is the last of 
+        the v4.x.  Version 5 has been out for a while, and they are up to 6.  I mentioned months ago that I cannot run v5 locally because 
+        my CPU is too old.  The good news is that version 4.4 reaches end of life in February, 2024.  This situation irritates me, but 
+        if I solve my basic problem of finding enough work, everything else gets solved.  It's probably not worth even digging at a Raspberry 
+        Pis for the moment.
+    </p>
+    
+    <p>In any event, kwynn.com already has another new home over the course of several days.  This time I set the time to live (TTL) on my IPv6 
+        AAAA records to 1 hour, very early this morning.  Just as I sat down to create the new instance, I set it to 5 minutes.  Once the 
+        new instance was ready, I gave the new records a 5 minute TTL and left them both "on."  I found that it's probably a good idea to 
+        close one's browser after 5 minutes because "old" tabs (20 minutes old or less) will still go back to the old address.  
+    </p>
+    
+    <p>MongoDB v4.4 would not auto convert the old data files.  I think I went back to 4.2, but I don't think I went back to 4.0.  I may 
+        not have taken the time to realize that 4.0 existed.  After the second version failed, I did this:
+     </p>
+     
+     <ol>
+         <li>Export (mongodump command) the data from the earlier version</li>
+         <li>stop the server</li>
+         <li>remove all the files under /var/lib/mongodb  (Don't remove the directory because Mongo will not necessarily create it.)</li>
+         <li>upgrade Mongo (and make sure it's running)</li>
+         <li>load the data (mongorestore command)</li>
+     </ol>
+     
+     <p>The careful and knowledgeable reader may have understood the context of the instance change, but I'll clarify.  I made a no-reboot 
+         image of my live instance, fired it up on a c5ad.large instance, did the Mongo upgrade, and tested everything with a subdomain of an 
+         extra domain I lease.  Then I made an image of the upgraded system, loaded it as a t3a.micro instance, tested again, and then 
+         created DNS AAAA records for the new system.  I watched for signs that the browser was picking up the new records at least part of 
+         the time, then I turned off the old records and switched the IPv4 via the AWS EC2 Elastic IP.  I watched the web server access log 
+         of the old system to make sure requests stopped coming in, then I shut the old (virtual) machine down.
+     </p>
+    
+</section>
+
+
+
+<section>    
+<h3>July 23</h3>
+
+<p>I originally posted this around 13:48.  At 13:52 I added one word to my email to him and emailed the jackass. I added the word below, too.
+    
+</p>
+
+<p>In my own pure tech news, the new instance of kwynn.com went live last evening around 8:29.  It's run fine since, and the CPU credits 
+    are still charging.  I should make some more notes on that, but I have other topics I want to address.
+    
+</p>
+
+<p>In non-technical news, I was considering beginning my job application to be an influencer for the Russian government.  I'm somewhat 
+    serious about that.  Unfortunately, I should deal with a certain jackass first.
+</p>
+
+<section>
+<h4>the latest robot script kiddie jackass</h4>
+
+<p>Several days ago I again posted my apprentice ad to Craig's List Atlanta computer gigs.  I got two legitimate responses, and both showed 
+    an initial handshake.  They have petered out on the other end, though.  That's another sub-topic, though.
+    
+</p>
+
+
+<p>I also got a blatantly robotic response, and today I got the 6th email from the robot.  That's the 6th email since early on July 18.  
+    
+</p>
+
+<p>First of all, the email prominently mentions Unix.  Linux ate Unix' lunch by 2004 or earlier, and now you'd be hard pressed to find a true 
+    Unix.  
+    The iCultOS is based on the Berkeley Standard Distribution of Unix, but I don't know how much it's been mod'ed.  Besides, only a handful 
+    of people know that.  
+</p>
+
+<p>Oh, crud.  I made the mistake of going to the custom domain name / site of the email address.  Now I have to mock it, too.  First of all, 
+    it doesn't have a security certificate.  I didn't have one, either, until recently, but since then I've spent so much time mucking 
+    with them that I can mock anyone who is as pretentious as this jackass.  It's not installing the certificate in the live environment 
+    that is 
+    hard, either.  It's getting it working on various test systems that's somewhat harder.  
+    
+</p>
+
+<p>The site prominently features the standard photo of a diverse group of 7 people.  It would appear that the robot's script kiddie is diverse, 
+    too.  It's a
+    tiny photo, but he looks black (50 - 70% black ancestry, at a guess).  A friend of mine is a 25 - 45% black software developer.  We 
+    actually haven't talked shop that much because 
+    our mutual interest is not technical, but I have every reason to believe that he's at least competent, and he may even be quite good.  
+    I conclude with some confidence that he's not a diversity hire.  I'm sure the diversity helps him get hired, 
+    but he doesn't need the help.  
+</p>
+
+<p>The script kiddie jackass is using a Scottish given name, but he's probably black, and he says he works for $10 / hour.  When Scotland 
+    regains independence in a 
+    few years, they should sue this guy for impersonation and reputation infringement and such. 
+    
+</p>
+
+<p>I sometimes spend over an hour composing responses to CL ads.  I have come to realize that this is almost always very stupid.  However,  
+    as with the SSL cert, I get to mock "I have a few key questions I'd like to ask you about your project. 
+    <b>I have given it a lot of thought.</b> (emphasis added)"  I suppose his generic questions are good ones, and perhaps I should even 
+    read them in full, but they are clearly generic, and he has given my ad no thought at all.  I might find a way to work with him if I 
+    weren't so damn irritated, and I have little reason to believe he's competent.
+    
+</p>
+
+<p>Actually, his questions are good ones.  I should even consider writing answers publicly, not to him.  
+    
+</p>
+
+<p>I suppose that will suffice.  
+    
+</p>
+
+<p>On second thought, I should compose my response.  He already has my real spam-catcher email address, so why not mock him directly?
+</p>
+
+<blockquote>
+    <p>Dear script kiddie jackass running this robot, if indeed there is anyone as biologically living as an ass,</p>
+    <p>I have spent two hours on some Craig's List computer gig ad responses, probably longer.  That is admittedly stupid on my part, but I 
+        really resent it 
+        when you spend no time at all.  The statement "I have given it a lot of thought" is extremely irritating when you have given my ad 
+        in particular no thought at all.  
+    </p>
+    
+    <p>I have other complaints / mockery that I have written out elsewhere.  That will suffice, though.  Get your robot to stop emailing me unless 
+        it's with a grovelling apology.  
+    </p>
+    
+</blockquote>
+
+
+</section>
+
+
+
+</section>
+
+<section>
+    
+    <h3>July 22 - yet another chapter in the upgrade</h3>
+    
+    <p>I'll try again to recap what needs doing for this and future upgrades.  I may be a few hours from throwing the switch to my 
+        Ubuntu 22.04 image.  
+        
+    </p>
+    
+    <p>When doing the AMI (image) quick launch from image ("Launch instance from AMI"), the IAM role is under "Advanced details" &gt; "IAM instance profile."  
+        
+    </p>
+    
+    <p>As I approach go-live:
+        
+    </p>
+    
+    <ul>
+        <li>Using the entry in /etc/hosts, I should be able to test kwynn.com on the new machine before it gets DNS routing.  I already have 
+        a copy of the SSL cert.  (Yes, this works.)</li>
+        <li>Give the instance some time to charge up CPU credits.  
+            
+        </li>
+        <li>quick link "cpu" must be tested on an instance that has limited CPU credits
+            
+        </li>
+        
+        <li>rsync to new machine
+            
+        </li>
+        
+        <li>update /opt/kwynn if needed
+            
+        </li>
+        <li>reset /var/log/apache2/access.log and error.log as to not conflict with the last entries of the old one.      </li>
+        
+        <li>test all services in launch-wizard / security group / firewall rules, including 4 and 6 ping</li>
+        
+    </ul>
+    
+    <p>General testing / steps:</p>
+    
+    <ul>
+        <li>update composer libraries both locally and in the cloud - update ALL libraries</li>
+        <li>test my contact form</li>
+        <li>go through my quick links on my local machine - it seems I was very bad at that</li>
+        <li>the web random generator (started 2017) tests nanopk() and nanotime() and such</li>
+        <li>remove older keys from ~/.ssh/authorized_keys</li>
+        <li>set up the Apache conf files to test both the test name and permanent name</li>
+        
+    </ul>
+    
+    
+    <h4>certbot</h4>
+    
+    <pre>sudo certbot certonly --dry-run --apache
+sudo certbot --apache
+    </pre>
+    
+    <p>It's probably easiest to let certbot mod the Apache conf files as it wants, then go back and set them up for both test and live 
+        domain names.
+        
+    </p>
+    
+</section>
+
+
+<section>
+    <h3>July 21 - Kwynn.com Ubuntu 22.04 upgrade update</h3>
+    
+    <section>
+        <h4>part 2 - PM</h4>
+        
+        <p>That AWS EC2 serial console feature is pretty cool.  I'd say it took 45 - 60 seconds from starting the instance until I started 
+            getting data.  Unfortunately, for this first run, I have once again run into, 
+            "A start job is running for Raise ne…k interfaces (5min 28s / 5min 40s)."  Interesting.  Once that reached 5:40, it fully booted.  
+            Once I say the basic network messages, I could ping but not get web.  After 5:40, I got web.
+            
+        </p>
+        
+        <p>Update composer libraries in the event of weirdness: /opt/composer$ composer update<br/>
+            /opt/composer is where I keep my composer libraries.  Note that you have to "update" rather than update blah because 
+            if you update individual packages, the dependencies will not carry through.  If you're in the equivalent of /opt/composer 
+            then "composer show" will show you all the versions.  You can compare dev to live.
+            
+        </p>
+        
+
+        
+    </section>
+    
+    
+    <section> <!-- h4 part 1 -->
+    
+        <h4>part 1 - AM</h4>
+        
+    <p>New update 02:38.  My nanopk extension does need installing in PHP 8.1, but it doesn't appear that is causing my problem with 
+        my web random generator.  That might indeed by all for tonight.
+        
+    </p>
     
     <p>First posted around 01:20, then updating 01:36.  Actually I'm posting the 2nd version around 2:04am.  I may be losing some coherence.  
         
@@ -123,10 +371,11 @@ li   { margin-bottom: 0.7ex; }
         
     </p>
     
-    <p>This attempted stalled out because I have to upgrade my nanotime PHP extension.  That isn't hard, but I think I've had enough for the 
+    <p>This attempt stalled out because I have to upgrade my nanotime PHP extension.  That isn't hard, but I think I've had enough for the 
         "day," or at least for now.
         
     </p>
+    </section> <!-- h4 part 1 -->
     
 </section>
 
@@ -4355,6 +4604,8 @@ mariadb-server/impish-updates,impish-updates,impish-security,impish-security,now
             
         </p>
         </section>
+    
+    <section> <!-- 2022/01/02 -->
         <h3>2022, January 2</h3>
         
         <p>First, an update to my previous entry:  For a week or so there was some DARPA LifeLog (Facebook) activity around 
@@ -4393,8 +4644,10 @@ mariadb-server/impish-updates,impish-updates,impish-security,impish-security,now
             until a moment ago when I looked at the function definition again.  Once again, this might be somewhat subtle, but you'll probably figure out how to use it 
             soon.
          </p>
+         
+    </section>  <!-- 2022/01/02 -->
      
-
+    </section> <!-- year 2022 -->
     
     <section>
     <h3>2021, December 30 - web server log analysis - 3rd entry today</h3>
@@ -6979,6 +7232,6 @@ like AWS does.  I am reasonable sure getting a 2nd IP address with Linode or Rac
 
 </body>
 
-<!-- 02:02 - unreliable stamp for confirming the version in the HTML validator -->
+<!-- 21:18 Sun - unreliable stamp for confirming the version in the HTML validator -->
 
 </html>
