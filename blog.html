@@ -55,6 +55,64 @@ li   { margin-bottom: 0.7ex; }
 <!-- ************** CURRENT ************************************************************************* -->
 
 <section>
+    <h3>July 26</h3>
+    
+    <p>I'm posting my July 26 and July 25 entries at the same time.  
+        
+    </p>
+    
+    <p>When I start a new instance, any sudo command, including the innocuous "sudo echo blah" results in 
+"sudo: unable to resolve host ip-10-1-2-3: Name or service not known"  where ip-10-1-2-3 is whatever is after @ at the command prompt and / or 
+the result of "cat /etc/hostname"  The solution is to change /etc/hosts such that the 127.0.1.1 entry (yes, 1.1) corresponds to 
+/etc/hostname
+    </p>
+    
+    <p>The above problem will happen with every new instance.  This next problem has to do with a new install of MongoDB.  Now 
+        "sudo apt update" results in "W: https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/4.4/Release.gpg: Key is stored in legacy 
+        trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details."  I think I'll sit down and fix that 
+        now.
+     </p>
+     
+     <p>Well, the instructions were close, but it took a bit more doing.  The standard but now slightly 
+         <a href='https://www.mongodb.com/docs/v4.4/tutorial/install-mongodb-on-ubuntu/'>out of date instructions</a> 
+         tell you to create a sources file and a public key file.  The key file command needs to be modified as I show below.  The command 
+         to create the sources entry is fine except that you need to modify the sources file as below, too.
+     </p>
+     
+     <pre>wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo tee /etc/apt/keyrings/mongodb-server-4.4.asc
+ls /etc/apt/keyrings/
+# confirm the file exists
+mongodb-server-4.4.asc
+head -n 4 /etc/apt/keyrings/mongodb-server-4.4.asc
+# confirm there is the beginning of a PGP public key there
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1
+
+mQINBFzteqwBEADSirbLWsjgkQmdWr06jXPN8049MCqXQIZ2ovy9uJPyLkHgOCta
+# at this step YOU HAVE TO MODIFY the sources file so that it looks like the following
+# the next command simply shows what it should look like when you're done modifying
+cat /etc/apt/sources.list.d/mongodb-org-4.4.list
+deb [signed-by=/etc/apt/keyrings/mongodb-server-4.4.asc] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse
+# old version with my failed attempt at modification commented out below
+# note that the signed-by completely replaces arch
+# deb [ arch=amd64,arm64,signed-by=/etc/apt/keyrings/server-4.4.asc ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse
+
+sudo apt update
+# now should result in
+# ...
+# Ign:4 https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 InRelease
+# Hit:5 https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 Release  
+# ...
+# All packages are up to date.     </pre>
+    
+     <p>Note that the "gpg" command itself does not come into play.  There may be ways to get it to work, but I didn't get that far.
+         
+     </p>
+     
+</section>
+
+
+<section>
     <h3>July 25 - a knock down, drag out fight with Apache</h3>
     
     <p>I won the fight, but it was tiring.  Now that I have a micro instance with 1GB of RAM, I should be able to (more easily) run my own 
@@ -88,6 +146,15 @@ li   { margin-bottom: 0.7ex; }
     <p>First I'll explain my solution, then I might get around to explaining the various difficulties I had to pick through.
         
     </p>
+    
+    <p>I post my earlier "Directory" version further below.  Note that the context of what you get from the URL changes between Directory 
+        and Location.  That is, you're getting a different string into the regex and thus the regex must be different.
+        
+    </p>
+    
+    <p>The biggest problem I had was a URL of /htval versus /htval/  .  
+        
+    </p>
         
     <pre>
 # begin included file
@@ -100,6 +167,7 @@ li   { margin-bottom: 0.7ex; }
 # end included file
     </pre>
 
+    <p>The following earlier version was in the Directory entry of my DocumentRoot directory</p>
     <pre>
 RewriteEngine On
 RewriteRule ^htval$    /htval/ [R=302,L]   # do NOT use P for this!!! ****
