@@ -55,8 +55,51 @@ li   { margin-bottom: 0.7ex; }
 <!-- ************** CURRENT ************************************************************************* -->
 
 <section>
-    <h3>July 25</h3>
+    <h3>July 25 - a knock down, drag out fight with Apache</h3>
     
+    <p>I won the fight, but it was tiring.  Now that I have a micro instance with 1GB of RAM, I should be able to (more easily) run my own 
+        copy of the W3 HTML validator.  I was working towards that.  My previous solution, months ago, on my local machine, was to run the 
+        validator on port 9999 and do all this "Proxy" directive and such.  In hindsight, it was a clumsy solution, but that's what "the 
+        net" proposed, and it did work.  
+    </p>
+    
+    <p>I decided I want my validator to live at https://example.com/htval.  After much gnashing of teeth, I have two solutions, one somewhat 
+        more elegant than the other.  
+    </p>
+    
+    <p>To back up a bit, I have restructured my /etc/apache2/sites-available files.  Hopefully I'll post the latest versions soon.  Earlier 
+        versions are in GitHub under a repo with sysadmin in the name or something.  I separated the files into .conf and .inc files.  .conf 
+        is the Apache format for config files.  .inc is my arbitrary format meaning "include" files.  The .conf files enable a 
+        specific site.  The .inc files are included with, not surprisingly, an Apache Include directive.  
+    </p>
+    
+    <p>I have a "private...inc" that uses the Define directive to define the server name and document root.  That is, the Define var 
+        becomes the literal ServerName directive / variable, and the DocumentRoot.  (Actually, I am still using /opt/blah for the DocumentRoot, 
+        but it could be done that way.)
+    </p>
+    
+    <p>For the local copy of kwynn.com, the kwloc.conf only has 2 lines that are the private..inc Include and a "pubcommon.inc" file.  
+        The pubcommon defines the non-secure http redirects and DocumentRoot and various other directories (Directory) and Alias(es) and such.</p>
+    
+    <p>The following Location entry can be included from anywhere in the common file or the .conf file.  The following is my second and somewhat 
+        more elegant version because it can be defined anywhere.  
+    </p>
+    
+    <p>First I'll explain my solution, then I might get around to explaining the various difficulties I had to pick through.
+        
+    </p>
+        
+    <pre>
+# begin included file
+&lt;Location /htval&gt;
+	RewriteEngine On
+	RewriteRule htval$   /htval/ 			 [R=302,L] 
+	RewriteRule htval/$ 	http://localhost:8888/ 	 [R=302,L,P]
+	RewriteRule htval/(.+)$ http://localhost:8888/$1 [R=302,L,P]
+&lt;/Location&gt;
+# end included file
+    </pre>
+
     <pre>
 RewriteEngine On
 RewriteRule ^htval$    /htval/ [R=302,L]   # do NOT use P for this!!! ****
@@ -64,19 +107,11 @@ RewriteRule ^htval/$ 	 http://localhost:8888/ [R=302,L,P]
 RewriteRule ^htval/(.+)$ http://localhost:8888/$1 [R=302,L,P]
     </pre>
     
-    
-    <pre>
-&lt;Location /htval&gt;
-	RewriteEngine On
-	RewriteRule htval$   /htval/ 				     [R=302,L] 
-	RewriteRule htval/$ 	http://localhost:8888/ 	 [R=302,L,P]
-	RewriteRule htval/(.+)$ http://localhost:8888/$1 [R=302,L,P]
-&lt;/Location&gt;
-    </pre>
+
 </section>
 
 <section>
-    <h3>July 24</h3>
+    <h3>July 24 - a second, recent kwynn.com instance / MongoDB upgrade</h3>
     
     <p>After getting the new home of kwynn.com working, I realized I was still using, rather embarrassingly, MongoDB v3.6.  It seems that 
         hasn't bitten me yet.  I decided, though, not to wait around for it to bite me.  Locally I am running v4.4 which is the last of 
