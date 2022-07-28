@@ -7,7 +7,7 @@
 <script src='UbuntuSymphony.js'></script>
 <style>
 body { font-family: sans-serif }
-h3   { margin-top: 2.0ex; margin-bottom: 0ex; font-size: 125%; }
+h3   { margin-top: 2.0ex; margin-bottom: 0.5ex; font-size: 125%; }
 h4   { font-size: 112%; margin-top: 0.7ex; margin-bottom: 0.6ex; }
 h5   { font-size: 105%; margin-bottom: 0ex;  margin-top: 0.4ex; }
 h6   { font-size: 102%; margin-bottom: 0ex;  margin-top: 1.3ex;}
@@ -15,6 +15,7 @@ p    { margin-top: 0.9ex; margin-bottom: 1.3ex; }
 pre  { margin-top: 0; margin-bottom: 0; }
 h1   { margin-top: 0; margin-bottom: 0; }
 ul	{margin-top: 0.5ex}
+ol	{margin-top: 0.5ex}
 li   { margin-bottom: 0.7ex; }
 .intron { margin-top: 1ex; font-size: 120%; margin-bottom: 0ex; }
 .iibl {  display: inline;  }
@@ -53,6 +54,18 @@ li   { margin-bottom: 0.7ex; }
 <h2>2022</h2>
 
 <!-- ************** CURRENT ************************************************************************* -->
+
+<section>
+    <h3>July 27</h3>
+    <p>New utilities:</p>
+    <ol>
+        <li>my own copy of the <a href='/htval/'>HTML validator</a></li>
+        <li><a href='https://ipv4.kwynn.com/t/22/07/ip46/'>ipv4 echo</a></li>
+        <li><a href='https://ipv6.kwynn.com/t/22/07/ip46/'>ipv6 echo</a></li>
+    </ol>
+    
+</section>
+
 
 <section>
     <h3>July 26</h3>
@@ -152,9 +165,46 @@ sudo apt update
         
     </p>
     
-    <p>The biggest problem I had was a URL of /htval versus /htval/  .  
-        
-    </p>
+    <p>The biggest problem I had was a URL of /htval versus /htval/ .  The Nu validator uses "style.css" rather than "/style.css" as the 
+        path.  Given that just about everyone is going to access their system indirectly rather than through their default 8888 port, 
+        I really wished they would have used the /.  Given that it's open source, I'll add it to my stupendously long to do list.  That is, I 
+        should lobby for the change and / or make it myself when I have time for such things.
+     </p>
+     
+     <p>Anyhow, the first rewrite rule turns /htval into /htval/  This should NOT use the P (proxy) option.  The proxy option does not 
+         change the URL, but we need the URL changed so that Nu interprets style.css as /htval/style.css or /style.css, depending on how you 
+         want to look at it.
+         </p>
+         
+         <p>The second rewrite rule solves a somewhat puzzling problem.  Even though there is an index.html in Nu, trying to access it directly 
+             results in a 404 error.  If you want the Nu home page, you have to ask for precisely / . The third rewrite is a fairly standard 
+             rewrite of the rest of the URL.  
+         </p>
+         
+         <p>I can't remember if 302 is the default over 301 or not.  In any event, I think it's best to explicitly use 302 (temporary redirect).  
+             I guess once you're certain it's working it doesn't matter, but I think it's best to err on that side.  Maybe in a few months I'll 
+             change it.
+          </p>
+          
+          <p>Remember that if you do use 301, if you want to change anything you'll have go the History in Firefox and "forget" the site to make 
+              it stop using the 301.  Also remember that you'd better do a hard refresh when testing: control - F5 in Firefox.  Also also (sic) 
+              remember that you have to restart or reload Apache with every change.  
+           </p>
+           
+           <p>I don't claim to fully understand the L (last rule to execute) option.  It works.  I'll leave it.
+               
+           </p>
+           
+           <p>This is the sort of development (sysadmin) that you literally have to take one line at a time and make sure the first one works 
+               before you keep going.  My earlier versions dealt with the Proxy and ProxyReverse and all sorts of unnecessary code.  I was 
+               changing too many things at once.  I was previously using port 9999 and redirecting to 8888.  I was using something like 
+               15 lines.  The following is a huge improvement on a number of points.  
+               
+           </p>
+           
+           <p>I thought I was going to show the code then explain it, but I did it the other way around.  
+               
+           </p>
         
     <pre>
 # begin included file
@@ -167,7 +217,7 @@ sudo apt update
 # end included file
     </pre>
 
-    <p>The following earlier version was in the Directory entry of my DocumentRoot directory</p>
+    <p>The following earlier version was in the Directory entry of my DocumentRoot directory.</p>
     <pre>
 RewriteEngine On
 RewriteRule ^htval$    /htval/ [R=302,L]   # do NOT use P for this!!! ****
@@ -7345,6 +7395,6 @@ like AWS does.  I am reasonable sure getting a 2nd IP address with Linode or Rac
 
 </body>
 
-<!-- 21:18 Sun - unreliable stamp for confirming the version in the HTML validator -->
+<!-- 02:45 Tue - unreliable stamp for confirming the version in the HTML validator -->
 
 </html>
