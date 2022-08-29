@@ -7,8 +7,8 @@
 <script src='UbuntuSymphony.js'></script>
 <style>
 body { font-family: sans-serif }
-h3   { margin-top: 2.0ex; margin-bottom: 0.5ex; font-size: 125%; }
-h4   { font-size: 112%; margin-top: 0.7ex; margin-bottom: 0.6ex; }
+h3   { margin-top: 3.0ex; margin-bottom: 0.5ex; font-size: 125%; }
+h4   { font-size: 112%; margin-top: 2.1ex; margin-bottom: 0.6ex; }
 h5   { font-size: 105%; margin-bottom: 0ex;  margin-top: 0.4ex; }
 h6   { font-size: 102%; margin-bottom: 0ex;  margin-top: 1.3ex;}
 p    { margin-top: 0.9ex; margin-bottom: 1.3ex; }
@@ -21,6 +21,7 @@ li   { margin-bottom: 0.7ex; }
 .iibl {  display: inline;  }
 .ghr4 { font-size: 105%; margin-top: 1.5ex; }
 .emq { margin-bottom: 0.1ex; margin-top: 0.1ex; }
+.htv20 { vertical-align: top; display: inline-block; padding-top: 1ex; }
 
 </style>
 </head>
@@ -30,30 +31,1000 @@ li   { margin-bottom: 0.7ex; }
 
 <div style='margin-bottom: 2.5ex; '>
     <h1  style='display: inline-block'>tech blog</h1>
-    
+       
     <div style='display: inline-block; margin-left: 0.6ex; position: relative; top: 0.9ex; '>
+        
+                <div style='display: inline-block' >
+        <a href='/htval/?doc=https://kwynn.com/t/7/11/blog.html'>
+            <img style='transform: scale(0.81, 0.81);' src="../../5/02/html5_valid.jpg" alt="HTML5 valid" width="103" height="36" /><!--
+            --><span class='htv20'>(my copy of the validator)</span></a>
+        </div>
+        
+        <div style='display: inline-block; margin-left: 2ex; ' >
         <a href='https://validator.w3.org/check?uri=https://kwynn.com/t/7/11/blog.html'>
-            <img style='transform: scale(0.81, 0.81);' src="../../5/02/html5_valid.jpg" alt="HTML5 valid" width="103" height="36" /></a>
+            <img style='transform: scale(0.81, 0.81);' src="../../5/02/html5_valid.jpg" alt="HTML5 valid" width="103" height="36" /><!--
+            --><span class='htv20'>(W3C copy)</span></a>
+        </div>
     </div>
 </div>
 
 <section>
 <h2 class='intron iibl'>introductory notes: </h2>
-<p class='iibl'>1. For time zone purposes, I am near Atlanta and use my local timezone.  Atlanta is the same as New York (America/New_York).</p>
+<p class='iibl'>1. For time zone purposes, I am near Atlanta and use my local timezone.  Atlanta is the same as New York.</p>
 <p class='iibl'>2. Starting sometime in December, 2021, I am often addressing one of my apprentices; he is the "you."</p>
-<p class='iibl'>3. Drafts / previous versions of <a href='https://github.com/kwynncom/tech-blog'>this page are on GitHub</a>.  Usually the live version 
-    is way ahead of 
-    GitHub. 
+<p class='iibl'>3. Drafts / previous versions of <a href='https://github.com/kwynncom/tech-blog'>this page are on GitHub</a>.  Usually the 
+    live version is way ahead of GitHub, but sometimes vice versa.  
     
-4. Sometimes I'm posting to GitHub and not commenting here.  If you click on 
+4. Often I'm posting to GitHub and not commenting here.  If you click on 
     <a href='https://github.com/kwynncom?tab=repositories'>my repos</a>, they are sorted by the 
-    latest changes.
+    latest changes.  5. The line between <a href='/t/21/12/personal_blog.html'>my personal blog</a> and this is becoming thin.  
 </p>
 </section>
     <section> <!-- 2022 -->
 <h2>2022</h2>
 
 <!-- ************** CURRENT ************************************************************************* -->
+
+<section>
+    <h3>August 28 - email server, IMAP, etc.</h3>
+    
+    <p>This is part of my gig application for a Craig's List gig / "temp jobs" / "computer temp jobs."  </p>
+    
+    <p>To take your ad literally from the top and start with Linux, I am typing on Ubuntu Linux, and Kwynn.com runs on Ubuntu Linux server.  Among other evidence, the HTTP "Server" 
+        header tells you this, if you use browser dev tools.  My <a href='/t/'>/t directory tree</a> decent evidence in itself that this site 
+        is over 11 years ago.  A whois lookup on my IP address shows AWS, and thus this sever is a Linux VPS.
+     </p>
+     
+     <p>I am still on the front page of Big Evil Goo for the search term "Python IMAP IDLE" without quotes.  I'm #7.  I've held 
+         <a href='/t/7/07/my_top_Google_articles.html'>#6 - 8 for over 7 years</a>.  Here is the 
+         <a href='/t/3/06/imap/imap_idle.html'>direct link to my IMAP IDLE</a>.  
+     </p>
+     
+     <p>On the encryption end, this isn't precisely related, but here are the steps to <a href='/t/7/06/enc.php'>do "by hand" a large portion of 
+             what TLS does</a>.  From memory, I create a long symmetrical key and then encrypt it using "Bob's" public key.  I send the 
+             payload to Bob encrypted with the symmetrical key and then the sym key encrypted with the public key.  
+         
+     </p>
+     
+     <p>I had a problem with Goo OAUTH working with the PHPMailer class.  I started with 
+         <a href='https://github.com/PHPMailer/PHPMailer/issues/1664'>someone else's solution</a>, but, as I recall, I had 
+         to do some hard thought to modify it.  I considered posting a sample of this code, and I probably will if it's round two of 
+         my application, but I decided for now it would take too much work to make it generic enough for an example.
+     </p>
+     
+     <p>My <a href='https://github.com/kwynncom/positive-gmail-check'>GMail "positive email check"</a> is using a Goo PHP library and is 
+         therefore somewhat removed from the raw server, but that is just as hard to get working as dealing with the raw server.
+      </p>
+      
+      <p>Regarding Postfix, a funny story about that.  About the same time I wrote that encryption script for a friend, we were discussing 
+          running our own mail servers.  It turns out that I did get receiving working, as I explain.  I believe I was using port 25 for 
+          SMTP, incoming in this case.  There was some talk that residential ISPs blocked it, but it wasn't blocked.  Then create an MX 
+          DNS record.  Set up Postfix, send email to whatever domain you used in the DNS record.  I think what went wrong is that root 
+          received the mail a la 1991 Sun Solaris UNIX.  As I recall, I hadn't sent it to an existing Linux user, so it went to root.  
+          The sudo command won't show you that root has mail.  I didn't realize the email had worked until I actually did "sudo su" to open 
+          a root-user shell.  Then I saw the notification a la 1991 at the command prompt.  I should have been looking in, as I 
+          recall /var/spool/...
+          </p>
+      
+      <p>I dealt briefly with SPF.  I understand once again that this is farther removed in that Goo is doing the work, but it shows 
+          that I can implement instructions and such.  For that matter, I stepped my client through adding the DNS record.  I may send the 
+          actual domain name in the email; I shouldn't include it here.  
+      </p>
+     
+      <pre>$ dig example.com TXT
+
+; <<>> DiG 9.18.1-1ubuntu1.1-Ubuntu <<>> example.com TXT
+...
+;; ANSWER SECTION:
+example.com.		300	IN	TXT	"v=spf1 include:_spf.google.com ~all"
+
+;; Query time: 188 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53) (UDP)
+;; WHEN: Sun Aug 28 21:29:01 EDT 2022
+;; MSG SIZE  rcvd: 171     </pre>
+     
+     
+      <p>Regarding DKIM, I know what they are, and I'm sure I could figure it out quickly.
+          
+      </p>
+     
+    
+</section>
+
+
+<section>
+    <h3>August 24 - the Gab troll</h3>
+    
+    <p>Weeks ago I posted a variant of <a href='https://gab.com/nevermasked/posts/108665715880878666'>my apprentice ad to Gab's 
+            "Programming, Computing, and Electronics" forum</a>.  As you can see, I acquired a troll.  
+        I'm not sure I've ever been trolled before.  If I have, it's been a long time.  I didn't even register "troll" for a while.  
+        At first, I thought it had a following.  Its header says "1.2k Followers," but when I click, there is no one.  
+        I see that inconsistency with other people, so I'm not sure what to make of it.  I also see lists of followers with some people, 
+        meaning that the following header does work in some or most cases.  
+    </p>
+    
+    <p>Now that I have partially grokked "troll," I'm continuing to engage it because I have evidence of the phrase, "There is no such 
+        thing as bad publicity."  And that's assuming anyone is taking the troll seriously and thus it's bad publicity.  
+        I have a few pieces of evidence that engaging it has kept my apprentice post alive.  A few days ago 
+        I made contact with my first potential apprentice from Gab.  I've also seen Gab HTTP referrers entering my site since the troll 
+        engagement.  
+    </p>
+    
+    <p>In addition to keeping my post alive, this is an exercise in engaging a troll while keeping my blood pressure down. As I said a couple of
+        days ago, I have almost no reason to think that my blood pressure will lead to any problem; I haven't taken the clot shot.  This is 
+        simply an exercise in emotional 
+        control.  
+    </p>
+    
+    <p>So, to address the troll's points:  This is not a matter of being offended.  If I thought anyone took it seriously, I could probably 
+        sue it for defamation.  I suspect Gab would back me rather than fighting giving me its identity, or leads to its identity.  
+    </p>
+    
+    <p>When contrasting "the internet" with the real world, I suspect it is being deliberately obtuse.  My real name is right there, and 
+        the troll is potentially damaging my ability to do business.  By contrast, the troll is anonymous and thus takes no risk unless I 
+        went to the courts.  
+    </p>
+    
+    <p>As I told it or at least implied, anonymous trolls are fine and useful in quite a few contexts.  Public figures are fair game.  
+        Defamation law distinguishes public and private figures.  I am not a public figure.  In my post I am not advocating policy or 
+        trying to affect anyone other than a potential handful of people who might want to become apprentices.  
+    </p>
+    
+    <p>The troll is only worth so much time.  I should boil this down for posting to Gab, though.  
+            </p>
+    
+    <section>
+        <h4>the Gab version of this post</h4>
+        
+        <p>This is not a matter of being offended.  The troll might want to do some research on defamation law.  I don't think anyone 
+            takes it seriously, though, so I don't see a point in pursuing that.  Now that I have registered the concept of "troll," I 
+            am continuing this for a few reasons, 1. To whatever extent the troll is bad publicity, I have evidence of the concept of 
+            "There is no such things as bad publicity."  I have my first potential apprentice reply since the troll engagement, and I 
+            have other bits of evidence that this "discussion," such as it is, is keeping my post alive. 2. It's an exercise in keeping 
+            emotional control.  
+        </p>
+
+    </section>
+            
+            
+    
+</section>
+
+
+<section>
+    <h3>August 23</h3>
+    
+    <p>A chat with Gab potential / probable apprentice...
+        
+    </p>
+    
+    <p>Reasons to move from PHP to Node.js: </p>
+    
+    <ul>
+        
+        <li>end to end client to server JavaScript</li>
+        <li>It's the natural language for and of MongoDB.  PHP can be 
+            rather painful with Mongo when the queries get complicated, such as the $ symbol conflict.  </li>
+        <li>I noticed a few hours ago that AWS Lambda does not natively process PHP.  Similarly, I have seen instructions and even 
+            tests that have several languages, but now one of them is Node and not PHP.
+        </li>
+        <li>Alpaca had Node and not PHP.  The hired.com test quiz had Node and not PHP.  Those are two more that come to mind.
+            
+        </li>
+    </ul>
+    
+    <p>A restatement: Kwynn's Rule of Software Development #1: NEVER develop without a debugger.  I found that one of the links at least 
+        in my apprentice 2 paths page is still useful for 
+        <a href='https://medium.com/@RoseLGauthier/debugging-javascript-in-chrome-dev-tools-part-1-d1a29cd94126'>showing what a debugger is</a>.  
+        That's client-side JavaScript, but the concept is the same in any language.  I use NetBeans and php-xdebug for PHP.  I held my nose and 
+        use the free and open source SatanSoft Visual Studio Code for Node.js.  I've used PyCharm for Python.  
+        A debugger is something that lets you run the code 
+        line by line and see what it's doing, including watching the variables change and the call stack go up and down.  You can also 
+        set "breakpoints" on specific lines such that the code runs until you "break" (pause) at a given line.  Then you can go step by step.
+        You "step into" functions or just "step over" them and see the result on the next line.  Or you can "step out" of them.  
+        That's the basics.  The quotes indicate terms that many debuggers use, if not all of them.  I've also used Eclipse for PHP.  
+        
+    </p>
+    
+    <p>I should add that a debugger does not solve your bugs or literally debug them.  It's a tool to let you debug them.  
+        
+    </p>
+    
+    
+</section>
+
+
+<section>
+    <h3>August 22</h3>
+    
+    <p>The potential apprentice situation that I was ranting about for the last few days seems to have come to a bad end on his end.  I 
+        suppose you could could say he withdrew his application for apprenticeship.  Perhaps I'll come back to that.  
+     </p>
+     
+     <p>The potential apprentice from Gab is coming along.  He can write!  He passes my writing tests.  His first question today is 
+         "Do you mind sharing any details in how you got burnt in previous work?"  
+     </p>
+     
+     <p style='margin-bottom: 3ex; '>Divorced, beheaded, died, divorced, beheaded...
+         
+     </p>
+     
+     <section>
+         <h4>lessons learned</h4>
+         
+         <p>I have written a lot below.  I should record some lessons.
+         </p>
+         
+         <ul>
+             <li>beware of people who demand the phone too quickly.  And / or have an account manager intermediary</li>
+             <li>consider escrow services.  Escrow.com, as I recall, only charges 3% and has a plenty good enough rating with BBB.
+             </li>
+             
+             <li>Beware of doing too much work before getting paid.  I think I've finally learned this lesson.
+                 
+             </li>
+             
+             <li>A number of things will trigger me and get me so worked up that the situation is unsalvageable. There are perhaps a number 
+             of things to say about this, but one is that it's a reason why I should not be working alone.  I sometimes need just about 
+             anyone else's perspective.</li>
+             
+             <li>In some rare instances, I might find a technical intermediary on the client's side: someone whom I would take as an 
+                 apprentice in other circumstances.  This probably would have saved at least one project: there was a specific person 
+                 who got involved too late, but 
+                 may have saved the project a few days or a week or two earlier.
+             </li>
+             
+         </ul>
+     </section>
+     
+     <p style='margin-top: 3ex; '>Let's make a list of codenames / brief summaries, then perhaps I'll randomize their order and expand.
+         
+     </p>
+     
+     <ul>
+         <li>the opposite of the British "peer" telling the truth</li>
+         <li>meltdown over $100 - $200</li>
+         <li>vanishes when I start talking about charging (instance 1 - filthy edition)</li>
+         <li>8 year deprecated PHP code</li>
+         <li>7 hour talk / the traveler</li>
+         <li>Mr. disorganized in several ways and bad communication with everyone, not just me</li>
+         <li>doesn't feel needs to pay minimum wage</li>
+         <li>pay me peanuts then Number 1 makes assumptions</li>
+         <li>vanishes when I start talking about charging (instance 2 - laborious edition)</li>
+     </ul>
+     
+     <div style='margin-top: 3ex; margin-bottom: 3ex;'>
+     <p>That spans quite a few years, so it's not quite the disaster that it appears, but then again it has been bordering disastrous overall.
+     </p>
+     
+     <p>Below, several times, I mention having my blood pressure raised.  I have not taken any "vaccines" at all in my adult life, so that 
+         hasn't damaged my heart.  Nor have I been to a doctor in 19 years, and that was when I passed a physical for particular work.  
+         My heart is just fine as far as I know.  The point is that I don't like having my blood pressure severely raised by clients.  
+         I don't like that emotional state.  I'm not worried about dying from it.
+         
+     </p>
+     </div>
+     
+     <section>
+         <h4>opposite British peer</h4>
+     <p>Opposite British peer:  This was a wretched line of communication.  This might still be salvageable to this day if I had the 
+         right intermediary.  I should have had an intermediary watching the communication early on.  I made a conscious decision to 
+         solve his problem whether he ever paid for it or not: I started chasing the rabbit, and I caught it!  This guy really annoys me on a "political" 
+         level, too.  I wrote a little bit too much without getting enough feedback.  He complained about my long emails.  They really weren't 
+         that long; he just probably wouldn't get off his effing phone.  Again, I needed an intermediary.  
+     </p>
+     </section>
+     
+     <section>
+         <h4>meltdown</h4>
+     <p>Meltdown:  This guy's technique was to pay whatever I asked for the first payment and then hire or fire me based on what I charged.  
+         I gave him a bill he seemed to think was totally outrageous.  He also seemed to think that I was going to demand payment.  
+         I never got a cent from him.  Complicating this matter was that he had already given me a company email address, so it 
+         eventually made it easy for me to just stop checking the box and ignore him.  
+   </p>
+   
+   <p>The issue of the corporate box brings up a larger point.  I get very irritated at people who do things like demand tax forms when 
+       I am not an employee and we have absolutely no guarantee that I'm going to make it to $600.  I don't remember what the difficulty 
+       with the box was, but it added a complication that I didn't need until there was a point in it.  There have been other 
+       examples over the years.  I think it goes to people trying to get commitment, but I make no claim of committing until we get 
+       beyond a certain point.  It's a chicken and egg.  
+   </p>
+   
+   <p>Web development alone is a vast field.  The meltdown guy melted down over what was probably a question of $100 - $200.  I very 
+       specifically said that I'd negotiate it.  He seemed to think it was something ridiculously simple, and I was scamming him.  
+       Yeah, it may have been the sort of thing he did every week or so.  I did it every year or so.  
+       
+   </p>
+       
+   <p>He eventually started backing down and realized that he had asked for me to do it in a way that required a bigger learning curve.  
+       Like I said, though, it was easy to stop checking the corporate box and be done with him.  He'd already raised my blood pressure too 
+       high, and it took him too long to back down.  I managed to keep calm for a while, and I'm the one who initiated the backdown process, which 
+       was quite an accomplishment for me in that such things are difficult--running is easier.  But it took him too long to calm down; I'd 
+       already given up.
+   </p>
+     </section>
+   
+    <section>
+        <h4>bill fail - filthy edition</h4>
+
+        <p>I was trying to work with another dev on this.  It is very hard for peer-level developers to work together.  With apprentices, 
+            it's clear who is in charge at the technical level, even if the apprentice is in charge on the business level.  If it's not 
+            clear, I need help on the business level, to the point of putting you in charge.
+        </p>
+
+        <p>The dev misunderstood what I meant and thought he sent the final bill to the client.  I can't conceive of how he'd think 
+            I would charge that little.  I was charging him a sales commission for getting him the client--that's all I was charging for 
+            in that bill.  Then he refused to clarify the issue and tried to figure out how we'd eventually get enough money out of the 
+            client.  
+        </p>
+
+        <p>I foolishly did a number of hours of work without getting clarity.  It took that many hours to achieve "hello world."  Then I 
+            sent the client the bill just for "hello world."  I think he was irritated at the confusion at this point, and he never 
+            responded.  I was embarrassed enough about the whole thing that I never pushed it, either.  
+        </p>
+    </section>
+     
+    <section>
+        <h4>8 year deprecated PHP code</h4>
+        
+        <p>She goes in the category of I got on the phone too quickly.  If I had slowed the discussion down, I might have realized she wasn't 
+            all there.  
+            
+        </p>
+        
+        <p>If you look for the word "deprecated" I think you'll find my rantings below. Her other developers charged $150 / hour.  I was 
+            perfectly happy with a fraction of that.  Then I found that she was using stuff that was deprecated 8 years before and removed 
+            from the language 6 years before.  That is insane.  I told her that nothing could be done until I fixed that.  She said that 
+            no one else had complained.  What I should have said is that of course they don't complain when they're charging $150 / hour.  
+         </p>
+         
+         <p>The clock of her server was wrong by something like 5 hours.  It hadn't been rebooted in almost 3 years.  Thus, with all this 
+             chaos, her system crashed too often.  
+         </p>
+         
+         <p>I did way, way too much tedious work before billing her.  I may have salvaged it, and, come to think of it, the situation might 
+             still be salvageable--again, with an intermediary.  The final straw, though, was when her demo system crashed.  
+             
+         </p>
+         
+         <p>The $150 dev had the bright idea of updating the demo system with my dev system code without testing it, or he didn't test much. 
+             Part of the problem was probably the effing cache system.  I tend to think anyone who makes a cache system without a very 
+             simple disable mechanism should be shot.  He may have tested and it worked because the cache hadn't refreshed yet.  Also, given 
+             the nature of their system, there was absolutely no excuse for needing a cache.  It should all have run instantly.  
+          </p>
+          
+          <p>He updated the demo system JUST BEFORE A DEMO!  And thus <b>I</b> get the call because she's freaked and he's unavailable.  
+              The fundamental problem was that he needed to refresh 3 repos of code, not one.  He incorrectly didn't think they were related.  
+              I should have pushed back and demanded it all be in one repo because I could tell it was connected.  I probably should have seen 
+              that coming, although I didn't expect him to do that a day later.  I thought I'd have a few days to collect my arguments on the 
+              matter.
+           </p>
+           
+           <p>Within about 10 minutes, I just about had the repos refreshed, and then I think I was messing with the DAMN CACHE when he 
+               finally became available and chimed in.  I may have had it working in another 2 minutes, but she had him take over.  
+               I thought he knew enough about git to simply reverse what I had done, but he did not.  He proceeded to very tediously manually 
+               undo it.  This is one of a handful of instances where I assumed the other guy knew more.  
+           </p>
+           
+           <p>So I was being intentionally or idiotically sabotaged by another developer.  Then I was called with emergencies and THEN 
+               overridden by someone who did not at all know more.  This once again raised my blood pressure, which 
+               I probably correctly simply walk away from.
+           </p>
+           
+           <p>To make things worse, she had some live systems running on the demo machine.  It was a mess.
+               
+           </p>
+         
+    </section>
+     
+     <section>
+         <h4>7 hour talk</h4>
+         
+         <p>I got on the phone too quickly.  And I talked for 7 hours, which gave me the mistaken impression that we were communicating 
+             in a relevant manner.  To add to my irritation, this guy popped back on CL AGAIN recently.  We talked twice with many years 
+             in between.  I didn't get burned the first time--that was another story.
+         </p>
+         
+         <p>In any event, he talked because he was driving.  This meant, though, that he had major connectivity problems such that he 
+             really should not have had in the relevant year.  He was very slow to look at what I've done, so I got too far ahead of him.  
+             At least, that was one problem.
+             
+         </p>
+         
+         <p>Given that I thought we were communicating, I was experimenting rather than rushing.  My experiment was a comical failure.  
+             He got very impatient, and it took me a while to realize that.  Because I was experimenting, I did way too much work (AGAIN) 
+             before realizing that this wasn't going anywhere.  He is actually another instance of vanishing when I presented a bill, but 
+             I should have known better in this instance.
+         </p>
+         
+     </section>
+     
+     <section>
+         <h4>Mr. Disorganized</h4>
+         
+         <p>I was using a variant of a CMS.  If I had simply started writing his system from scratch, it may have worked.  I eventually 
+             came to realize I'd probably made a mistake the with the CMS, so I felt I had failed.  I didn't push to continue when it fell apart.  
+             From his perspective, he was paying a lot and not getting far enough.  I tended to agree with him.  With that said, we 
+             were making progress.  "We" because I was working with another dev on this.  That relationship worked pretty well.  I wish we 
+             had tried other projects together, but he had a day job and didn't need the extra money.  
+         </p>
+         
+         <p>Between my partner and me, the client bounced 2 - 3 checks.  That was the only time in my life I went to a bank to cash checks.  
+             Then he just ignored the next invoice, and, once again, I had had enough and wasn't going to push the issue.  
+             
+         </p>
+         
+         <p>He had com problems with employees of his, too.  Also, he wouldn't email, and he'd call me at 10am when I wasn't awake.  
+             So multiple problems.
+             
+         </p>
+     </section>
+     
+     <section>
+         <h4>no minimum wage</h4>
+         
+         <p>He maybe, barely passed my writing tests, but once again, I probably got on the phone too fast.  I managed to get one 
+             relatively substantial payment out of him.  I should have been using an escrow service from the start.  That probably 
+             would have solved our problems.
+          </p>
+          
+          <p>In this case, I needed access to very roughly $750 of his money.  I should have asked him at that point for a technical 
+              intermediary on his end--someone I could train to push the final buttons such that I didn't need access to that money.  
+              It turns out there was a perfect person, but by the time I asked, it was too late.  
+          </p>
+          
+          <p>He harped several times on the notion that I had stolen the money.  I kept trying to explain to him in detail how literally 
+              anyone on earth could see I hadn't.  (That should give some people a big hint as to the nature of the project.)  So obviously 
+              this was grating to me.  
+          </p>
+          
+          <p>Also, specifically because I was uncomfortable about this situation with the money, I did something meant to retrieve the money 
+              quickly.  It was not stolen or lost, but it was temporarily inaccessible given the widely published nature of the system that 
+              a few 1,000 people used.  That is, what I was doing was NOT obscure.  
+              That in turn broke something else.  He got bent out of shape about this point that was in my mind quite minor.  
+          </p>
+          
+          <p>When I started talking about the second payment, I was already riled and probably wasn't communicating well.  I thought he was 
+              deliberately misunderstanding me, and I may have even accused him of such.  That got him bent out of shape.  At least I didn't 
+              accuse him of stealing money.  
+          </p>
+          
+          <p>At one point, he went on about what was and wasn't billable.  I was talking about such a trivial $ / hour for the very skilled 
+              work that I was doing that it pissed me off.  I probably would have been satisfied with Waffle House Rock Star Grill Op 
+              wages of roughly $15 / hour.  He drove me under minimimum wage.  Also, at one point I thought he was about to put me on a 
+              small salary.  Thus, I assumed small amounts of long term training THAT HE ASKED ME TO DO were damn sure billable at a low 
+              rate.  
+          </p>
+          
+          <p>I finally did put his system in production to his satisifaction just because I wanted to achieve the goal.  Several months later 
+              he said that someone who had done that before (I had not.) was impressed with my work.  Again, it was probably salvageable, but 
+              he's raised my blood pressure and pissed my off.
+              
+          </p>
+     </section>
+     
+     <section>
+         <h4>peanuts - Number One</h4>
+         
+         <p>I talked to this guy several times at 1 - 3am, so it was perfect on that front.  Because of this, I accepted an insanely low 
+             hourly wage.  I specifically told him that I hadn't been an employee in a long time, and that I wasn't necessarily going to be 
+             working 40 hours immediately.  I also asked for a large degree of flexiblity on hours in terms of time of day.  I otherwise 
+             explained that it was going to take a while to get oriented.  He was fine with that.  
+         </p>
+         
+         <p>It would appears that he didn't communicate this to his Number One.  After roughly 2 weeks, I started to feel that I'd 
+             actually found something stable.  So if you'll excuse the phrase, I went fishing for women.  That is, I started looking at 
+             singles boards and such.  And I found an interesting one.  
+         </p>
+         
+         <p>Around 12:30am Number One essentially asked me where I was.  I was not on the clock.  He seemed to assume I was working 
+             fixed hours and was on call and such.  I told him that I was going back and forth with a woman.  All of this was in writing, 
+             so I'm paraphrasing.  I read his response as thinking I was stealing from the company.  
+         </p>
+         
+         <p>I'd have to remember all the details, but, as I've already implied, I was not fully settled on the project.  I was settled 
+             enough to go on dating sites, but ...  Given that I'd already had a discussion with the owner on hours and such, and given 
+             the hourly wage, Number One's commentary set me off.  This is one of several instances where I sent out an emotionally charged 
+             email.  If you 
+             ever get one from me, you have perhaps 12 - 24 hours to try to calm me down.  The owner went a bit too long.  I wound up 
+             not charging them anything.  I was not legally an employee yet.  I think the expectation was that I would invoice at least the 
+             first time.
+         </p>
+         
+         
+     </section>
+     
+     <section>
+         <h4>disappears on invoice - laborious edition</h4>
+         
+         <p>Got on the phone too fast, most likely.  I showed him varoius editions of what he wanted, and he would say, "But can you 
+             do blah blah blah."  The answer was sure, but at some point you need to pay me for what I've done.  Again, perhaps an 
+             escrow service would have helped.  He vanished when I sent an invoice.  But he probably didn't see emails as significant.  
+             Again, the email test.  It was probably salvageable, but the situation was so awkward I couldn't figure out what to do.
+             
+         </p>
+     </section>
+     
+</section>
+
+
+<section id='e2022_0821_0009'>
+    <h3>August 21 (at least 4 entries; the first just after midnight, the second starting 03:05am, 3rd at 20:42, the 4th soon after)</h3>
+    
+    <section>
+    <h4 style='margin-top: 1ex; '>part 1, around 00:09</h4>
+    
+    <p>Note that my August 20 entry was posted a few minutes ago.  Weeks ago I posted my apprentice ad to Gab.  I got trolled for the first time.
+        That's another story, though.  I may decide to continue to engage the troll.  I have some evidence that there is no such thing as 
+        bad publicity in that our arguing keeps attention on my ad.  Along those lines, I got a reply.  I posted to Gab twice--in May and a few weeks 
+        ago / a few weeks after May.  This is my first substantial reply.
+     </p>
+     
+     <p>The question: is "there is an end-goal to the apprenticeship? Will the apprenticeship have the possibility of leading to working for you?"
+      </p>
+      
+      <p>I'll take the second question first.  The positive part of the answer is that would, in theory, be great if you could work for me.  
+          A somewhat distant and theoretical goal of having apprentices is to have a development company (or trust) that works during the evening 
+          and night.  If I train apprentices, their technique will be compatible.  The more realistic answer is that if you want to work for me, 
+          you'll have to help me find more business.  That is one of my motivations to find apprentices--I need help finding business.  There 
+          are lots of ways to help.  
+      </p>
+      
+      <p>So, yes, that is a possible end goal.  More generally, though, I want you to get to the point that you can find your own paid projects 
+          or even go get a "real job."  I am not certain, but my educated guess is that with just a few months of experience, you'd start 
+          getting calls from job recruiters.  I addressed this a handful of times in the last few days in response to another potential 
+          apprentice.  (He was responding to my Craig's List ad.)  That is, I addressed this just below in this blog.  The relevant entries 
+          are non-contiguous, though.  The first one was on August 14.  
+          
+      </p>
+    </section>
+    <section>
+        <h4>part 2 - starting 3:05am</h4>
+        
+        <p>The Gab potential apprentice and I are going back and forth now.  I'm not asking anyone to do cold calls, although if anyone thinks 
+            that might be effective, I'd consider a good deal for a commission.
+         </p>
+         
+    </section>
+    
+    <section>
+        <h4>part 3 - starting 20:41</h4>
+        
+        <p>I updated "<a href='/t/22/06/front_man.html'>front man</a>" regarding apprentices and much more than apprentices.  
+            
+        </p>
+    </section>
+    
+    <section>
+        <h4>part 4 - a rant about a definitely non-Gab potential apprentice</h4>
+        
+        <p>The potential apprentice from Gab and I are doing just fine.  The one I will rant about is from Craig's List.  My latest 
+            ad expired a few days ago; he wrote a few days before expiration.  Given that I'm about to rant about him, that's 
+            probably a bad sign.  This is similar to "Mr. Zoom," however long ago it was.  The situation is salvageable, but I get 
+            this sort of thing a lot.  I'm ranting as much about the other instances as this one.  
+        </p>
+        
+        <p>I told him I'd posted my August 14th entry below.  I said in my email, "Let me know what you think."      
+            As far as I know, he didn't write back.  There is nothing in spam.  I am open to a failure in email, but I have no 
+            reason to think that.  
+            I had some concern that 
+            he mistook my showcase website as being that which he specifically doesn't want to do, so I wrote my 8/19 entry below 
+            trying to clarify that a website is an alternative to a corporation or trust.  I don't have an artificial entity for 
+            him to reference.  There are some things I wanted to clarify for anyone in the future, too, so I hope it wasn't a waste.  
+            For that matter, I'm trying to clarify this in my own mind.  It's been hard to express all my thoughts on how apprentices 
+            and I can help each other.
+            
+        </p>
+        
+        <p>So even though there was silence from the 14th to the 19th, I clarified and wrote him again.  I emailed something very 
+            close to what I wrote here on the 19th.  His reply was, "You've already sent me this and I read it. What backend projects 
+            can you help me with?"  As I said, he didn't <i>tell me</i> he read it, so why should he get snippy?  I have every right 
+            to never write him again, but I did, and I spent more time answering his question.
+        </p>
+        
+        <p>In sales there is a concept of "the call to action."  Given that he wrote me, isn't "Let me know what you think" enough of a 
+            call?  Perhaps not.  Even if not, it seems that a lot of people have a problem with the concept that if I email you in the 
+            context of an ongoing discussion, I expect an answer unless I specifically say that there is more to come from my end.  
+            It's amazing how many discussions just end for reasons that I have trouble fathoming.  Are people functionally illiterate?  
+            Will they not get off their flippin' phones and type?  Can they not type?  I believe the current version of my ad on 
+            this site mentions typing ability.  
+        </p>
+        
+        <p>Oh yes, I mentioned his answer yesterday, just below.  My answer to him was, in part: does he want ideas on what I can help 
+            with, or does he have ideas?  This seems a reasonable question.  As I said, if I start writing ideas I could be at it for 
+            hours.  He's had every opportunity to look over this site and my GitHub and see that there are dozens and dozens of 
+            ideas.  I'm not expecting him to do extensive reading like that, but if he's looking for ideas, perhaps he could have 
+            taken the trouble to look on his own.
+        </p>
+        
+        <p>Given his answer, which I'm coming to in a moment, I see the potential for confusion.  I thought that maybe he had things 
+            he wants to work on, but he has no idea how to get started.  Also, I'm not trying to make people do work for me for free 
+            as a one-sided deal.  I'm willing to help them with their own work.  
+         </p>
+         
+         <p>His reply a few hours ago, "I have no ideas. That is why I reached out to you. Am I wasting my time or are we going to do 
+             some work? This back and forth emailing is getting old. / Sent from my iPhone"
+         </p>
+         
+         <p>In some versions of my ad which are probably fairly easy to find on my site, I tell people it's probably best if they 
+             get off their flippin' phones when writing me.  
+         </p>
+         
+         <p>Again, I hope the reader can see that "I have no ideas" is NOT OBVIOUS to me.  That's why I asked, very politely.  Also, 
+             I <i>did</i> give him ideas on how I could help in the general sense, and my 8/14 entry states that assumption as to 
+             what he is asking.
+         </p>
+         
+         <p>One of several points that nettles me is something I've observed too many times before.  I hope that in any case of 
+             ambiguity, I suspend judgment until I get clarification.  It's a red flag for me when people jump to bad conclusions.  
+             He's done it twice.  Perhaps that should end that.  I did write him back, though.  I'll get to that in a moment.
+         </p>
+         
+         <p>I want to address something else that has come up before.  "... are we going to do some work?" has come up before for 
+             specific meanings of that.  And he may not mean these things, but I'm busy ranting, so I'll continue.  
+         </p>
+         
+         <p>I've had one or two apprentices who are quite set on working on stuff I'm getting paid for because it's "real world."  
+             They weren't expecting to get paid, but they still wanted to work on something "real."  I get that on one level, but 
+             to go back to the medieval apprentice model, that's like a beginning apprentice blacksmith demanding to work on plate 
+             armor.  A blacksmith's apprentice starts with making crude nails.  
+             
+         </p>
+         
+         <p>There is also the complication that my main project is for an attorney and thus attorney-client-privileged information is 
+             involved.  I'd have to trust the apprentice, and several of them I would trust.  Also, I am considering asking to make 
+             parts of that open source, but there are some cost benefits to that just from my end, let alone my client's.  
+             
+         </p>
+         
+         <p>I also wonder if this guy is under the delusion that he'd be much help on a "real" project sooner than months from now.
+             He's expecting me to spend that sort of time. I have spent a decent fraction of that time with apprentices, but 
+             that's a lot to ask in his 30th word past his initial email.  I do need something in return, although that something may 
+             be fairly easy to achieve on the apprentice's part.  What this guy is asking may not be at all easy on my part.
+           </p>
+           
+           <p>His 30th word plus he's been ornery twice.  I have to like someone to spend that sort of time, and / or think they're 
+               going to make progress.  I can't even communicate with this guy so far.
+               
+           </p>
+           
+           <p>My latest answer to him, by the way, was "Anything we do on the back end will involve Linux.  I'm running Ubuntu Linux 
+               (desktop), 
+               so that would be easier.  Let me know when you have Linux running, or if you have questions."  His installing Linux would 
+               go a long way with me.
+           </p>
+           
+           <p>I could comment further on my answer, but I think I've spent enough time on this rant.  
+               
+           </p>
+        
+    </section>
+    
+</section>
+
+<section>
+    <h3>August 20 (starting 23:42)</h3>
+    
+    <p>My potential apprentice answered my question about back end projects.  "What backend projects can you help me with?"  I read that 
+        about 10 hours ago.  My thought for most of that time has to been to roll on the floor laughing.  (Yes, I am aware there is an 
+        acronym for that phrase.)  Or perhaps I should cry.  
+    </p>
+    
+    <p>I'm starting to appreciate the front end more and more, but I had to be dragged there.  It's where the projects I found led me.  
+        I think it's safe to say my heart is still in the back end.  So the only question is do you want ideas or do you want to present 
+        me with ideas?
+    </p>
+    
+    <p>If you want ideas from me, I'd have to resist writing dozens of ideas.  I'm not even going to start until asked.  It's too dangerous 
+        in that I could be at it for hours.  
+        
+    </p>
+    
+    <p>To elaborate on your presenting me with ideas, I have done and will do a huge variety of projects, so let's hear it.  I'd imagine 
+        I'll entertain it.
+        
+    </p>
+    
+</section>
+
+
+<section>
+    <h3>August 19 (starting around 23:15)</h3>
+    
+    <p>Note that my previous entry was updated a few hours ago, during the night of the 19th.
+        
+    </p>
+    
+    <p>A potential apprentice wrote me a few days ago.  I replied here, but I made one imprecise statement that needs correcting, and 
+        I otherwise want to rephrase.
+    </p>
+    
+    <p>I mentioned a website to showcase his work.  That was imprecise.  I'll try again:
+        
+    </p>
+    
+    <p>One way I can help apprentices is to get them work experience.  The work does not have to be for me; it can be something you want
+         to do.  I can play the role somewhere between boss and thesis adviser.  That is, I can make sure you're doing it well enough 
+         that it is legitimate experience.  I don't have a corporation or other formal artificial entity, so that presents a very small 
+         but management complication.  One option is that you say you worked for Kwynn.com.  I'm fine with that, but I would 
+         understand if you don't want to be associated with my louder and louder "irritation" at the powers that be.  
+    </p>
+    
+    <p>The alternative is to create a website that does not have to list me publicly, but I can speak as your managerial reference.  
+        The website doesn't have to have much content.  Ideally I would want whatever you generate to be public, but, if not, 
+        the site only has to make reference to what you're doing.
+    </p>
+    
+</section>
+
+
+<section id='eAlpacaHW'>
+    <h3>August 18 - 19: "hello world" for the Alpaca stock and crypto trading API (in progress 00:57 8/18, continued 8/19 21:16+)</h3>
+    
+    <h4>updates 8/19</h4>
+    <p>Updates during the night of 8/19: Here is the 
+        <a href='https://github.com/kwynncom/examples-etc-permanent/tree/main/Alpaca'>latest code</a> 
+        and what should be a permanent repo.  Maybe I finally solved the code-fragments problem.
+     </p>
+     
+     <p>To add to yesterday's (this morning's) commentary, I was a bit concerned when Alapca said they wanted NodeJS 14+, and the command 
+         line shows 12.  I added version output which currently shows v16.15.0.  NodeJS installs versions of itself in ~/.npm I believe.  
+         It likely does this based on the package.x files.  Visual Studio Code is smart enough to know which version to run.  
+     </p>
+    
+    <h4>original 8/18 - early 8/19</h4>
+   
+    <p>The <a href='https://alpaca.markets/docs/trading/getting-started/'>Alpaca Trading API hello world documentation</a> is pretty good, but 
+        it contains an annoying bug.  I was following the JavaScript instructions, but the bug may be in all of them.  
+        The first trading example is to buy BTC, but if one tries to buy BTC with a "day" "time_in_force," you get an HTTP 422 error.  The "gtc" 
+        setting rather than "day" works.  <a href='https://github.com/alpacahq/alpaca-trade-api-js#orders-api'>GitHub says the settings 
+            are</a> 'day' | 'gtc' | 'opg' | 'ioc'  "Time in force" is a general stock trading term.  
+    </p>
+    
+    <p>I think I mentioned that I held my nose and am using Visual Studio Code, the free and open source version, to debug JavaScript (server-side 
+        Node.js).  It works.  I'll probably live.  (Those taking Bill's vax may not live.  SatanSoft should be seized and sold off to pay 
+        damages.)  
+    </p>
+
+    <p>I can manage in Node.js, and one day very soon I may really dig in, but for now I still run into unexpected issues.  If you want to 
+        keep your API key out of the public code, it takes some unexpected syntax.  Also, for debugging purposes, the example code needs 
+        to be modified a bit to deal with asynchrony.  
+    </p>
+    
+    <p>Once again I'm going to refer to a 
+        <a href='https://github.com/kwynncom/code-fragments/tree/1486a2bbd1caeb09c8378252ad480a4d6a0ea12c/alpaca'>specific version of 
+            code</a>.  The code is subject to updates and the new versions being moved entirely.  In fact, that is the broken version 
+            for purpose of demonstrating the time_in_force error.  I just pushed a new, working version that should be easy to 
+            find from the above link.
+        
+    </p>
+    
+    <p>Note how I use module.exports.publicSampleCreds in public_example_creds.js to make the data accessible to the main program.  
+        I am not certain this is the exact right way, but it works for now.  I'm sure I'll learn more eventually.
+        
+    </p>
+    
+    <p>Then I write a couple of async functions to make sure the the program doesn't end before I see my output.  
+        
+    </p>
+    
+    <p>Here is more about the 422 error.  Note that in the createOrder.then() I need both the success and failure parameters to be able to 
+        see the error.  The various levels are
+        
+    </p>
+    
+    <pre>Error: Request failed with status code 422
+        error.response.data: {
+            code: 42210000,
+            message: "invalid crypto time_in_force",
+        }</pre>
+    
+    <p>Out of (sandbox, fake) money gets an HTTP 403 error, and error.response.data explains this.  Oddly, when you put more money in your 
+        account, you need to use new API keys, and trying to do anything will get you another 403 error much earlier in the program.
+        
+    </p>
+    
+</section>
+
+
+<section>
+    <h3>August 14 (first [and only] post after 22:35)</h3>
+    
+    <p>This is to a new potential apprentice.  Your comment about websites versus APIs reminded me of an XKCD.  Here is the 
+        <a href='https://www.explainxkcd.com/wiki/index.php/1481:_API'>Explain XKCD version</a>, which is more useful for a handful 
+        of reasons, and <a href='https://xkcd.com/1481/'>the original</a>.  The main text is "If you do things right, it can take people a 
+        while to realize that your 'API documentation' is just instructions for how to look at your website."  The server side (back end) 
+        of a website to a degree is an 
+        API.  You know the term "back end," and there is such a beast as a "back end developer" who focuses on the back end of a website, 
+        which is (in part) the database and more-or-less explicitly an API.  
+    </p>
+    
+    <p>(I doubt I understood the IERS reference at the time.  Now I do.  That IERS reference is quite funny when one gets it.  About 22 hours 
+        ago, though, I was writing in my personal blog about how dangerous XKCD has become.  Anyhow, those are other topics.)
+    </p>
+    
+    <p>For the moment I'll interpret your request as "How can I (Kwynn) help you get an 'IT' position?"  I'll take this in a handful of steps.  
+        We'd have to figure out what project(s) you want to work on.  I have lots of of ideas that are back-end only, but they don't have to 
+        be my ideas or even anything I'm interested in.  You work on projects, I periodically evaluate them, where "periodically" might range 
+        from a few times a day to monthly.  Then you can list experience working for this site or some new site we create just to showcase 
+        what you're doing.  You can list on your resume n months of experience working for kwynn.com or XYZ.com or blah.com.  I serve as 
+        managerial reference to confirm it, and job recruiters will love talking to me; they'll want to recruit me, too.  It 
+        probably would not take very many months to start getting contacts from job recruiters (headhunters).
+     </p>
+     
+     <p>That's the first notion that comes to mind.  
+         
+     </p>
+    
+    
+</section>
+
+
+<section>
+    <h3>August 9</h3>
+    
+    <section>
+        <h4>Wordle</h4>
+        
+        <p>For keyword purposes: all 2,309 / 2309 Wordle words / word list / dictionary in  
+        <a href='https://raw.githubusercontent.com/kwynncom/code-fragments/63c658e061686c9d487afe297f2056b77962d24a/wordle/list/wordle_list_2309_words.json'>
+            JSON</a> and raw 
+<a href='https://raw.githubusercontent.com/kwynncom/code-fragments/63c658e061686c9d487afe297f2056b77962d24a/wordle/list/wordle_list_2309_words.txt'>text</a>.  
+
+            
+        </p>
+        
+        <p>On a vaguely related note, my <a href='/t/20/10/sitemap_begin_2020.xml'>2020 sitemap / XML</a>.
+            
+        </p>
+    </section>
+</section>
+
+
+<section>
+    <h3>August 8 (last entry roughly 22:30)</h3>
+    
+    <p>ENTRY 1: I created a <a href='/t/22/08/tsck/'>utility to test my simple timeserver</a>.  For my own searching purposes: port 8123, TCP, UDP.
+        (02:11 AM then slightly revised 02:12)
+    </p>
+    
+    <section>
+        <h4>entry 2 - mocking a robot response to my Craig's List apprentice ad</h4>
+        
+        
+        <p>I sent this to him at 9:26PM. 
+            
+        </p>
+        
+        <p>This "guy" (robot who identifies as male) very, very clearly didn't read a damn thing; it's a robot writing.  I would like to mention again 
+            that I ALWAYS take time to at least make it clear I'm answering that specific ad.  It makes this sort of rotten spam all the more 
+            obnoxious.  
+            
+        </p>
+        
+        <p>Oh, then his robot writes again 63 minutes later, as if he forgot something.  I had decided not to send this to him, but now I'm leaning 
+            towards sending it momentarily.  
+            
+        </p>
+        
+        <p>"Ex-NASA ... Developer ..."</p>
+        
+        <p>I hope that it's not just me who gives this guy backlash for invoking an occupying "government" agency.  To name a few agencies, the purpose of 
+            the Department of Defense is offense in service to baby-raping demon worshipers.  The purpose of the Dept of Treasury is to make us all 
+            poor.  The purpose of D Education is to make us dumb.  Prior to "Covid," the purpose of the FDA was to make damn sure that cancer is not 
+            cured.  As Dr. Burzynski in Houston discovered the hard way, curing cancer gets you a 57 count Federal indictment.  The current purpose of the 
+            FDA is to do as much damage as they can with "Covid" and "the vaccine."  The purpose of the D Energy is to make damn sure that "free energy" 
+            is not released.  Ask the late Eugene Mallove of MIT.</p>
+        <p>The purpose of NASA, among others, is to hide the truth of what's out there.  The 
+            evidence of UFOs is vast, and NASA continues to deny.  The evidence of ruins on Mars is perhaps not vast but compelling, and NASA keeps 
+            coming up with swamp gas and weather balloons.  
+        </p>
+        
+        <p>Then there is the matter of NASA facilities used for MK-ULTRA.  I believe both Cathy O'Brien and Fiona Barnett talk about NASA facilities used 
+            for sexual torture and other horrors of MK-ULTRA.  What's up with that?  
+        </p>
+        
+        <p>Then there is the matter of the missing Federal $21 - $23 trillion with a T.  Mark Skidmore of Michigan State confirmed it, although 
+            Catherine Austin Fitts presented evidence first.  As of roughly 2018, Fitts' conclusion was that the money had gone to the secret space 
+            program, which is running rings around NASA's 1943 published technology, as opposed to what is still hidden that was running in 1943.
+            
+        </p>
+        
+        <p>Along the same lines, it is unclear how much of what NASA does is and has been fake.  Most or all of the moon landing footage seems to be
+            fake.  Earth humans probably did go to the moon during or well before 1969, but not with the technology portrayed.  
+            
+        </p>
+        
+        <p>The jackass' name is a word I know from Iran.  Is he a US citizen (leaving aside the complexities of THAT concept)?  If not, why was he 
+            working for NASA?  I believe I have gone on at some 
+            length about the Indian "developers" being a matter of treason at high levels.  
+            
+        </p>
+        
+        <p>And he's located in Silicon Valley.  What a great reputation they have.  DARPA Lifelog masquerading as Facebook, and Big Evil Goo vying for the 
+            most evil company in the history of the world, to name a couple of big ones.  Anyone pumping out "Covid" and "vaccine" Big Lies is trying to 
+            kill tens of millions or many more people.  
+            
+        </p>
+    
+        <p>He mentioned a free speech product he launched.  You can't simultaneously invoke Silicon Valley and advocate free speech.
+        </p>
+        
+    </section>
+</section>
+
+<section>
+    <h3>August 2</h3>
+    
+    <p>I think I was about to launch into a new entry on 8/2, then I didn't.  This has not been substantially changed since some time on 8/2.
+        
+    </p>
+    
+    <p>Yes, I am up very, very early by my 25 year usual.</p>
+    
+    <section id='e2022_0802_AWS_IAM_1024'>
+    <h4>AWS IAM revision</h4>
+    
+    <p>I just revised the AWS <a href='#e2022_07_03_AWS_IAM'>IAM policy I created on July 3</a>.  I specifically want the AWS dashboard to  
+        give me various errors so I know I'm logged in with the limited access user.  Today I got some really ugly errors, though, that took up way 
+        too much of the screen.  I considered giving the limited user all of the "describe" powers, but I happened upon one in the "Visual editor" list, 
+        and 
+        then the little info icon led to 
+        <a href='https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstanceAttribute.html'>confirmation</a> that it covered the error 
+        I was looking for.  
+        
+    </p>
+    <p>The new "power" is "ec2:DescribeInstanceAttribute"; the errors were:        
+    </p>
+    
+    <pre>Failed to describe disableApiTermination for instance i-0123...
+Failed to describe instanceInitiatedShutdownBehavior for instance i-0123...</pre>
+    
+    </section>
+</section>
+
+<section>
+   
+    <h3>July 31</h3>
+    
+    <p>A few hours ago I posted this site's <a href='/t/22/06/upsort/'>update / change log</a>.  The source code is linked from that page.
+    </p>
+    
+    <p>My blood pressure just went up while cleaning my inbox of calls from a job recruiter.  I've already complained about this one, I 
+        believe.  Several weeks ago I sent him my SatanSoft formatted resume exported from LibreOffice.  One of many irritations is that 
+        we are 30+ years into the web era, and I am still asked for SatanSoft resumes.  I answered his question about rate, citizenship, 
+        availability, blah blah blah.  Then, like almost all recruiters always do, he went dark.  
+    </p>
+    
+    <p>Note to job recruiters: you lose whatever smidgen of credibility you have when you go dark for 2.5 weeks.  "Thank you for your 
+        information, but the job is taken" is all it takes.  Apparently the job became available again, but I am not jumping up and down to 
+        waste more time.  It's not just answering his questions and dealing with SSoft resumes.  I generally explain that the first thing 
+        I care about is the night owl thing.  (I'm writing this sentence at 4:23am.)  I am very sick and tired of saying that over and over 
+        and having it ignored.  
+    </p>
+    
+    <p>I am reading the transcription of his voicemails.  Part of my irritation is that I really don't want to have to listen to him.  
+        He's Indian, and I really resent that I am dealing with Indians.  I also find it interesting that Big Evil Goo Voice's transcription 
+        doesn't do as well with Indians as Americans.  There must be hundreds of millions of hours of Indian voices to train the "AI" on.  
+        I suspect this goes to the "racist robots."  Perhaps most Indians simply OBJECTIVELY cannot speak English clearly enough.  
+        
+    </p>
+    
+    <p>There are hysterical articles on "racist robots" / racist AIs.  AI essentially proves that racism is objectively, mathematically valid.
+        It seems the AIs have become "racist" on quite a number of occasions.  I could go on about that; perhaps some other time.
+        
+    </p>
+    
+    <p>Anyhow.  Good.  I feel a bit better now.  I did respond to him and sent my resume again.  I asked if he wanted me to answer his other 
+        questions again.  This should be amusing if not blood pressure raising.
+        
+    </p>
+    
+    <p>(posted 4:44am)</p>
+    
+    
+</section>
+
 
 <section>
     <h3>July 27</h3>
@@ -929,7 +1900,7 @@ sudo certbot --apache
     
 </section>
 
-<section>
+<section id='e2022_07_03_AWS_IAM'>
     <h3>July 3, 2022 - creating an AWS IAM user to stop and start a test instance</h3>
     
     <p>I left my main client's test machine running overnight.  This cost roughly 20 cents, but it's the principle.  I get a bit paranoid 
@@ -946,6 +1917,8 @@ sudo certbot --apache
         instance ID.  If you try to restrict them, the policy will break.  This is what I came up with:
         
     </p>
+    
+    <p>Updated <a href='#e2022_0802_AWS_IAM_1024'>August 2 (notes)</a> - added "ec2:DescribeInstanceAttribute"</p>
     
     <pre>{
     "Version": "2012-10-17",
@@ -964,7 +1937,8 @@ sudo certbot --apache
             "Effect": "Allow",
             "Action": [
                 "ec2:DescribeInstances",
-                "ec2:DescribeInstanceStatus"
+                "ec2:DescribeInstanceStatus",
+                "ec2:DescribeInstanceAttribute"
             ],
             "Resource": "*"
         }
@@ -7395,6 +8369,6 @@ like AWS does.  I am reasonable sure getting a 2nd IP address with Linode or Rac
 
 </body>
 
-<!-- 02:45 Tue - unreliable stamp for confirming the version in the HTML validator -->
+<!-- 20:29 8/22  - unreliable stamp for confirming the version in the HTML validator -->
 
 </html>
