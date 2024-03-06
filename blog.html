@@ -71,11 +71,81 @@ li   { margin-bottom: 0.7ex; }
 </p>
 </section>
 	
-	<section><h2 class='years40'>2024</h2>
+<section><h2 class='years40'>2024</h2>
+
+
+<section><h3>March 6 (started 4th)</h3>
+<p>This is more on moving computers.  Some annotation to the following list:</p>
+
+<p>
+
+</p>
+
+<ul>
+    <li>install the <a href='https://github.com/validator/validator'>HTML validator</a> - first sudo apt install default-jdk  then, after after cloning,    python ./checker.py all</li>
+    <li>The way I have it set up, the validator needs the proxy and proxy_http apache mods</li>
+    <li>the validator involves systemctl stuff</li>
+    <li>replace "nobody" user with DynamicUser=yes</li>
+    <li>I have been and will be adding to my <a href='https://github.com/kwynncom/running-sysadmin-examples'>sysadmin examples repo</a></li>
+    <li>I will have to activate the Apache rewrite engine:  sudo a2enmod rewrite  ;  sudo systemctl restart apache2  -- note restart not reload </li>
+    <li> sudo systemctl status apache2 | fold   -- the fold command wraps lines readably</li>
+    <li>sudo a2enmod ssl   and restart</li>
+    <li>put locally run, SSL-enabled domain name in /etc/hosts  :  add the line :  127.0.0.1  example.com</li>
+    <li>set permissions of Apache DOCUMENT_ROOT aptly</li>
+    <li>it would appear I have symbolic links in kwynn dot com /t/23/02.  That may not be the best way to do it, but I will probably stick with it for now.  
+	The specific links are below.  Need to change underlying permissions, too.
+	<ol>
+		<li>homecms points to my <a href='https://github.com/kwynncom/cms'>CMS project</a> / home (explicit /home)</li>
+		<li>htva points to cms/htva </li>
+		<li>webhook_git points to my <a href='https://github.com/kwynncom/github-activity-web-widget'>GitHub webhook project</a> -- I rather doubt 
+this still works, but that's another issue</li>
+
+	 </ol>
+    </li>
+    <li>That in turn leads to issues with 
+	<a href='https://github.com/kwynncom/kwynn-php-general-utils/blob/02a21205384fa209308672f8bd18a14f3f7f00f8/isKwGoo.php'>isKwGoo</a> 
+    and the <a href='https://github.com/kwynncom/positive-gmail-check'>positive email [Big Evil Goo Mail] check</a>.</li>
+    <li>looks like kwynn dot com /index.php and the cms index.php should be a hard link</li>
+    <li>need to install GMail / Goo composer.  I keep these in /opt/composer 
+	<a href='https://github.com/kwynncom/kwynn-php-general-utils/blob/8134720e170144b9e518de1672668053885e6b87/composer.php'>as is shown in kwutils</a> 
+(I refer to the whole repo as kwutils because of the one file with that name):<br/>
+composer require google/apiclient<br />
+composer require google/apiclient-services<br />
+composer require google/auth<br />
+    </li>
+    <li>positive email check read-only secret file - set permission - That's the Goo Cloud Console API key stuff.</li>
+    <li>isKwGoo email hash file</li>
+
+
+
+</ul>
+</section>
+
+
+
+
+	
+<section><h3>February 19 (not posted until probably the 29th)</h3>
+    <p>Some thoughts on moving computers:</p>
+
+    <ul>
+	    <li>GitHub keys</li>
+	    <li>get Apache config in repo</li>
+	    <li>create necessary (perhaps obfuscated) paths / sym links - such as /var/kwynn/... </li>
+	    <li>install chrony - After being asleep for something like 9 days, the new computer is 20 SECONDS fast.  That won't do.</li>
+	    <li>put my chrony.conf in public repo and swap it for the default</li>
+	    <li>move selected passwords - GitHub, client stuff, etc.</li>
+    </ul>
+
+</section>
+
 		
-		<section><h3>January 29</h3>
-			<section><h4>law office project update</h4>
-				
+		
+		<section><h3>Feb 5</h3>
+			<section><h4>null update</h4>
+				<p>The page is marked as changed because I started an update and didn't get anywhere with it.
+					
+				</p>
 				
 				
 			</section>
