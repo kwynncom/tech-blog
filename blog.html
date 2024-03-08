@@ -74,8 +74,8 @@ li   { margin-bottom: 0.7ex; }
 <section><h2 class='years40'>2024</h2>
 
 
-<section><h3>March 6 (started 4th)</h3>
-<p>This is more on moving computers.  Some annotation to the following list:</p>
+<section><h3>March 8 (started 4th)</h3>
+<p>This is more on moving computers. </p>
 
 <p>
 
@@ -84,10 +84,16 @@ li   { margin-bottom: 0.7ex; }
 <ul>
     <li>install the <a href='https://github.com/validator/validator'>HTML validator</a> - first sudo apt install default-jdk  then, after after cloning,    python ./checker.py all</li>
     <li>The way I have it set up, the validator needs the proxy and proxy_http apache mods</li>
-    <li>the validator involves systemctl stuff</li>
-    <li>replace "nobody" user with DynamicUser=yes</li>
-    <li>I have been and will be adding to my <a href='https://github.com/kwynncom/running-sysadmin-examples'>sysadmin examples repo</a></li>
-    <li>I will have to activate the Apache rewrite engine:  sudo a2enmod rewrite  ;  sudo systemctl restart apache2  -- note restart not reload </li>
+    <li>Here is how I <a href='https://github.com/kwynncom/running-sysadmin-examples/blob/7fe64ab6200f5724a0383bd23ac0f44ec1dcaa11/apache2/run_local/nup/nuprw.inc'>set 
+up the validator in Apache config</a> to run at <a href='/htval'>/htval</a></li>
+    <li>the <a href='https://github.com/kwynncom/running-sysadmin-examples/tree/main/nu'>validator involves systemctl</a> if you want it to 
+start at reboot.  That URL might change, so here is a <a href='https://github.com/kwynncom/running-sysadmin-examples/tree/f74104d77d5374d2ebbbb2655e52513092bdfe40/nu'>
+specific version of nu / validator systemctl</a>.</li>
+    <li>replace "nobody" user with DynamicUser=yes  # done in repo above</li>
+    <li>I have been and will be adding to my 
+	    <a href='https://github.com/kwynncom/running-sysadmin-examples'>sysadmin examples repo</a></li>
+    <li>I will have to activate the Apache rewrite engine:  sudo a2enmod rewrite  ;  sudo systemctl restart apache2  
+	    -- note restart not reload </li>
     <li> sudo systemctl status apache2 | fold   -- the fold command wraps lines readably</li>
     <li>sudo a2enmod ssl   and restart</li>
     <li>put locally run, SSL-enabled domain name in /etc/hosts  :  add the line :  127.0.0.1  example.com</li>
@@ -104,7 +110,7 @@ this still works, but that's another issue</li>
     </li>
     <li>That in turn leads to issues with 
 	<a href='https://github.com/kwynncom/kwynn-php-general-utils/blob/02a21205384fa209308672f8bd18a14f3f7f00f8/isKwGoo.php'>isKwGoo</a> 
-    and the <a href='https://github.com/kwynncom/positive-gmail-check'>positive email [Big Evil Goo Mail] check</a>.</li>
+    and the <a href='https://github.com/kwynncom/positive-gmail-check'>positive email [Big Evil Goo Mail] check</a>.  See "notes" below.</li>
     <li>looks like kwynn dot com /index.php and the cms index.php should be a hard link</li>
     <li>need to install GMail / Goo composer.  I keep these in /opt/composer 
 	<a href='https://github.com/kwynncom/kwynn-php-general-utils/blob/8134720e170144b9e518de1672668053885e6b87/composer.php'>as is shown in kwutils</a> 
@@ -115,10 +121,33 @@ composer require google/auth<br />
     </li>
     <li>positive email check read-only secret file - set permission - That's the Goo Cloud Console API key stuff.</li>
     <li>isKwGoo email hash file</li>
-
-
-
+    <li>looks like I have yet more symlinks in my website to resolve, or just use the actual repo:
+	    <ul>
+		 <li><a href='https://github.com/kwynncom/php-date-formats'>PHP date format repo is in</a> <a href='/t/20/08/dates/'>/t/20/08/dates/</a></li>
+		 <li>To do it backwards, one of my <a href='/t/21/12/ua/'>user agent parsers</a> is in this 
+		    <a href='https://github.com/kwynncom/web-server-access-log-analysis/tree/97e23ac23f4c0e59a065c7024f75439ab9bc3cf0/agents_sa'>web server access log 
+		repo directory</a></li>
+		 <li><a href='/t/22/07/textIO/textIO.html'>textIO</a> example from my <a href='https://github.com/kwynncom/examples-etc-permanent'>"permanent examples"</a> repo.</li>
+		 <li>/t/22/03 was probably the start of a new reference to /t/22/02 sessions, but I've had enough for now</li>
+	    </ul>
+    </li>
 </ul>
+
+<section><h4>notes</h4>
+<p>My "positive GMail check" system was originally meant to be darn sure whether I have unread emails or not.  I am an embarrassing number of Android versions 
+behind, but I doubt that situation has improved.  I have found that one can swipe GMail's inbox all one wants, but you can't be sure if you're getting new emails or not.
+My checker solves that problem quite nicely, although it's pull and not push.  (I suppose I could fairly easily adapt it to push.)
+</p>
+
+<p>I generalized that code to do Goo OAUTH(2) / "Login with Big Evil Goo[gle]."  I've been using that with my lawyer project for months now.  "isKwGoo()" is a function 
+I use for my own site to indicate whether the admin (me) is logged in.  The function is in my kwutils / general PHP code, though, not the postive email repo.
+In any event, I created a hash of my non-public email address that should be considered the admin.  isKwGoo() then checks if the cookie logged in has successfully 
+checked that email address.  If so, I'm admin.  
+</p>
+
+
+
+</section>
 </section>
 
 
