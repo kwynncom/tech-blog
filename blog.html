@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"    >
+<meta name="viewport" content="width=device-width, initial-scale=1.0" >
 <title>Kwynn's tech blog</title>
 <script src='UbuntuSymphony.js'></script>
 <style>
@@ -39,13 +39,13 @@ li   { margin-bottom: 0.7ex; }
         
                 <div style='display: inline-block' >
         <a href='/htval/?doc=https://kwynn.com/t/7/11/blog.html'>
-            <img style='transform: scale(0.81, 0.81);' src="../../5/02/html5_valid.jpg" alt="HTML5 valid" width="103" height="36" /><!--
+            <img style='transform: scale(0.81, 0.81);' src="../../5/02/html5_valid.jpg" alt="HTML5 valid" width="103" height="36" ><!--
             --><span class='htv20'>(my copy of the validator)</span></a>
         </div>
         
         <div style='display: inline-block; margin-left: 2ex; ' >
         <a href='https://validator.w3.org/check?uri=https://kwynn.com/t/7/11/blog.html'>
-            <img style='transform: scale(0.81, 0.81);' src="../../5/02/html5_valid.jpg" alt="HTML5 valid" width="103" height="36" /><!--
+            <img style='transform: scale(0.81, 0.81);' src="../../5/02/html5_valid.jpg" alt="HTML5 valid" width="103" height="36" ><!--
             --><span class='htv20'>(W3C copy)</span></a>
         </div>
     </div>
@@ -71,11 +71,367 @@ li   { margin-bottom: 0.7ex; }
 </p>
 </section>
 	
-	<section><h2 class='years40'>2024</h2>
+<section><h2 class='years40'>2024</h2>
+
+
+<section><h3>April 2</h3>
+
+<p>First posted 01:50.  
+
+</p>
+
+<p>I'm not feeling so enthused about updates, but I suppose I do have a very small audience, and there are updates.</p>
+
+<p>I finally upgraded kwynn.com to Ubuntu 23.10.  One lesson is that one should beware of setting the TTL of AAAA records too high, at least on AWS EC2.  I had them set at 24 hours.  I'm 
+trying to be nice to both my registrar and the DNSystem as a whole.  AWS EC2 is set nicely to change instances of IPv4 addresses--that's the Elastic IPs.  You can set an Elastic IP to 
+any instance you want.  You can reassign v6 addresses, too, but, as far as I know, you have to explicitly release them from the old server (instance).  It would have been easier to just 
+change it, but instead I took my site down for longer than I wanted to reassign the v6 address.
+</p>
+
+<p>On a related point, be careful of having more than one subnet (unless you have a reason, of course).  I had a second one for no good reason, 
+and I wasn't giving thought to which one to select.  That's why I couldn't switch IPv6 easily--I had the wrong subnet.  Thus, I deleted the second one.
+
+</p>
+
+<p>I think it was 23.10 that upgraded to PHP 8.2.  (I upgraded my local computer months before kwynn.com.)  In any event, I got hammered by "Deprecated function: Creation of dynamic 
+property className::$varName is deprecated..."  I wasn't prepared for that sort of workload when I upgraded Ubuntu.  I would assume there is still stuff broken on my site.  I went over 
+the stuff I use; that's the best I can / will do for now.
+</p>
+
+<p>Years ago I heard that AWS us-east-1's original AZs were becoming old and decrepit.  I've been on -1a for a while, and, with one possible exception, it works fine.  It seems too often 
+that the network connection gets hung up for minutes upon (re)boot.  I don't have enough data to correlate that to an AZ, though.  It's just a thought.  
+</p>
+
+<p>So, when I create a new instance, a new AZ is one consideration.  Then there is the warning flag, "EC2 recommends setting IMDSv2 to required."  I wondered what the heck that was.  
+It's the http://169.254.169.254/ service within an instance--Instance MetaData Service.  It lets programs figure out which AZ they are in, and what type of instance it is, and such.  Around 
+24 hours ago I upgraded my <a href='https://github.com/kwynncom/aws-ec2-metrics-web-display'>metric tracking</a> code to IMDSv2.  I'd have to move instances, though, to turn v2-only on.  
+At least, I'm pretty sure I have to move instances.  Actually, no; one can do it on the fly, but my first glance shows it's too complicated to bother with.
+</p>
+
+<p>AWS' <a href='https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/'>discussion of v2</a> 
+is interesting.  They set the TTL of the result to 1 hop, so that they data can't leave the instance.  Also, they observed that most proxies and firewalls and such don't forward 
+HTTP PUT, so they use that.  
+</p>
+
+<p>In somewhat unrelated news, I got <a href='https://github.com/discourse/discourse/tree/main'>Discourse</a> running for a client (a few days ago) on EC2.  That went smoothly.  
+</p>
+
+<p>In unrelated news, I notice that the latest HTML validator complains "Trailing slash on void elements has no effect and interacts badly with unquoted attribute values."  I suppose 
+I should deal with that.  I may do so now, in fact.
+
+</p>
+
+
+</section>
+
+
+<section><h3>March 13</h3>
+<p>False alarm / false update.  
+
+</p>
+
+
+</section>
+
+
+
+<section><h3>March 11 - thoughts on cryptocurrencies</h3>
+
+<section><h4>note</h4>
+<p>This is quick and dirty, but it's all I have time for.  Hopefully it's useful.  </p>
+
+<p>I wish I didn't have time because I was making lots of money, even fake "money" as defined below.  It's more like I have just enough 
+work to not quite feed and house me.  I want to finish this work early in the month so I can seek new projects in a week or so.
+
+</p>
+</section>
+
+<section><h4>an attempt at a conclusion</h4>
+
+<p>I wrote the conclusion last, but I'll post it first.
+
+</p>
+
+<p>As a system of currency, it's hard to get any worse than the banks.  That's always been a Satanic operation.  Crypto-powered AlphaBay 
+starts getting the world back to how it was in 1910, before (((they))) started making more money and causing much more damage by making 
+"drugs" "illegal."  
+</p>
+
+<p>So far, almost if not all of the cryptos have been less stable than the FRN, which is rather pathetic.  The FRN will always have a 
+downward trend, though, and 
+the cryptos have a potential upward trend indefinitely.  
+</p>
+
+<p>Holding crypto is speculative but probably a good idea at a low percentage of investments.  Mining or staking crypto may be fine if you can 
+start with small amounts, start getting returns, and don't have a large egg in the basket.
+</p>
+
+<p>If we made a stable cryptocurrency, we could change the world.  
+
+</p>
+
+</section>
+
+<p>This begins the original post:
+
+</p>
+
+<p>I've been asked about crypto at least twice in the last few weeks, so I'll try to answer usefully.</p>
+
+<p>First, as an abstract concept, independent of specific tokens / coins, crypto has the potential to be a true revolution along the lines 
+of 
+the industrial revolution.  Crypto has proven 
+that a large number of people will accept a currency(ish) outside of governments, banks, or other "official" institutions.  I don't quite 
+consider crypto to be true currencies, because one 
+definition of a proper currency is a unit that maintains stable purchasing power for years, decades, or centuries.  The cryptos 
+spectacularly fail at stability.  </p>
+
+<p>
+
+There were supposed to be "stable" tokens, but my thumbnail understanding is that a handful of those totally failed recently--they 
+became so unstable that they went to permanent zero.  Also, at least one was based on the Federal Reserve Note (FRN - fake "dollars"), which is 
+quite a joke.
+</p>
+
+<p>To back up and emphasize that point: the green bills and stuff in bank accounts are not legal dollars.  They are falsely denominated 
+in dollars.  The 
+<a href='https://catalog.usmint.gov/american-eagle-2024-one-ounce-silver-proof-coin-24EA.html'>US Mint still issues a true one dollar, 
+one silver (Troy) ounce, 
+2024-stamped coin</a>.  I link to the proof--reflective, polished, for collectors--version.  They also mint many more non-proof coins that 
+are theoretically meant for general circulation.  You generally can't buy those directly from the Mint because they only sell in bulk.  Last 
+I checked (many 
+years ago), you could buy those coins for 1 - 5 Federal Reserve Notes (FRN) above the spot price of silver.  That is, right now a true 
+dollar will cost you perhaps 28 FRN with a spot price right now of 24.73 FRN / Troy ounce.  
+</p>
+
+<p>The Mint also issues 1 (Troy) ounce gold coins that are stamped 50 dollars.  Hopefully they didn't discontinue the American Eagles in 
+2024.  I can find a <a href='https://catalog.usmint.gov/american-eagle-2023-one-ounce-gold-uncirculated-coin-23EH.html'>2023 gold coin</a>, 
+though.  Interestingly, that one is uncirculated rather than proof.  I didn't know they sold those directly, although I haven't looked in 
+years or even decades.  In any event, I'm sure I could get a much better price, but the spot of gold is 2,190 FRN right now.  I would 
+likely have to pay 2300 FRN for a 50 dollar coin, so that's a 46:1 ratio rather than &gt; 25:1 for silver.  
+</p>
+
+<p>So, how do the banks get away with denominating their account money in dollars?  I damn sure can't get gold or silver at the legal 
+ratio.  That's a rhetorical question, of course.  The banks are at the core of the Satanists / J--ish "elite" / Illuminati system.  
+</p>
+
+<p>Worse yet, 99.99999% of all fake "dollars" are literally created by a bank when a debt is incurred.  
+Every (99.999999%) unit of the so-called national currency is lent at interest, which means the whole "national" currency is borrowed, 
+which means that the currency can never be repaid because more debt exists than units to pay it.  The 
+<a href='https://en.wikipedia.org/wiki/2018_Swiss_sovereign-money_initiative'>2018 Swiss sovereign-money initiative (<i>Vollgeld</i>)</a> 
+tried to address this issue, shockingly.  Meanwhile, 
+<i><a href='/t/21/12/Silent_Weapons_for_Quiet_Wars.pdf'>Quiet Weapons for Silent Wars</a></i>
+blithely admits this is "slavery and genocide" (page  4), "counterfeiting" (14), and "... presented as ... 'currency,' [that] has 
+the appearance
+of capital, but is in effect negative capital. Hence, it has the appearance of service, but is in fact, indebtedness or debt" (10).
+</p>
+
+<p>So, on one hand, cryptos are a true representation of value as opposed to Rothschild's debt-slave tokens.  Cryptos are created by intense 
+computation (mining, like Bitcoin -- proof of work) or lower-power computing backed by proof of stake (like Cardano Ada, at least in the 
+summer of 2021).  Similarly, it's much harder to turn someone's account off.  My understanding is that during the Canadian 
+Trucker's Convoy (early 2022), the Satanic occupying power ("government") targeted Coinbase and other large exchanges.  That only works 
+if one kept one's wallet with an exchange.  A crypto holder is free to keep their own security tokens / wallet.  
+</p>
+
+<p>I should also address the notion that crypto is used for evil purposes.  What a joke.  The banks have been deeply involved in the "illegal" 
+drug trade since banks existed.  The same people who own banks (Rothschilds, etc.) run the drug trade, sex trafficking trade, etc.  They are 
+the ones who decide what's illegal.  Cocaine and heroin were over the counter products in America in 1900.  
+Duh.  
+JP Morgan has been successfully sued by Jeffrey Epstein victims in the last few months, recently for 290M FRN.  
+</p>
+
+<blockquote>
+Bayer marketed diacetylmorphine as an over-the-counter drug under the trademark name Heroin....  From 1898 through to 1910, diamorphine was 
+marketed under the trademark name Heroin as a non-addictive morphine substitute and cough suppressant....  
+In the US, the Harrison Narcotics Tax Act was passed in 1914 to control the sale and distribution of diacetylmorphine and other opioids...<br>
+-- <i><a href='https://en.wikipedia.org/wiki/Heroin#History'>Heroin</a></i>, WikiP, unchanged as of Mon, 11 Mar 2024 23:32:35 GMT, captured 
+around 21:15 EDT.
+</blockquote>
+
+<blockquote>By 1885 the U.S. manufacturer Parke-Davis sold coca-leaf cigarettes and cheroots, a cocaine inhalant, a Coca Cordial, cocaine 
+crystals, and cocaine solution for intravenous injection.<br>
+-- <a href='https://en.wikipedia.org/wiki/Cocaine#History'>similar to above</a>, apparently unchanged since Mon, 11 Mar 2024 13:46:30 GMT, captured
+~3 minutes after the above
+</blockquote>
+
+<p><a href='https://www.bitchute.com/video/q3QXhFy1Zugk/'>Ronald Bernard talked about banks</a>.  At a  quick glance, he's talking about them 
+at 17 minutes.  At one point in that interview, he talks about how his mission was to launder tractor-trailer loads of FRN green bills in the 
+basement of 
+a large European bank.  That was for Iraqi oil during sanctions, but the same applies to actual crimes, as opposed to the tyranny of the 
+decade 
+that the US Inc. makes up.
+</p>
+
+<p>On a similar note, I spent perhaps 10 minutes browsing AlphaBay, a dark web site.  Every "illegal" drug under the sun was available.
+I just laughed and laughed.  Why I thought it was funny is another topic.
+</p>
+
+<p><i>Wall Street Journal</i>: "<a href='https://www.wsj.com/articles/instagram-vast-pedophile-network-4ab7189'>Instagram Connects Vast 
+Pedophile Network</a>" by Jeff Horwitz and Katherine Blunt.  June 7, 2023 7:05 am ET.  Another example of large companies being far worse 
+than anything crypto is accused of.  I haven't read that specific article.  I assume it's a limited hangout, and the truth is far worse.
+</p>
+
+<section><h4>an attempt to get to the point--investments, mining,  the future, etc.</h4>
+
+<p>The popularity of crypto has proven that people will accept non-"official" currencies.  As far as I know, though, no one has created 
+a stable crypto, or even proposed one that makes sense.  Basing "stability" on the FRN is laughable.</p>
+
+<p>A stable crypto or a family of them could be a true revolution.  We would be able to issue currency as the 
+users' economy grew and create true wealth as opposed to a debt that someone has to pay.  In <i>For Us, the Living: A Comedy of Customs</i>, 
+Robert Heinlein sketched a currency system that would make it unnecessary to work for necessities.  I am reasonably sure that his system is 
+feasible.  It's hard to comprehend how much damage the various Satanic tentacles do.  That is, peace on earth is fairly simple if you 
+counter a handful of basic Satanic schemes.  
+</p>
+<p>I would love to work on that project, and I have the tech capability to do it.  I would need the right barter or a small number of FRNs 
+per month.  </p>
+
+<p>As for the existing cryptos, I would treat them as speculative investments that you can afford to lose.  The supply of Bitcoin grows 
+very slowly, and I believe it's programmed to stop growing.  Meanwhile, demand has obviously been all over the place for years.  I tend to 
+think it's a good long-term investment because its growth will be very slow.  It's speculative because it's already been very volatile, and 
+it's still a new system with some potential unknowns.  
+</p>
+
+
+<p>Ether should also be solid because Solidity is part of it.  :)  People were starting to move towards Solana, I think it was called, 
+because Ether can get expensive relative to what you're trying to accomplish.  
+</p>
+
+<p>As for mining or proof of stake, the numbers on Cardano Ada were fairly easy to run, although I didn't run them when I was working on 
+that project.  Ada was (and probably still is) proof of stake.  You earn Ada by running a node and "staking" Ada to that node.  A node is the 
+equivalent of a Bitcoin mining rig, although a node didn't need specialized or powerful hardware.  A node is a program running on a server 
+that takes turns with other nodes creating blocks and thus new Ada.  Staking is essentially a vote of confidence in your node.  You can "stake"
+your own Ada against your node or get others to do so.  Staking is not custodial and doesn't keep anyone from spending their Ada.  
+When a stakeholder 
+sells Ada, the stake goes to whomever the new Adas' owner is staked to (if anyone).  
+As best I understood the algorithm, if you had 1% of all Ada staked to you, you would create a block, and thus create Ada, every 
+100 seconds.  
+</p>
+
+<p>Running the system was, at the time, about $70 a month on AWS.  For that purpose, AWS was probably a bit expensive.  I could probably 
+have come up with cheaper alternatives.  A few people published their earnings, and some people were making some money (Ada).  
+</p>
+
+<p>I can't imagine mining Bitcoin is feasible these days.  My understanding of that algorithm is that you are buying lottery tickets 
+with GPU power.  The total number of tickets must be astronomical these days.  There is a drawing every 10 minutes, but the chance of winning 
+must be vanishingly small. I'm sure someone has run those numbers.
+</p>
+
+<p>Also, I heard a story recently that is a cautionary tale.  I have high confidence that the story is true, at least in the end result.  
+Someone was good 
+money with one of the oldest, most popular cryptos (I think it was one of the proof-of-work systems).  They were reinvesting, 
+though, and not taking any of their profits.  Also, they 
+apparently didn't have direct access to their wallets.  At some point, the people running the data center said that all the money had been 
+lost and gave some excuse as to how.  The excuse was likely a lie, and the data center operators likely stole the money.  
+</p>
+
+</section>
+
+
+
+</section>
+
+
+<section><h3>March 8 (started 4th)</h3>
+<p>This is more on moving computers. </p>
+
+<p>
+
+</p>
+
+<ul>
+    <li>install the <a href='https://github.com/validator/validator'>HTML validator</a> - first sudo apt install default-jdk  then, after after cloning,    python ./checker.py all</li>
+    <li>The way I have it set up, the validator needs the proxy and proxy_http apache mods</li>
+    <li>Here is how I <a href='https://github.com/kwynncom/running-sysadmin-examples/blob/7fe64ab6200f5724a0383bd23ac0f44ec1dcaa11/apache2/run_local/nup/nuprw.inc'>set 
+up the validator in Apache config</a> to run at <a href='/htval'>/htval</a></li>
+    <li>the <a href='https://github.com/kwynncom/running-sysadmin-examples/tree/main/nu'>validator involves systemctl</a> if you want it to 
+start at reboot.  That URL might change, so here is a <a href='https://github.com/kwynncom/running-sysadmin-examples/tree/f74104d77d5374d2ebbbb2655e52513092bdfe40/nu'>
+specific version of nu / validator systemctl</a>.</li>
+    <li>replace "nobody" user with DynamicUser=yes  # done in repo above</li>
+    <li>I have been and will be adding to my 
+	    <a href='https://github.com/kwynncom/running-sysadmin-examples'>sysadmin examples repo</a></li>
+    <li>I will have to activate the Apache rewrite engine:  sudo a2enmod rewrite  ;  sudo systemctl restart apache2  
+	    -- note restart not reload </li>
+    <li> sudo systemctl status apache2 | fold   -- the fold command wraps lines readably</li>
+    <li>sudo a2enmod ssl   and restart</li>
+    <li>put locally run, SSL-enabled domain name in /etc/hosts  :  add the line :  127.0.0.1  example.com</li>
+    <li>set permissions of Apache DOCUMENT_ROOT aptly</li>
+    <li>it would appear I have symbolic links in kwynn dot com /t/23/02.  That may not be the best way to do it, but I will probably stick with it for now.  
+	The specific links are below.  Need to change underlying permissions, too.
+	<ol>
+		<li>homecms points to my <a href='https://github.com/kwynncom/cms'>CMS project</a> / home (explicit /home)</li>
+		<li>htva points to cms/htva </li>
+		<li>webhook_git points to my <a href='https://github.com/kwynncom/github-activity-web-widget'>GitHub webhook project</a> -- I rather doubt 
+this still works, but that's another issue</li>
+
+	 </ol>
+    </li>
+    <li>That in turn leads to issues with 
+	<a href='https://github.com/kwynncom/kwynn-php-general-utils/blob/02a21205384fa209308672f8bd18a14f3f7f00f8/isKwGoo.php'>isKwGoo</a> 
+    and the <a href='https://github.com/kwynncom/positive-gmail-check'>positive email [Big Evil Goo Mail] check</a>.  See "notes" below.</li>
+    <li>looks like kwynn dot com /index.php and the cms index.php should be a hard link</li>
+    <li>need to install GMail / Goo composer.  I keep these in /opt/composer 
+	<a href='https://github.com/kwynncom/kwynn-php-general-utils/blob/8134720e170144b9e518de1672668053885e6b87/composer.php'>as is shown in kwutils</a> 
+(I refer to the whole repo as kwutils because of the one file with that name):<br>
+composer require google/apiclient<br>
+composer require google/apiclient-services<br>
+composer require google/auth<br>
+    </li>
+    <li>positive email check read-only secret file - set permission - That's the Goo Cloud Console API key stuff.</li>
+    <li>isKwGoo email hash file</li>
+    <li>looks like I have yet more symlinks in my website to resolve, or just use the actual repo:
+	    <ul>
+		 <li><a href='https://github.com/kwynncom/php-date-formats'>PHP date format repo is in</a> <a href='/t/20/08/dates/'>/t/20/08/dates/</a></li>
+		 <li>To do it backwards, one of my <a href='/t/21/12/ua/'>user agent parsers</a> is in this 
+		    <a href='https://github.com/kwynncom/web-server-access-log-analysis/tree/97e23ac23f4c0e59a065c7024f75439ab9bc3cf0/agents_sa'>web server access log 
+		repo directory</a></li>
+		 <li><a href='/t/22/07/textIO/textIO.html'>textIO</a> example from my <a href='https://github.com/kwynncom/examples-etc-permanent'>"permanent examples"</a> repo.</li>
+		 <li>/t/22/03 was probably the start of a new reference to /t/22/02 sessions, but I've had enough for now</li>
+	    </ul>
+    </li>
+</ul>
+
+<section><h4>notes</h4>
+<p>My "positive GMail check" system was originally meant to be darn sure whether I have unread emails or not.  I am an embarrassing number of Android versions 
+behind, but I doubt that situation has improved.  I have found that one can swipe GMail's inbox all one wants, but you can't be sure if you're getting new emails or not.
+My checker solves that problem quite nicely, although it's pull and not push.  (I suppose I could fairly easily adapt it to push.)
+</p>
+
+<p>I generalized that code to do Goo OAUTH(2) / "Login with Big Evil Goo[gle]."  I've been using that with my lawyer project for months now.  "isKwGoo()" is a function 
+I use for my own site to indicate whether the admin (me) is logged in.  The function is in my kwutils / general PHP code, though, not the postive email repo.
+In any event, I created a hash of my non-public email address that should be considered the admin.  isKwGoo() then checks if the cookie logged in has successfully 
+checked that email address.  If so, I'm admin.  
+</p>
+
+
+
+</section>
+</section>
+
+
+
+
+	
+<section><h3>February 19 (not posted until probably the 29th)</h3>
+    <p>Some thoughts on moving computers:</p>
+
+    <ul>
+	    <li>GitHub keys</li>
+	    <li>get Apache config in repo</li>
+	    <li>create necessary (perhaps obfuscated) paths / sym links - such as /var/kwynn/... </li>
+	    <li>install chrony - After being asleep for something like 9 days, the new computer is 20 SECONDS fast.  That won't do.</li>
+	    <li>put my chrony.conf in public repo and swap it for the default</li>
+	    <li>move selected passwords - GitHub, client stuff, etc.</li>
+    </ul>
+
+</section>
+
 		
-		<section><h3>January 29</h3>
-			<section><h4>law office project update</h4>
-				
+		
+		<section><h3>Feb 5</h3>
+			<section><h4>null update</h4>
+				<p>The page is marked as changed because I started an update and didn't get anywhere with it.
+					
+				</p>
 				
 				
 			</section>
@@ -3799,7 +4155,7 @@ sudo certbot --apache
             
         </p>
         
-        <p>Update composer libraries in the event of weirdness: /opt/composer$ composer update<br/>
+        <p>Update composer libraries in the event of weirdness: /opt/composer$ composer update<br>
             /opt/composer is where I keep my composer libraries.  Note that you have to "update" rather than update blah because 
             if you update individual packages, the dependencies will not carry through.  If you're in the equivalent of /opt/composer 
             then "composer show" will show you all the versions.  You can compare dev to live.
@@ -4104,8 +4460,8 @@ sudo certbot --apache
     </p>
     
     <p>In the AWS EC2 web instances list, if you're on the instances list with an instance checked, or else drilled down on a specific instance, Actions -> 
-        Monitor and Troubleshoot -> Get system log is helpful.  It seems that it takes several minutes to update, though.  The message <br/>
-        "[    3.159381] Out of memory and no killable processes..." is a big hint, but it was somewhat hard to find.  The last message, <br/>
+        Monitor and Troubleshoot -> Get system log is helpful.  It seems that it takes several minutes to update, though.  The message <br>
+        "[    3.159381] Out of memory and no killable processes..." is a big hint, but it was somewhat hard to find.  The last message, <br>
         "[    3.169146] ---[ end Kernel panic - not syncing: System is deadlocked on memory ]---" is less clear, but it helped me figure it out.
         
     </p>
@@ -4439,7 +4795,7 @@ margin-bottom: 1ex;
 '
 ><!--
 	--><a href='/t/0/fn/fn_calculator.html' style='text-decoration: none'><!--
-        --><span style='text-decoration: underline'>Numerology Calculator</span><br /><!--
+        --><span style='text-decoration: underline'>Numerology Calculator</span><br><!--
 	--><!--
 	--><span style='color: blue  ; background: orange'  >5</span><!--
 	--><span style='color: yellow; background: violet'  >3</span><!--
@@ -7908,7 +8264,7 @@ echo('OK' . "\n");   </pre>
     <p>...and "Istanbul was Constantinople."  </p>
     
     <p>I should have thought to mention this earlier.  If you take the relational route, MySQL became MariaDB.  For Ubuntu installation,
-        I *think* all you need is sudo apt install mariadb-server <br/>
+        I *think* all you need is sudo apt install mariadb-server <br>
         In case it helps, I list what I have below.  The one command above should kick off the rest, though.  You'll need to download 
         MySQL Workbench directly from Oracle, though.  
     </p>
@@ -9670,9 +10026,9 @@ $ more kwynn-topology-relay-2021-08-1.json
 		</p>
 		<p>Here is an attempt at an edited version of my 
 			<a href='https://kwynn.com/t/21/07/asterisk/asterisk_build.txt'>Asterisk install command history</a>.  One important note is that 
-			some of that was probably tail chasing versus:<br/>
-			sudo ./install_prereq<br/>
-			sudo ./install_prereq install<br/>
+			some of that was probably tail chasing versus:<br>
+			sudo ./install_prereq<br>
+			sudo ./install_prereq install<br>
 		</p>
 		
 		<p>Then I changed <a href='https://kwynn.com/t/21/07/asterisk/asterisk_conf.txt'>4 config files</a>.</p>
@@ -9780,9 +10136,9 @@ $ more kwynn-topology-relay-2021-08-1.json
 	</p>
 	
 	<p>I eventually got to code that made it clear that the login was not being processed at all.  By looking at the conditions, I eventually realized that Drupal wasn't receiving the login or password.  Then I realized that none of $_REQUEST, $_POST, or $_GET were showing the login and password. So I searched on that problem and quickly realized that it was a rewrite / redirect problem.
-	<br />sudo a2enmod rewrite<br />
-	sudo systemctl restart apache2<br />
-	<br />
+	<br>sudo a2enmod rewrite<br>
+	sudo systemctl restart apache2<br>
+	<br>
 	Problem solved!  I won't admit after how long.
 	</p>
 	
@@ -10745,7 +11101,7 @@ like AWS does.  I am reasonable sure getting a 2nd IP address with Linode or Rac
 <p style='margin-top: 2ex'>
     <a href='https://validator.w3.org/check?uri=https://kwynn.com/t/7/11/blog.html'><img
         src="../../5/02/html5_valid.jpg"
-        alt="HTML5 valid" width="103" height="36" /></a>
+        alt="HTML5 valid" width="103" height="36" ></a>
 </p>
 
 </body>
