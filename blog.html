@@ -73,11 +73,628 @@ li   { margin-bottom: 0.7ex; }
 	
 <section><h2 class='years40'>2024</h2>
 
-<section><h3>April 20</h3>
 
-<section><h4>disruptive idea for content distribution</h4>
+<section><h3>July 9, 2024</h3>
+<section><h4>very irritating difference between mongosh and mongo</h4>
 
-<p>I wrote about this years ago on another page (within this site.  I'll link to it eventually.)  I apparently didn't do well enough in my description, though, so I'll try again and 
+<p>I am executing a file containing the following query.  
+The shell_exec() command is </p>
+<pre>mongosh  --quiet   /tmp/kwqeq10_2021_9ddeee941d9265e105411ffd55d645b2_k.js</pre>
+
+
+<p>The magic query looks like this:</p>
+
+<pre>
+<code>
+print(
+	EJSON.stringify(
+		db.getSiblingDB('mydbName').getCollection('mycollection').find().toArray()
+	)
+)
+</code>
+</pre>
+
+<p>A known-to-be-working example:</p>
+<pre>
+<code>
+print(EJSON.stringify(db.getSiblingDB('test').getCollection('my_arbitrary_collection_name').find().toArray()))   
+</code>
+</pre>
+
+<p>The key to this is that the JSON result has double quotation marks / double quotes around the keys / properties (see results below).  These are parse-able by many languages.
+
+</p>
+
+<pre>
+[
+    {
+        "_id": {
+            "$oid": "668cec9babdd6dc6cc59daf6"
+        },
+        "someData1": 1,
+        "moreData2": "2 blah"
+    },
+    {
+        "_id": {
+            "$oid": "668ceccbabdd6dc6cc59daf7"
+        },
+        "otherData": "blah blah blah",
+        "foo": "bar"
+    }
+]</pre>
+
+<p>Here is <a href='https://github.com/kwynncom/examples-etc-permanent/blob/main/mongoshJSON/mongoshJSON.php'>the example code</a>.  
+
+</p>
+
+</section>
+
+</section>
+
+<section><h3>June 21 - understanding binary</h3>
+
+<p>I have a new apprentice.  I have hope that we'll work together for months and possibly years to come.  She's already built up 50 karma points in case we start trying to use Reddit 
+to get gigs.
+</p>
+
+<p>She's taking online classes at one of those private online schools for a BS in CS.  There are a handful of such schools in that category I've heard of over the years.  
+I won't name the school because I might wind up mocking them.  They go in the category of institution that I wonder if it will do her any good.  I tend to think college is generally 
+not worth it even for CS, but that's not my topic right now.
+</p>
+
+<p>Right now she's taking a Linux sysadmin class, which in theory is great.  In practice, there are a bunch of things that annoy me, which is also not my topic now.  In any event, 
+she was learning chmod.  I was trying to explain the permission bits, such as chmod 755 === rwxr-xr-x .
+</p>
+
+
+<p>She quickly mentioned that she does not understand binary at all.  I tried to explain that decimal 567 === 5 X 10^2 + 6 X 10^1 + 7 X 10^0, and thus try to explain that binary works 
+the same way.  So far, I'm not getting anywhere, but we've only spent a few minutes on it so far.  She asked me, "If I don't understand this, am I not cut out to be a programmer?"  
+</p>
+
+<p>I've been pondering that question.  I eventually answer it below.  For now, though, rather than answer it directly, I'll say this.  Forget binary for the moment.  It would be a very good idea to start to think about the decimal system 
+that we take for granted, and what it means.  As above, what does 567 really mean?  Base 10 (decimal) only has the digits 0 - 9.  Thus, 567 or 56 or 10 is a different beast.  The number 
+"10" is an abstraction in a way that "9" is not.  "9" represents something that you can easily visualize--9 objects.  One can easily visualize 10 objects, but 10 is a 1 and a 0.  It's an abstract usage of 1 and 0.  For that matter, 4,598,839 cannot be visualized, but it can be manipulated because the number means something very specific, and their are algorithms to 
+process the number.  I mentioned that Roman numerals are very crude and cumbersome because they are not a base system.  They do not have a zero.  Zero is very important.  
+</p>
+
+<p>It would be great to understand bases, the importance of zero, what 567 or 5678 means, etc.  It goes to abstraction and business analysis.  That is, when figuring out how to code 
+something, you have to really understand how it works.
+</p>
+
+<p>I will encourage her to first analyze decimal and really understand what's going on.  The way we do addition by hand, for example, is an algorithm.  
+There are reasons why carrying digits over to the next decimal place works.  In other words, why does stuff she learned in 4th - 8th grade work?  What is really going on?  
+(I think I understood addition when I was a child, but it took me some time longer to think through why long division works.  That is, I didn't fully 
+analyze the long division algorithm for 
+a while.)
+</p>
+
+<p>Computers add and divide in similar ways to how we do it by hand.  Again, it's an algorithm.  
+</p>
+
+<p>Once she understands decimal consciously, then binary should be relatively easy.  
+</p>
+
+<p>I don't care if it takes her months.  Her circumstances are such that getting a clear head for any length of time is problematic, so it might take months.  
+</p>
+
+<p>If we come at it from different directions over the course of months, and she's still not getting anywhere in her understanding, then the answer may be that we have to start questioning 
+whether she's cut out for programming.  As best I understand, some programmers go through their whole careers writing from specifications.  I frown heavily upon such things.  
+A programmer should be able to do business analysis / requirements gathering.  I should add that I've almost never written from specifications, even at medium-sized software companies (for various reasons).
+
+</p>
+
+
+<p>Hopefully that will do for a start.
+
+</p>
+
+
+
+</section>
+
+
+<section><h3>June 10</h3>
+
+<section><h4>yet another rant about another instance of the general store problem</h4>
+
+<p>My frustration is NOT directed at my co-developer.  He's relatively new to dev and is going with the overwhelming general wisdom.  
+
+</p>
+
+<p>To recap, the general store problem refers to a Steven Wright joke to the effect of "I went to the general store, but I couldn't buy anything specific."  In the past I've applied that 
+to Drupal and WordPest and to some degree Magento and Angular.  This time it's Next.js.  I'm not even sure this moment how Next and React related to each other, or whether they do.  
+Right this moment I don't care.  Whatever is plaguing me runs as "npm run dev", so it's NodeJS, and I'm nearly certain it's Next.  
+</p>
+
+<p>Once again, this stuff is the "latest and greatest" "powerful," "generalized" system that has all its developers singing huzzahs and hallalulah and <i>Kum ba yah</i>.  Once again, I'm 
+irritated at best, and I'm tempted to run around in a circle waving my arms and shrieking.
+</p>
+
+<p>I'll try to take my irritants in order.  The idea was to use the React (or Next or something) version of Big Evil Goo(gle) Maps.  (As much as two of us involved hate Google, we have 
+come to the painful decision that we should use it.  Perhaps Goo will be seized soon enough.  I have hope.)
+</p>
+
+<p>My co-dev presented me with a version that used a lat lng center and a zoom level, which is what most start with.  In the Goo Maps client-side JS API, though, months ago, I found 
+</p>
+
+<pre><code>this.bounds = new google.maps.LatLngBounds();
+this.bounds.extend(position [object, with lat lng]); // iterated for every location
+this.map.fitBounds(this.bounds);</code>
+</pre>
+
+
+<p>I found that for 5,000 locations, it's plenty fast enough to run each of them through, and the boundaries will be expanded as needed.  It's essentially an auto-zoom given the points on 
+the map.  
+</p>
+
+<p>I'm assuming that the React / Next version uses the same underlying Goo library, but I have the impression that they don't advertise that very well.  Thus, when I mentioned the Map 
+object and bounds to my co-dev, he didn't know what I meant.  Again, no fault of his.  One of my big objections is that React / Next re-define things in a way that hides the underlying code.  (WordPest and Drupal and Magento and Angular do the same thing.)  
+</p>
+
+<p>My co-dev and I will have to go back around and figure out whether there is a solution to the Map problem.  The client-side JS object must be there somewhere.  I went looking for it 
+briefly, but a quick search didn't find it.  Thus, I figured out how to integrate Next (React / Nodejs) with OG client-side / web-based JS.  
+</p>
+
+<p>Some of this I posted in general form on 6/3.  Now I'll try to be specific and add more recent code.  I do not use the Location Apache directive anymore.  Here are the Apache config mods:</p>
+
+<pre>
+<code>
+# in another conf file in the real implementation
+# live versus dev name
+&lt;IfFile			 /var/kwynn/i_am_Kwynn_local_dev_2024_01> 
+    Define Gsn dev.example.com
+# Define Gsn blah
+&lt;/IfFile>
+&lt;IfFile			!'/var/kwynn/i_am_Kwynn_local_dev_2024_01'> 
+    Define Gsn live.example.com
+&lt;/IfFile>
+
+
+# ServerName is in a 2nd other file in the real implementation
+ServerName ${Gsn}
+
+ProxyPass	 /nodejs http://${Gsn}:3000/
+ProxyPassReverse /nodejs http://${Gsn}:3000/
+
+ProxyPreserveHost On
+ProxyPassMatch ^/(_next/webpack-hmr)$   ws://localhost:3000/$1
+ProxyPassMatch ^/(_next/static/.*)$ http://localhost:3000/$1
+
+</code>
+</pre>
+
+<p>At the HTML level, I invoke Node in an iframe: </p>
+<code>
+&lt;iframe src = '/nodejs' style='width: 21vw; height: 98vh; ' id='iframeNode'>&lt;/iframe>
+</code>
+
+<p>The following is the JavaScript both in the browser and in Node.  It probably isn't perfect because I'm obfuscating some things.  If you want it perfect, you 
+can hire me.
+</p>
+
+<p>Note that in the real code there are some promises and "on DOM load events" that keep things in the right order.
+
+</p>
+
+<p>The Node side consists of checkboxes and "clear" and "select all."  The checkboxes define different types of customers.  This sends arrays of customers to the Map to display them.  
+The "rebound" global is needed for the case where I clear the points / customers / markers on the Goo Map side and then call Node to set the checkboxes to unchecked.  Given the way this is 
+all set up, this would cause the Node side to call Maps yet again.  It's an unnecessary call that would also mess up the data, so I have a variable to ignore it.  The variable is defined 
+in a different file from one of its usages.  The order of definitions is protected by "on DOM load" and other promises.  
+
+</p>
+
+<pre>
+<code>/* receive from Node into the parent HTML window with the Google Map */ 
+function rcvCustSelectionFromNodeJS(customers) { 
+    if (GLIgnoreSelRebound) { 
+	GLIgnoreSelRebound = false;
+	return;
+    }
+    /* the customers are shown on the map */ 
+}
+
+/* send to node */
+var GLIgnoreSelRebound;
+
+function clearCustomersFromNodeSelection() {
+    const e = document.getElementById('iframeNode');
+
+	    if (e && e.NodeclearCustomers) {
+		     e.NodeclearCustomers();	    
+
+    		GLIgnoreSelRebound = true;
+	    }
+}
+
+/* the Node side */
+// top of file - send selection to Goo Map in parent HTML window
+'use client'
+
+import React, {useState, useEffect} from 'react'
+export default function setCustomerSelection({ filteredCustomers ...
+
+useEffect(() => {
+        if (window.parent.rcvCustSelectionFromNodeJS)
+            window.parent.rcvCustSelectionFromNodeJS(filteredCustomers);
+    }, [filteredCustomers])
+}
+
+// another node file that clears the selection
+
+'use client'
+
+import React, {useState, useEffect} from 'react'
+import Checkbox from './Checkbox'
+
+export default function FilterCustomers({ ...
+
+    const clearCustomers = () => {
+        setCustomers([]); // original Node
+    }
+    
+    // the window HTML / JS DOM object may not be defined yet, so check
+    if (typeof window === 'object' && !window.NodeclearCustomers)  // make available to parent 
+                                       window.NodeclearCustomers = clearCustomers;
+
+</code>
+</pre>
+
+
+</section>
+
+<section><h4>continuing the rant</h4>
+
+<p>So, the good news is that I appear to have a system to get React and OG client-side JS talking to each other.  Apparently it is React because the variables say so, but Next is involved, too.  (I'm not as sure that Next needs to be there anymore.)
+</p>
+
+<p>The bad news is that the Next server takes up enough RAM that I had to create a swap space.  Apache, PHP, and MongoDB don't generally need swap space, but MariaDB and Next / React do.
+The next-server is taking 54GB of virtual RAM.  In short, this is a case where I may have 1 million lines of code running where a few dozen would suffice.  The "general store," as usual, 
+does not seem worthwhile.
+</p>
+
+</section>
+
+</section>
+
+
+<section><h3>June 6</h3>
+<section><h4>Ubuntu 24.04 upgrade notes, part 2 (posting after 04:32)</h4>
+<ul>
+<li>Upgrade MongoDB</li>
+<li>remember to purge MoDB previous install, and other directions in MoDB's doc</li>
+<li>set IPv6 to a lower TTL</li>
+<li>Disable php8.2 and enabled 8.3.</li>
+<li>Re-install nano time PHP extension</li>
+<li>create a new SSL cert for testing; don't forget to switch it back</li>
+
+
+</ul>
+
+</section>
+
+</section>
+
+
+<section><h3>June 3, 2024</h3>
+
+<p>Looks like at least 3 entries today, and the day is still young from my POV.  The first entries were around 5:30am.  The 3rd is after 19:21.</p>
+
+<section><h4>Ubuntu 24.04 upgrade notes</h4>
+
+<p>Ubuntu 24.04 comes with PHP 8.3 over 8.2.  Thus, disable one in Apache and enable the other.  Then, I have to re-install my nano time PHP extension.
+That gets me farther at 19:24.
+
+</p>
+
+</section>
+
+<section><h4>a slick bit of tech</h4>
+
+<p>The project I'm talking about will probably end in less than 2 months, so I'm nowhere near out of the woods.  Similarly, I'm not being paid very much.  I'm being paid a flat rate.  
+Right now I consider my $ / hour to be decent, but I'm also going to try to keep working hard at this.
+</p>
+
+<p>With that note, the roosters were out there crowing as of a few minutes ago (5:25am), so I'll join them.
+</p>
+
+<p>First, a note to self that the proxy and proxy_http Apache HTTP server mods are needed.  Apparently proxy_html is not, so I'll try to turn that off.  
+</p>
+
+<p>Also, you need a swap space (or perhaps a lot of RAM) to run even a "tiny" React / npm / Next / nodejs server.  On a 1G RAM t3a.micro instance, I'm pretty sure npm was crashing without swap.
+I set the swap to 1GB.  
+</p>
+
+<p>As for crowing, I just accomplished a rather slick piece of tech.  How does one get "traditional" client-side JS talking to a React project's almost entirely client-side JS?  Put another way, how does one get traditional JS served from Apache to work with Node?  
+</p>
+
+<p>The elements were</p>
+
+<ul>
+<li>Serve primarily from Apache as before.  That is, serve the index.html from Apache.  (It's a .html rather than .php because I have all PHP stuff turned off for the moment, trying to 
+coordinate with the front-end dev.) 
+</li>
+
+<li>Use an iframe to serve from Node on port 3000</li>
+
+<li>iframes can talk to the parent window and vice versa.  I should have figured that out about 2 years ago, but I started trying something really silly involving talking back and 
+forth with the server.  It turns out it's painless.
+</li>
+
+<li>In the useEffects or whatever the heck they are called in React / Next are client-side JS  ('use client' may be needed), add a bit of code to intercept those changes and communicate them 
+to the parent window. [slight change for clarity 06/10]
+</li>
+
+<li>Use the Apache Location directive (I think.  I'm not looking back at this yet.) and some Proxy and reverse proxy commands to serve up _next/blahblahblah files.  They get "confused" 
+between ports, as did I.  Use similar directives to alias /callNode to port 3000.  (It is NOT an "Alias" directive.)
+</li>
+
+<li>As mentioned, enable the appropriate Apache mods.</li>
+<li>And create a swap file</li>
+</ul>
+
+<p>I may be missing steps, but that covers a lot of it.  The hardest part was zooming in on using Location.  I was trying Rewrite rules that were not working.
+
+</p>
+
+<p>Maybe one day I'll record the details.</p>
+
+</section>
+
+<section><h4>part 2 - fussing about the usual "general store" issue</h4>
+
+<p>This will probably remain a stub for now, but I hope to one day fuss about React just like I have Drupal and Angular and WordPress and such ilk.  They may seem like very different tech, 
+but there are commonalities.  
+</p>
+
+<p>I am going to try to learn React while I'm at it, but, so far, my suspicions are proving correct.  
+
+</p>
+
+</section>
+
+</section>
+
+<section><h3>May 21, 2024</h3>
+
+
+
+<p>A few months ago a potential apprentice was looking at Craig's List ads.  We only spent a few minutes at it, so I never quite explained my objection to his methodology.  
+</p>
+
+<p>I need help narrowing down to specific ads.  He was creating yet more lists of ads, which is what Craig's <em>List</em> already is.  He was sending me the results of keyword searches.  
+The results were lists of ads.  When he did send me specific ads, he was getting the idea.  
+</p>
+
+<p>There either zero keywords or hundreds of keywords that will help me, where 0 and hundreds amounts to the same problem: a keyword search won't work.  In his case, I would have to go 
+through his list and then I would still have to go through the individual cities to find what he missed.  He was adding to my workload, not reducing it.
+</p>
+
+<p>We probably would have gotten that sorted, but <a href='/t/21/12/personal_blog.html#e2024_0428_0110_sd'>his "self-discipline" comment</a> did not go well with me.  
+
+</p>
+
+
+
+
+</section>
+
+
+<section><h3>May 7</h3>
+
+
+
+<section><h4>SQL v noSQL</h4>
+
+<section><h5>intro</h5>
+
+<p>I'm responding to someone specific, but I might as well post it.</p>
+
+<p>When your friend says "textbook relational data,"  I disagree.  In your case, it works just as well either way.  For reasons I explain, my preference is for MongoDB.  It's a 
+strong preference in the sense that I have not rethought using MongoDB since 2017.  However, if I were brought onto a project with well-written SQL and well-written data access objects (DAO) and whatnot, I might not make any suggestion to change it.  
+</p>
+
+</section>
+
+<section><h5>main section - written 5/6 but not posted that day</h5>
+
+
+<p>Your data tree came through intact.  Everything you suggested looked fine to do either one of (no)SQL.  Your ideas for noSQL were fine.  I have some long-term suggestions below, but 
+they are indeed long-term.  As we've discussed a few times over the years, the most important thing is to get something working however you can. </p>
+
+<p>I started learning SQL in 1997, but I'm heavily weighted towards MongoDB since 2017.  As I add to the law office project, all the additions are in MongoDB.  I have not added a single 
+field to MariaDB (MySQL) in years.  
+</p>
+
+<p>I'll explain why I started using MongoDB, but there is nothing wrong with RDBs (relational).  My very vague notion from my job recruiter feed is that SQL is still in more job descriptions 
+than noSQL.  You can probably determine the ratios quickly enough.  
+</p>
+
+<p>There are probably cases where SQL is decidedly better, but the notion is vague to me.  That is, I have no great examples in 8 years of part-time work.  I give a quasi-theoretical case 
+further below.  Also, in RDBs' favor, the SQL SELECT syntax is very elegant.  I am still not fluent in reporting-type queries in BJON (MongoDB's query syntax).  I have some temptation to 
+buy (or write) the various tools that convert SQL to BJSON.  By now, the free ones are likely getting better, but it's my job to learn BJSON.
+</p>
+
+<p>One of the reasons I moved to Mongo is Drupal's relational "field collection."  The problem isn't inherent to a relational DB.  My commentary on that has been something to effect that a field collection is a perverse parody of <a href='https://en.wikipedia.org/wiki/Sixth_normal_form'>6th normal form</a>.  That's sarcasm.  I haven't looked up what 6th means.  I was taught 
+3rd normal form--"the key, the whole key, and nothing but the key."  
+</p>
+
+<p>In other words, for a year or two before I found MongoDB, my nose was rubbed in how NOT to do relational.  Again, it's not an RDB's fault; that's just Drupal's nonsense.
+</p>
+
+<p>The slightly bigger reason I started using Mongo is because in MongoDB you don't have to create a table or field in advance.  Mongo does not care whether your keys or values (rows and columns) are consistent.  In theory, this can lead to trouble.  It's an argument for routing all inserts and updates for one collection through one data access 
+object (DAO), likely a DAO that you write.
+</p>
+
+<p>With that said, the only time I've been badly bitten was when I got lax and confused "6" (string) with 6 (integer).  Thus, I (almost) always put my inserts and updates through a function 
+called "vid()" or "validID()" or "vidord() - valid ID or die."  That is, "6" or 6 go into the function, and either a positive integer comes out or an exception is thrown.
+</p>
+
+<p>Regarding speed (performance), once again, Drupal showed how to do it wrong.  To this day there is a calculation that grinds on for about 1 minute at 100% CPU.  There is a decent chance 
+I'll have that down to 100ms in the near future.  
+</p>
+
+<p>The problem with the field collection was that it assumed you'd be interacting with a form and nothing else.  Woe be unto you if you need to  process the data in another way, such as the simple task of finding which hours have not yet been billed.  I'm joining way too many tables.  
+</p>
+
+<p>MongoDB has always served me well in terms of speed.  With that said, there have only been a handful of times in MongoDB that my data has gotten into the millions of rows / documents.
+</p>
+
+<p>Off hand, I can only think of one time I was really polishing speed in terms of millions of rows.  It's somewhere in my public GitHub repos, but I'm not going digging for it now.   
+It's when I was processing millions of lines of web server access logs, although the good stuff might be in another repo.  
+</p>
+
+<p>In that case, the problems are identical whether it's (no)SQL.  For example, insertMany() is much faster in either system.  That is, it's "insertMany()" in MongoDB.  In SQL it's 
+one INSERT statement with an array of values.  Well, it's not called an array.  That's stretching my memory.  That point is that there is a direct equivalent.  
+</p>
+
+<p>There is another situation in MongoDB in which you can get into trouble more easily than RDB.  I'm not sure I can remember the exact scenarios, but I can get close.  Say you have a 
+court date associated with a case ("State versus Bob").  And then say you're concerned with whether a case is public defense or private.  In SQL, the join is simple, and you quickly 
+isolate dates for public defense cases.  
+</p>
+
+<p>There are probably solutions in Mongo, but I suspect they are visually ugly.  Again, a SQL SELECT is quite elegant.  I haven't had a situation where I really needed to whittle that 
+down.  With a bit of thought, you can isolate what you want quickly enough in MongoDB.
+</p>
+
+<p>Similarly, there are reporting scenarios, as opposed to transactional scenarios, where SQL is likely easier and probably faster.  
+</p>
+
+<p>I have one screen in the lawyer system backed by MongoDB that stutters for 120ms on my local machine and 330ms on the live system.  That's too slow for my taste.  There have been other fish to fry, though, 
+so I haven't fixed it.  I don't think this is noSQL's "fault," but I don't know.  In any event, I'll try to remember to report on the solution, although it  is probably months away, only because that project
+is such a small fraction of full time.
+</p>
+</section>
+
+<section><h5>answering your questions more directly</h5>
+
+<p>Hopefully the above was helpful.  Now I'll try to answer your questions directly.
+</p>
+
+<p>In your simple scenario, there is no difference between (no)SQL in that you're searching on the "Posts" table / collection.  Obviously the exact syntax is a bit different, but I don't 
+see any conceptual difference.  No, I don't see a performance benefit either way.  Remember that you can create indexes in both systems.  You'd want an index on post.uid.  
+</p>
+
+<section><h5>regarding IDs</h5>
+
+<p>Sorry to diverge from your questions again, but I just thought of a debate in my head that's been intermittently going on for about 24 years, and that led to another thought.
+</p>
+
+<p>I've been debating whether IDs should be positive integers in cases where there is no compelling reason to be anything else.  I've come back around to yes.  Integers almost certainly 
+compare faster in the CPU logic core faster because that's pretty much the basic operation of a CPU.  You might try a string 9 bytes or bigger versus integers and compare the difference 
+with an index.  You may need to auto-generate 100,000s of rows to come to a conclusion.
+</p>
+
+<p>With that said, I sometimes have both a human-readable _id and then a positive integer ID with a unique index on it.  Sorting the index backwards (-1) may be useful; in the case (situation) 
+of the lawyer, he's usually working with the most recent or highest numbered (legal) cases.  For the human-readable ID, I either have a human-readable date plus some data 
+guaranteed to remain unique, or I may have something like "Bob_versus_State_caseID_12345."  
+</p>
+
+<p>I really like my human readable IDs.  For <a href='https://github.com/kwynncom/kwynn-php-general-utils/blob/dc63a363b1f989ee88e78397b287aa3cb408a1f3/mongodb3.php'>my default date code, 
+see my GitHub</a> and the get_oids() function.  
+</p>
+
+<p>Note that if you use "Bob_versus_State," you have to be careful to not try to change the _id in the case of an update / upsert.  That's one reason to use an integer in addition to a 
+human _id.  That is, if you do it the way I'm suggesting, you make sure _id isn't in the data payload (upsert) for an existing document / row.  This can 
+get awkward in the case where you don't know if it's a new document or not.  I can elaborate if you care.
+</p>
+
+</section>
+
+<section><h5>back to your questions</h5>
+
+<p>As I hope I've said, I don't have a super-strong opinion as to when to use each.  So far, I haven't seen any reason to go back to relational.  If you're writing a zillion reports and 
+you itch to use SQL, there may be an argument to create a relation data warehouse from the transactional MongoDB data, and then report off of the warehouse.
+</p>
+
+<p>That is likely the best I can do for round one.  The long-term thoughts are below.
+
+</p>
+
+</section>
+
+</section>
+
+
+<section><h5>images - long-term ideas</h5>
+
+<p>I tend to base64 encode binary data (such as images) if I'm going to put it in a database.  There is something to be said for being able to read a raw .bson file.  That is, if you have 
+raw binary, the output in the "more" or "cat" or even mongosh command looks very weird.  This also brings up a question of what does an image look like in MongoDB Compass or Robo3T (deprecated) or an equivalent of MySQL Workbench?  That is, a visual / GUI / pretty query tool.
+</p>
+
+<p>I can't imagine the encoding and decoding makes much speed difference in 2024's hardware.  Base64 is not a strong opinion, just something to think about.</p>
+
+<p>In the long-term, you might not want images in the database at all.  There is a question whether any database is suited for large binary data.  I'm sure you can find lots of 
+opinions out  there.  In the short term, as always, do whatever works the easiest, which is putting images in the DB.
+</p>
+
+<p>I'll give you an example of a situation that makes my teeth hurt.  It's not perfectly equivalent, but it's close.  In the lawyer project, my client writes snail letters to his clients.  
+I save the LibreOffice Writer file of the letter.  I am almost certain it's binary because the format is a ZIP-encoded version of several XML files.  
+</p>
+
+<p>I often backup and restore his database from the live system to my local machine.  Every other table (collection) is eye-blink fast, but both saving and reading the letters takes quite a 
+few seconds.  There can't be that many letters (5,000 at most), and they are not that big (20k, 100k at most).  Perhaps I'll look it up.  The point being that it's the one item that bogs 
+my backups down.  Also, in this case, the letters get less important over time.  That is, looking at a letter from 1 year ago is unlikely and 5 years ago is less likely.  One day I 
+plan to do something different.
+</p>
+
+
+
+</section>
+
+</section>
+
+</section>
+
+
+<section><h3>April 28</h3>
+
+<section><h4>more Craig's List madness</h4>
+
+<p>On one hand, I am not one to complain about length of writing.  I damn well am going to complain when 15 years and 3,000 - 4,000 responses have resulted in not much.  This guy's 
+ad is 1,635 words and 8,748 bytes.  This was my intended response:
+</p>
+
+<blockquote>
+
+<p>I appreciate a thorough explanation of what you want.  Fifteen years ago I would have been thrilled to see such an ad.  I would have diligently read it.  I may still diligently read it, but this is something like my 4,000th response in 15 years.  I have learned the hard way that no matter what I do, response rates are low.  I should probably give up on freelancing, but the alternatives have their own problems.  The first reason I freelance is because this will be my 5th email of the "day."  I am quite a night owl.</p>
+
+<p>I've been doing web development part time for over 20 years.  It's been part time because I can't quite solve the aforementioned problems.  I may be quite content to get $20 / hour, and I'll probably be faster than many applicants. </p>
+
+<p>I got to roughly point 13 and then skimmed a bit.  <del>It seems you want to do certain steps one at a time.  That would be great if I'm paid after each step.  I like the idea of breaking projects into small parts and payments.</del></p>
+
+<p>That's the best I can do for first contact.  It's likely about the best you'll get.  I suppose I'll find out eventually, or not.</p>
+
+<p>Kwynn</p>
+</blockquote>
+
+<p>I was ready to send that.  I should have suspected the following; it's happened before.  I went to look for an email address, and no email address.  Just a phone number.  His ad 
+also has a DARPA Lifelog ("Facebook") link.  The guy was a Marine.  Perhaps that explains a few things.  I still refuse to read the whole thing until I know this is for real.  I'm wondering if someone on Craig's List is playing a prank on him.  
+</p>
+
+<p>I caught a few more pieces of it, and now I think he's saying he won't pay a damn thing until the whole project is done.  Ok, maybe, but he'd better put the money in escrow.  
+</p>
+
+<p>I decided it was too late to ping him, and it may not be appropriate on Sunday.  That's never clear on Craig's List.  I'm not sure if I'll ever contact him or read his whole ad.  Perhaps 
+I'll read it when I'm in the sun with my bare feet on the ground.  
+
+</p>
+
+</section>
+
+</section>
+
+<section><h3>April 23</h3>
+
+
+
+<section><h4>content distribution</h4>
+
+<p>As has become the case often lately, this gets just beyond the stub stage.  This entry was starting to be a job application, starting on the 20th, 
+but the job already went to someone local-to-them.  I'm relatively sure
+that reason is the truth.  I'd decided before I got that word that it wasn't worth that much time.  The idea is worth some time, but I can only do so much at once.
+</p>
+
+<p>I wrote about this years ago on another page (within this site.  I'll link to it eventually [or not].)  I apparently didn't do well enough in my description, though, so I'll try again and 
 eventually update that page.
 </p>
 
@@ -95,11 +712,11 @@ I should make it easy for others to put content on their own sites using their o
 downloads are faster both because they can route based on distance and my proposed system can use file sharing tech to pull data from many locations at once.
 </p>
 
-
-
 </section>
 
 </section>
+
+
 
 
 <section><h3>April 16</h3>
