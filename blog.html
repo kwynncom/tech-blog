@@ -72,23 +72,70 @@ li   { margin-bottom: 0.7ex; }
 
 <section><h3>January 22</h3>
 
+<section><h4>leap seconds: introduction</h4>
+
+<p>I've been whittling on this for more hours than I care to admit.  As of 07:27, I'm going to try to clean this up just a bit, add a few notes, and then leave it as-is.  It will 
+probably remain a draft forever.
+</p>
+
+<p>At one point I pondered whether I could do a better job than Grok.  That is, was writing this worth it, as opposed to listing a bunch of ideas to ask Grok about?  
+Whether I did better or not: results are inconclusive.  See what you think.  Whether this was worth it, without even finishing, maybe.  It was fun.  
+
+</p>
+
+</section>
+
+<section><h4>(a portion of) my relevant Grok conversations</h4>
+
+<p>I discovered the hard way several hours ago that if you're not logged into X, you don't get the bullet-point-by-bullet point citations.  It's possible that only I get these 
+if I'm logged in as the originator (prompter), but I haven't tested that yet.  The point-by-point citations are in the HTML that anyone gets, but the CSS causes them to be 0 pixels by some number of pixels.  
+That is, you can get them from the raw HTML, but they are invisible when the page is rendered.  I might eventually take the time to bitterly complain to X about this.
+</p>
+
+<p>With that said, below is a fraction of my conversations.  I had probably 2 - 4x more than the following, but I changed one prompt a few minutes ago 
+to ask about "noon" and not the "moon," and then I lost the rest of that conversation.  That will teach me to save more links to histories.  On the other hand, I am pretty sure you can use Grok with the free version of an account, so you can ask about all this.  I may complain bitterly about this, too.  
+</p>
+
+<ol>
+    <li><a href='https://x.com/i/grok/share/9inLcawIRq8dKK8TABy4DyqP7'>1</a></li>
+    <li><a href='https://x.com/i/grok/share/USOiW4dxCP0YjrqIAzlukMTEE'>2</a></li>
+</ol>
+
+</section>
+
 
 <section><h4>leap seconds: the short version</h4>
 
 <p>Until roughly the 1950s, the only meaningful and useful measure of time involved the sun's position in the sky.  Time is always a measure of motion, or a measure of changes in space.
-Thus, a day was the standard of time.  (The definition of a "day" is actually much more complicated than you'd think.  I get into that later.)  Until 1960, the second was defined as  
+That's the only meaning it can have.  Thus, a day was the standard of time until 1960.  (The definition of a "day" is actually much more complicated than you'd think.  I get into that later.)  Until 1960, the second was defined as  
 1 / 86,400 of a day.  
 Even once you define a day such that it's almost constant, the rotation speed of the earth is NOT quite constant; thus, a day isn't constant.  
 (Right there, we start to approach the concept of leap seconds.)  Also, it's very hard to observe the position of the sun moment to moment, especially when it's dark or cloudy.  
+By going noon to noon, when it's easiest to observe the exact position of the sun, you can set clocks and tweak them so that they are quite good.   
 </p>
 
-<p>
+<p>"Quite good" became not good enough, though.  Regulating carrier frequencies seems to be the most compelling, immediate reason to why a better time standard was needed.  
+Just like better aircraft altimeters allow closer vertical spacing, a better time standard allows more frequencies.  
+</p>
+
+<p>Atomic clocks became so incredibly accurate that it became a matter of "Why not?"  In 1967, the second was defined in terms of quantum emissions of a very specifically regulated 
+(mind-bogglingly cold, for one) caesium-133 atom.  Thus, the standard became divorced from the rotation of the earth.  
+</p>
+
+<p>A number of processes have used atomic time since atomic time was possible.  There is an International Atomic Time (TAI for the French usage) that retroactively counted caesium transitions back to Jan 1, 1958, midnight GMT, as the beginning of time.  
 
 </p>
 
-<p>
-
+<p>What most of us use as a standard is UTC (universal coordinated time, again using the French ordering of words for the acronym).  UTC started on Jan 1 1972 (midnight UTC).  
+By that point, the earth's solar (observed) days were a total of 10 seconds slower than atomic time, so UTC started as atomic time minus 14 years (so that UTC starts at 0 in 1972) but then PLUS 10 seconds to account for the earth's rotation.  "They" decided to keep UTC synced with the sun, so 27 more seconds have been added between 1972 and the very end of 2016.  Those are 
+the leap seconds.  A second is added at the very end of June or December, such that the clock reads 23:59:60 before 00:00:00 of the next month.  
 </p>
+
+<p>As I think about it, I'm now starting to wonder why "they" ever created UTC separately from atomic time.  System crashes were already happening in the late 70s and continued through 
+the latest leap second in 2016.  As of late 2022, "they" have decided to give it up and discontinue leap seconds before 2035.  
+</p>
+
+
 
 </section>
 
