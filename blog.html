@@ -69,17 +69,374 @@ li   { margin-bottom: 0.7ex; }
 
 <section><h2 class='years40'>2025</h2>
 
+<section><h3>March 4, 2025</h3>
 
-<section><h3>January 22</h3>
+<section><h4>words of advice on MongoDB and MySQL (MariaDB) SSH tunnels</h4>
+
+<p>I have no reason to expose my MongoDB and MySQL (MariaDB) servers to the outside world.  However, sometimes I need to look at live data as opposed to 
+my local copy.  I already have my AWS EC2 Security Group (firewall) for ssh (port 22) set to accept my local machine's IPv6 prefix 
+(of the form 1234:5678:90ab:cdef::/64 ).  So, it's handy to use an ssh tunnel to route my database GUI clients (MongoDB Compass and MySQL Workbench) 
+to my live database servers.  
+</p>
+
+<p>I use a command of the form: </p>
+
+<code>ssh -6 ubuntu@example.com  -i  /path/to/MyInstance2025.pem   -L   9999:example.com:27017   -N</code>
+
+<ol>
+<li>-6 makes ssh use IPv6 for its lookup, because that's how I've registered my address prefixes. (ssh must use v6 to reach example.com so that my outgoing address is v6)</li>
+
+<li>ubuntu is the Linux login user / shell user / sudo user for Ubuntu's AWS AMIs (Amazon images).  You log into an Ubuntu EC2 instance as such, through 
+ssh.  (see security note below)
+</li>
+
+<li>The -i switch is followed by the path to your PEM file / private key.  That's the local half (private key) of a "Key Pair" one selects or creates 
+when one starts an AWS EC2 instance. 
+</li>
+
+<li> -L is for "local port forwarding."  You follow that with localPort:domain:remotePort.  
+
+</li>
+
+
+</ol>
+
+<section><h5>notes</h5>
+
+<p>By revealing the "ubuntu" user, I'm arguably bending security to some degree.  For one, that's a conscious choice.  To the best of my memory, I have 
+mentioned numerous times that I almost always use Ubuntu.  Also, the various Apache web servers involved are set (by default) to 
+use the "Server" HTTP response header, which says "Server: Apache/2.4.58 (Ubuntu)."  I am 99% sure I can turn that off, but I have no plans to do so.
+Similarly, knowing that the servers involved are on AWS is a matter of an IP address whois lookup.  I SUPPOSE that is a potential benefit of CloudFlare 
+(which I do NOT use) and Cloudflare's ilk.  You can set up Cloudflare to hide what service you're using.  The whois simply comes up as CloudFlare.  
+</p>
+
+<p>I've been holding a grudge, though, against CloudFlare for 8 - 9 years now.  They have or at least had an upload file limit.  That costs me an enormous amount of time working around.  The limit was something like 300 or 500MB, as I recall.  It was pretty small even for the time.  You could pay for 
+higher limits, of course.  
+</p>
+
+<p>I've sometimes been confused about the format of various key files.  This one  begins with "[dashes] BEGIN OPENSSH PRIVATE KEY [dashes]" and ends 
+with a similar END tag.  Mine is 387 bytes including the BEGIN / END tags.  It's 7 lines total, where the main package is base64 encoded.  
+The other end is set up automatically upon instance creation, but it's at /home/ubuntu/.ssh/authorized_keys.  That's the public key.  It has the 
+form ssh-ed25519 BB..3g MyInstance2025 [newline] .  ed25519 is the more recent default key pair generation method, as opposed to earlier RSA.  My file has one public key and is 99 chars long total.  That's the only line that has content.  
+The main body is once again base64.  By default, 
+MyInstance2025 corresponds with the PEM file name.  It may have to correspond to the name.  I'm not sure, and I'm not going to test that now.
+</p>
+
+
+
+</section>
+
+</section>
+
+</section>
+
+
+
+<section><h3>Feb 28</h3>
+
+<p>This is in-progress at 21:50.  I continue after 22:07.
+
+</p>
+
+<section><h4>code editors and general UI/UX stuff</h4>
+
+<p>Below is the question / prompt.  I call it the "prompt" because that seems appropriate with my sudden usage of Grok.  This came from a human, though, 
+and I'm going to give my own human answer.
+</p>
+
+<blockquote>
+<p>What are your thoughts ... on Vim, Neovim, and emacs? From what I recall, you seem to strictly use NetBeans.... I’ve been considering looking into Neovim. Thus far I have been working on learning Vim motions to help navigate my editor and use the mouse less.... I thought you might have some opinions.
+</p>
+</blockquote>
+
+<p>In rough order of what is easiest to answer:
+</p>
+
+<p>I use NetBeans for PHP.  I use PyCharm for Python.  I grudgingly use the more-or-less FOSS VS Code for Node.  After much searching, I couldn't find 
+an alternative.  Come to think of it, though, that was before I was talking to Grok.  Netbeans may be one line of code away from being able to debug Node.  
+The only problem, maybe, is that Node changed the name of a debug command several years.  Someone made a NetBeans patch, but the user who requested the 
+patch never got back to the patch-er, so the patch died.  It's somewhere way down on my list to look into that.
+</p>
+
+<p>I used emacs from 1991 - 1993 on Sun [Microsystems] OS [UNIX] and, as I recall, the very beginnings of Sun Solaris.  I see the emacs does not come by default with relatively recent Ubuntu.  (I hadn't looked for a long time until just now.)  
+As I recall, emacs has some nice, simple macros.  I've given some thought to looking into those again.  My understanding is that just like Vim, Emacs has been modernized and still has a loyal following, although I'd imagine it's small.  
+</p>
+
+<p>Vim does come with Ubuntu, and I still have muscle memory of its basic, non-obvious keys.  I must have used it in the early 90s, too.  However, 
+I use nano when I'm editing files in the cloud without X (the windowing system, going back to the 80s or 90s)/ Gnome / or whatnot.  Emacs was definitely meant for dev.  I don't think anyone considers nano apt for dev, but it's useful for quick edits.  I think I have occasionally come across a system without 
+nano in the last 15 years, but not often.
+</p>
+
+<p>To answer the more abstract part of your question, I've never pursued minimizing mouse movement, but I can think of at least two very serious people 
+I know who do that.  My lawyer client wants my software written that way, and it's something that's tripped me up before.  I have to concentrate to 
+make sure he can use the software with minimal mouse movement.  The other person was and probably still is a very good if not great dev.  I didn't 
+talk to him very often, so my knowledge of his ability is more indirect.  
+</p>
+
+<p>So I have not specifically pursued maximizing my own UX in my interaction with various software, but it's an interesting notion.  Along those 
+lines, I finally aliased "history" as 'h' and "grep" as 'g'.  A year or two ago I increased my shell history such that I keep 20,000 commands.  I wanted to 
+make sure I could always find commands.  So, I'm always grepping my history.  I should make that "hg".  Similarly, I should figure out ways to better 
+automate my top commands.  
+</p>
+
+<p>Another thing I recently did along those lines was to re-base my timesheets for both the lawyer project and my other ongoing project that you know something of (ha!).   That is, I was using a timesheet for the lawyer project that went back 3 years and was thus quite cluttered.  It had a bunch of 
+tabs.  Decluttering is part of the UX effect we should seek.
+</p>
+
+<p>So, to reiterate, you may find your project very useful.  
+</p>
+
+<p>On a somewhat related point, I remember expressing skepticism about AI's ability to write code.  
+I kept hearing about ChatGPT, but 
+<a href='https://kirschsubstack.com/p/i-tried-to-redpill-chatgpt-i-failed'>Steve Kirsch's interaction</a> has me piping angry at ChatGPT's existence.  
+I heard about Kirsch's interaction about the same time I started hearing "the buzz."  Similarly, I of course despise MicroSoft (SatanSoft) for 
+exactly the same reasons&dash;&dash;because they fail to call for Gates' trial and execution.  
+</p>
+
+<p>But Deputy Emperor-God Musk is helping us save the world, so I was inclined to like Grok before I'd used it.  Thus, I've started 
+"talking to" to Grok about code and other topics.  I have been very impressed with its ability to write code.  
+</p>
+
+<p>That's all for now.
+
+</p>
+
+</section>
+
+</section>
+
+
+<section><h3>Feb 25</h3>
+
+<section><h4>my first use of Grok 3 beta "Think"</h4>
+
+<p>Given that I was not using "Think" for yesterday's discussion, perhaps I didn't need to bother.  In other words, for my immediate purposes, 
+the default setting probably works well enough.  In any event, I turned on the "Think" option and eventually reached the limit of 10 "Think" questions 
+per 2 hours.  Given that it was sometimes thinking for 40 seconds of God knows how many CPUs / GPUs / magic widgets, that seems a fair limit.  
+For a moment I was confused and disappointed.  "No, I was just getting to the good part!" but then I realized it is time to give myself a rest in 
+addition to giving Grok a rest from my problem.  I suppose I could continue with the default setting, but, again, it's time to give it a rest.
+</p>
+
+<p>I was discussing the electric universe theory that gravity is a side effect of electric attraction.  I didn't get very far in that Grok had to 
+keep straightening out my phrasing.  It did a good job of it, just like it did yesterday.  I made some progress, though, and eventually I will 
+refine my plan of attack and try again.  
+</p>
+
+<p>One problem is that I was confusing two concepts.  If you have a positive point charge at the center of the earth and a shell of an equal number of 
+negative charges around it, the net effect is zero because the shell is centered on the point charge.  It kept telling me that, and rightfully so.  
+The electric theory of gravity says that a few hundred atoms (to pick an arbitrary number) will have a symmetrical dipole moment such that there is a 
+slight negative charge away from the center of mass.  I did get Grok to agree that it would be "slight," and it quantified slight, but I won't bother 
+with details until I get farther.   
+</p>
+
+<p>Grok kept telling me that a dipole moment in the usual sense would not be an inverse square effect, and that's true.  I'm proposing a large number of 
+dipole moments that should add up to a spherical / even effect, which should be an inverse square.  I didn't realize that phrasing, though, until I'd 
+hit my limit.
+</p>
+
+<p>Grok had a number of other objections to the theory, but one at a time.  I never quite communicated clearly enough for it assess the first thought experiment.  That experiment will hopefully show that a very slight electric imbalance leads to an acceleration of g at the surface of the earth.  
+</p>
+
+</section>
+</section>
+
+<section><h3>Feb 24</h3>
+
+<section><h4>a possibly novel way to explain "effective aperture"</h4>
+
+<p>I started asking Grok (3 beta) about GPS and ADS-B signals.  I wanted to understand why the frequencies are what they are.  I misunderstood 
+something Grok said, and it led to the concept of "effective aperture."  So after much wrangling with Grok, I figured out what A<sub>e</sub> is.  
+I figured out the purpose of its definition.  I don't yet understand WHY the formula works, but I understand its purpose.  
+</p>
+
+<p>I'm going to give my own phrasing first, and then I'll give you the phrasing Grok says is correct.  
+(At some point perhaps Grok and I will continue our discussion and converge.)  The following will be sloppy or even wrong 
+because I'm getting tired, and I want to record what I have before I crash.  
+</p>
+
+
+<p>The concept of effective aperture deals with an ideal receiving antenna that captures all the energy that touches it.  The theoretical 
+ideal receiver is said to be a point.  An ideal geometric point can't receive any signal because it has no area.  "Effective aperture" could 
+be phrased as "effective area."  An ideal receiver has an effective aperture or Ae=λ<sup>2</sup>/4π where λ is the wavelength being transmitted.  
+Another way of putting this goes something like this.  Given that formula, if you had n ideal (isotropic) receivers at distance d, shaped like 
+sphere around the ideal (isotropic) transmitter, the sum of their effective areas (apertures) would be equal to the area of the sphere.  
+</p>
+
+<p>Grok phrases it as follows, and Grok says the notion is correct.</p>
+
+<blockquote><p>
+    The effective aperture Ae=λ<sup>2</sup>/4π of an isotropic receiver exists to define the power it captures from a wave of wavelength λ, ensuring that			N=16π<sup>2</sup>d<sup>2</sup>/λ<sup>2</sup>      such receivers, summing to a sphere’s area 4πd<sup>2</sup>
+      at distance ( d ), collect all energy from an isotropic transmitter.
+
+</p>
+
+</blockquote>
+
+<p><a href='https://x.com/i/grok/share/szQqg1hwxsuqwRbYE4Jld9yw1'>Here it is on X</a> for confirmation.  
+
+</p>
+
+</section>
+
+</section>
+
+
+<section><h3>February 4</h3>
+
+<p>Null update.  I confused this with my personal blog again.</p>
+
+</section>
+
+
+<section><h3>January 29</h3>
+
+<section><h4>PS to previous</h4>
+
+<p>I'm not taking screenshots because that's not the point.  You'll just have to believe me.  Also, all of those stations will be recorded long-term.  The personal weather stations in FindU get saved long-term on a government site.  It's called the 
+Citizen Weather Observer Program (CWOP).  Also also (sic), I'm making a general point that hopefully you don't observe the hard way
+one day.  It's a cautionary tale.
+</p>
+
+</section>
+
+<section><h4>temperature data anomaly</h4>
+
+<p>Now I've seen everything.  "UGA Weather Network ... Etowah River Treatment Facility /   
+<a href='http://www.georgiaweather.net/mindex.php?content=calculator&variable=CC&site=BALLGND'>Ball Ground, Cherokee County, Georgia</a> / Conditions at 2:00 AM EST on January 29, 2025...  Temperature: 28.5 &deg;F"
+</p>
+
+<p>Meanwhile, the 
+<a href='https://forecast.weather.gov/MapClick.php?lat=34.3377&lon=-84.3758'>forecast</a> says a low of 36 which presumably means sometime after dawn.  The same weather station reports 42 degrees at 01:35 AM.  For that matter, it reports the dew point as 32.  
+Very generally speaking, the temperature does not go below the dew point.  I am currently not experiencing one of the several 
+conditions where that generalization fails.  
+</p>
+
+<p>Five readings, all of which are <a href='http://www.findu.com/cgi-bin/wxnear.cgi?noold=1&limit=5&zip=30107'>north and NE of Ball Ground</a>, show nothing lower than 40, at and somewhat before 02:13.  Only the 
+<a href='http://www.findu.com/cgi-bin/wxnear.cgi?noold=1&limit=5&zip=30004'>stations near Alpharetta</a> have 
+<a href='http://www.findu.com/cgi-bin/wxpage.cgi?call=EW7107'>one station</a> that is showing 31.  The other 4 are 38 or above
+(as of 02:18).
+</p>
+
+<p>I have set the pipes dripping.  This place has zero tolerance around freezing.  That has led to my 
+aforementioned physical misery and the fact that I need to move before March 22.</p>
+
+<p>  The UGA station in question shows that the 
+temperature went below freezing around 10:30pm.  Obviously I could poke my nose out the door and / or turn my car to key position 2 
+to check that thermometer, but I'd better go with the worst case indication no matter what I do or don't see outside.  
+It's still hours until dawn.  
+</p>
+
+<p>The UGA station went down to 28.6 at 02:15.  The UGA station has matched my car at the times I've looked.  Also, the history 
+graph of the UGA station is consistent and meaningful.  It doesn't show a jump.
+
+</p>
+
+</section>
+
+</section>
+
+<section><h3>January 26</h3>
+
+<p>So far I only have one section.  I'll likely first post after 04:58.
+
+</p>
+
+<section><h4>continuing from yesterday / a few hours ago</h4>
+
+<p>The topic is what I'm capable of doing when I'm physically, mentally, or emotionally in a state where I feel I shouldn't be doing 
+work for clients, in part because the work may not be good enough (high quality enough).
+</p>
+
+
+<p>I found people to talk to for a few hours, but now I'm back to deciding what I can tackle.  
+</p>
+
+<p>GNUCash Python bindings, and eventually a way to reconcile certain credit cards that have transactions with something like 5 different statuses--varying 
+degrees of "completed" transaction.  Also, somewhat simplified entry for very frequent transactions; I want to build a web form. I want "what if" or 
+projected costs.  
+</p>
+
+<p>Mucking about with my flying saucer ("grativic propulsion system") aerospace traffic control system.  Looking at how flight levels are currently 
+done.  Lots of stuff around that.
+</p>
+
+<p>Go back to my projects on quickly processing moderate-sized web server access logs (500MB).  Parallel processing, C or other compiled language, 
+possibly using a GPU.  Use a RAMdisk / tmpfs.  Grok says iotop does not see RAMdisk operations, which makes sense.  I'd like to see it not seeing them.
+</p>
+
+<p>Then there is ID'ing bots.  Lists of browser release dates, possible "AI."  Look into existing open source.  Per Grok, 
+"ELK Stack (Elasticsearch, Logstash, Kibana)" looks interesting.
+</p>
+
+<p>Various Wordle mucking.  
+
+</p>
+
+
+<p>I need to play with containerization and virtualization.  
+
+</p>
+
+<p>I want to figure out how to send an email from kwynn.com, using my own email transfer agent.  That is, not using AWS SES or MailChimp or whatnot.  
+I got several steps into the process roughly 2 years ago, but I could not get the standard receiving domain to accept an email.  (That unfortunately 
+would be Big Evil Goo Mail.)
+
+</p>
+
+</section>
+
+</section>
+
+
+
+<section><h3>January 25</h3>
+
+<section><h4>what to do when you're mildly to moderately physically miserable</h4>
+
+<p>I'm not going to go into all the details of the misery.  Let's just say I don't feel that I can do good work for my clients right now.  Tomorrow is 
+looking iffy.  Maybe by Monday night I will have recovered.
+</p>
+
+<p>So what does one do?  I got ambitious some time ago and I upgraded kwynn.com to Ubuntu 23.10.  As I remember, I had kept up with 6 month released for 
+a while, perhaps most of several years.  Only the even-year April releases are long-term support, though, such as 24.04.  They are supported for 5 years, as 
+I remember.  Everything else is supported for 8 - 9 months.  That is, until 2 - 3 months after the next release.  
+</p>
+
+<p>So, I finally upgraded kwynn.com.  I wound up changing IPv6 addresses after slowly bringing down my AAAA DNS TTL down to 5 minutes.  
+I even set the new instance to Instance Metadata Service (IMDS) to v2 with the token required.  I'd taken the time to upgrade the one program of mine that 
+uses that.
+</p>
+
+<p>So that's apparently what I do in such situations.  Unfortunately, the misery continues.  I have ideas for the next such tasks, but at the moment, I'm 
+both mildly miserable and irritated for other reasons.  So apparently now all I can do is write on my tech blog.
+
+</p>
+
+</section>
+
+</section>
+
+<section><h3>January 23</h3>
+
+
+<section><h4>leap seconds: later introduction</h4>
+
+<p>I originally planned to post this 2 mornings ago.  Now (1/23 20:02) I'm going to try to correct a few things and let it be.  The change that it will ever be 
+finished with polish is low.  
+
+</p>
+
+</section>
 
 <section><h4>leap seconds: introduction</h4>
 
-<p>I've been whittling on this for more hours than I care to admit.  As of 07:27, I'm going to try to clean this up just a bit, add a few notes, and then leave it as-is.  It will 
+<p>I've been whittling on this for more hours than I care to admit.  As of 07:27 (1/22), I'm going to try to clean this up just a bit, add a few notes, and then leave it as-is.  It will 
 probably remain a draft forever.
 </p>
 
 <p>At one point I pondered whether I could do a better job than Grok.  That is, was writing this worth it, as opposed to listing a bunch of ideas to ask Grok about?  
 Whether I did better or not: results are inconclusive.  See what you think.  Whether this was worth it, without even finishing, maybe.  It was fun.  
+[It seemed fun when I wrote it.  ~36 hours later, I look back and think I can't spend time on such things.]
 
 </p>
 
@@ -87,13 +444,13 @@ Whether I did better or not: results are inconclusive.  See what you think.  Whe
 
 <section><h4>(a portion of) my relevant Grok conversations</h4>
 
-<p>I discovered the hard way several hours ago that if you're not logged into X, you don't get the bullet-point-by-bullet point citations.  It's possible that only I get these 
+<p>I discovered the hard way several hours ago that if you're not logged into X, you don't get the bullet-point citations.  It's possible that only I get these 
 if I'm logged in as the originator (prompter), but I haven't tested that yet.  The point-by-point citations are in the HTML that anyone gets, but the CSS causes them to be 0 pixels by some number of pixels.  
 That is, you can get them from the raw HTML, but they are invisible when the page is rendered.  I might eventually take the time to bitterly complain to X about this.
 </p>
 
 <p>With that said, below is a fraction of my conversations.  I had probably 2 - 4x more than the following, but I changed one prompt a few minutes ago 
-to ask about "noon" and not the "moon," and then I lost the rest of that conversation.  That will teach me to save more links to histories.  On the other hand, I am pretty sure you can use Grok with the free version of an account, so you can ask about all this.  I may complain bitterly about this, too.  
+to ask about "noon" and not the "moon," and then I lost the rest of that conversation.  That will teach me to save more links to histories.  On the other hand, I am pretty sure you can use Grok with the free version of an account, so you can ask about all this.  I may complain bitterly about this history loss, too.  
 </p>
 
 <ol>
@@ -106,7 +463,9 @@ to ask about "noon" and not the "moon," and then I lost the rest of that convers
 
 <section><h4>leap seconds: the short version</h4>
 
-<p>Until roughly the 1950s, the only meaningful and useful measure of time involved the sun's position in the sky.  Time is always a measure of motion, or a measure of changes in space.
+<p>Until roughly the 1950s, the only meaningful and useful measure of shoter-term time involved the sun's position in the sky.  
+(The measure of a year is important, too, but I'm focusing on smaller units.)  
+Time is always a measure of motion, or a measure of changes in space.
 That's the only meaning it can have.  Thus, a day was the standard of time until 1960.  (The definition of a "day" is actually much more complicated than you'd think.  I get into that later.)  Until 1960, the second was defined as  
 1 / 86,400 of a day.  
 Even once you define a day such that it's almost constant, the rotation speed of the earth is NOT quite constant; thus, a day isn't constant.  
@@ -126,7 +485,7 @@ Just like better aircraft altimeters allow closer vertical spacing, a better tim
 
 </p>
 
-<p>What most of us use as a standard is UTC (universal coordinated time, again using the French ordering of words for the acronym).  UTC started on Jan 1 1972 (midnight UTC).  
+<p>What most of us use as a standard is UTC (universal coordinated time, again using the French ordering of words for the acronym).  UTC started on Jan 1 1972 (midnight GMT).  
 By that point, the earth's solar (observed) days were a total of 10 seconds slower than atomic time, so UTC started as atomic time minus 14 years (so that UTC starts at 0 in 1972) but then PLUS 10 seconds to account for the earth's rotation.  "They" decided to keep UTC synced with the sun, so 27 more seconds have been added between 1972 and the very end of 2016.  Those are 
 the leap seconds.  A second is added at the very end of June or December, such that the clock reads 23:59:60 before 00:00:00 of the next month.  
 </p>
@@ -140,6 +499,10 @@ the latest leap second in 2016.  As of late 2022, "they" have decided to give it
 </section>
 
 <section><h4>leap seconds - first, "free energy" per Tom Bearden</h4>
+
+<p>A longer version, written earlier:
+
+</p>
 
 <p>I'm curious to see how I'll do versus WikiP or AI.  Leap seconds go to the question of how to define time.  For an anecdote, 
 in roughly 1996 I was at a one-time public lecture given by Tom Bearden.  (He lived to 91 years old and only passed about 3 years ago.)  
@@ -158,7 +521,7 @@ blocker.  Perhaps you'd need a series of 9-volts to get a useful voltage.  I don
 </p>
 
 <p>They (there are 4 other names on the patent) needed a material that conveyed voltage but not charge.  Maybe they could do it at lower 
-voltages and external currents.  Again, I don't know what they demonstrated and what they have now.
+voltages and externally available currents.  Again, I don't know what they demonstrated and what they have now.
 </p>
 
 </section>
@@ -188,7 +551,7 @@ between "one hyperfine level to another."  This assumes an "unperturbed ground-s
 extremely close to absolute zero temperature: there must be so little energy that a detector can 
 count that one ground-state transition rather than many possible energy changes (quanta).  Being near absolute zero by definition greatly 
 reduces energy and thus noise.  Grok tells me the clocks must be less than 10 micro-Kelvin (μK).  The highest grade such atomic 
-clocks cost $30,000, and I'd imagine they cost a lot to maintain that temperature.
+clocks cost $30,000, and I'd imagine it costs a lot to maintain that temperature.
 </p>
 
 <p>Now we approach leap seconds.  Scientists and engineers manage to maintain a very precise time standard.  But how does that relate to the 
@@ -198,8 +561,9 @@ clocks that are still sometimes on a our walls?
 <p>Well, the day is pretty damn close to 86,400 seconds.  It's not close enough for modern, specialized purposes, but it still has a very close relationship to the sun going around the sky.  
 </p>
 
-<p>The caesium clock standard, or "International Atomic Time [TAI for the French usage] began at midnight (00:00:00.000000) on January 1, 1958" GMT. 
-For scientists, engineers, and technicians in relevant fields, "What time is it?" is answered by caesium ticks (quantum transitions) from that moment.
+<p>The caesium clock standard, or "International Atomic Time [TAI for the French usage] began at [was retroactively set to] midnight [00:00:00.000000] on 
+January 1, 1958" GMT. For scientists, engineers, and technicians in relevant fields, "What time is it?" is answered by caesium ticks (quantum transitions) 
+from that moment.
 </p>
 
 <p>You and I are not necessarily interested in caesium ticks.  When we ask "What time is it?", we still want some relationship to where the 
@@ -211,7 +575,7 @@ local solar time wasn't good enough.  It was the railroad companies that created
 <p>Noon still means something, of course, and it's tracked with great precision.  What "noon" means is more complicated than in 1820, though.  
 </p>
 
-<p>For me, in EST, noon means something like "the average time that the sun is highest in the sky at 75 degree west longitude."  I can 
+<p>For me, in EST, clock noon means something like "the average time that the sun is highest in the sky at 75 degree west longitude."  I can 
 derive my solar noon with my longitude (offset from 75&deg;W) and "the equation of time."  The equation of time deals with the fact that the 
 earth's orbit is not a perfect circle and the seasonal / annual (observed) motion of the sun must also be accounted for.
 </p>
@@ -219,7 +583,7 @@ earth's orbit is not a perfect circle and the seasonal / annual (observed) motio
 <p>
 Scheduled ship passage between Great Britain and America began in 1818.  To have a schedule, one needs the relative times between London and New York.  Time always measures 
 a change in space.  For our purposes, that change is the changing position of the sun (as observed from various points on earth).  The relative time between London and 
-New York depends on their relative distance.  It's difficult to run a tape measure across the Atlantic.  "We" could fairly close to running a tape measure today, but it was 
+New York depends on their relative distance.  It's difficult to run a tape measure across the Atlantic.  "We" could get fairly close to running a tape measure today, but it was 
 impossible in 1818.  </p>
 
 <p>This goes to the literally ancient longitude problem.  I'll come back to that, but first a word on latitude.  
@@ -251,14 +615,9 @@ clock ticks between solar noons.
 <p>
 In 1761, the only way to test John Harrison's clock was to take it out on the ocean for a few thousand miles, bring it back to the same place, and see how its measured noon relates to the observed solar position.  </p>
 
-<p>Note that noon is used for somewhat different reasons when observing latitude versus trying to set a standard for longitude.  
+<p>Note that noon is used for somewhat different reasons when observing latitude versus trying to set a standard for longitude.  [Or is it?  I keep 
+going around about that, but I'll have to leave this be.]
 </p>
-
-<p>
-
-</p>
-
-
 
 <p>
 (Edmond Halley of Halley's Comet had a pretty good handle on the equation of time issue in 1693, so that part was solved.)
@@ -290,7 +649,8 @@ at -0.00146907.  That's because atomic time was <b>defined to be</b> astronomica
 <p>We could run a tape measure across the Atlantic, but it would still be impossible to get the same precision that time-derived location gives us.  "We" got 
 much better at measuring time than directly measuring distance.  With GPS, our proverbial tape measure is based on time.  When the tape measure was in orbit, "we" could 
 send signals that could serve as the most precise tape measure in recorded history.  Only then did "they" realize that an earth density (and thus gravitational) issue 
-meant the 1851 observation was not quite right.  Given that time had been defined based on that error, though, the official coordinates were established in 1984.
+meant the 1851 observation was not quite right.  Given that time had been defined based on that error, though, the official coordinates were established in 
+1984.
 </p>
 
 <p>Finally, we get much closer to leap seconds.  Some branches of science had their time standard set in 1958, but astronomers still needed to know how atomic time related to 
@@ -306,6 +666,9 @@ the sun and other stars.  From 1958 to 1972, atomic time and solar time had dive
 <p>In late 2022, "they" decided to stop using leap seconds "by or before 2035."  That is, UTC will become strictly controlled by atomic time and be allowed to drift away from the sun.
 </p>
 
+<p>[The End for now, and probably for a *time* or forever]
+
+</p>
 </section>
 
 </section>
