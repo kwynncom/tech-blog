@@ -69,9 +69,121 @@ li   { margin-bottom: 0.7ex; }
 
 <section><h2 class='years40'>2025</h2>
 
-<section><h3>March 4, 2025</h3>
+<section><h3>March 7</h3>
 
-<section><h4>words of advice on MongoDB and MySQL (MariaDB) SSH tunnels</h4>
+<section><h4>flying saucer aerospace traffic control</h4>
+
+<p>I wrote a separate page about <a href='/t/23/03/build_a_UFO.html'>how anti-gravity might work</a>.  A few weeks ago 
+<a href='https://x.com/mtgreenee/status/1875301496226771204'>anti-gravity came up in a big way</a>.  (For the record, here is Grok's 
+OCR of <a href='https://x.com/OddPenguin73/status/1897914249843769554'>Matthew Livelsberger's 2024/12/31 email to Sam Shoemate</a>.)
+</p>
+
+<p>For roughly two years I've been occasionally dreaming of my UFO / flying saucer / anti-gravity trips to come.  Among many questions, 
+it raises the question of how does one accomplish aerospace traffic control with a few billion saucers?</p>
+
+<p>I'm assuming saucer prices will come down like everything else, so soon there will be a lot of them.  They'll be like cars.
+
+Grok estimates there are 1.6 
+billion street-legal ground vehicles on earth right now.  It estimates a peak of 200M on roads at moments of peak global traffic.  
+Grok and I agree that "peak" is driven by Chinese rush hour.
+</p>
+
+<p>As a starting point, I've been watching how air traffic control works, and how altitudes (flight levels) are allocated.  
+I'm assuming that saucers can routinely go at least 200 miles up.  I'm assuming at the start that space junk above that hasn't been 
+cleaned up, and there are satellites.  
+With UFOs, though, it would be fairly easy to clean up all the space junk.  Military and space agency ground radars 
+can track 1cm-sized space junk, so an autonomous UFO with the proper radar can go up, find, catch up with, and grab 
+much smaller pieces.  
+</p>
+
+<p>Satellites would likely be phased out and replaced with "hovering" anti-gravity craft.  One can have geosynchronicity at any 
+altitude and latitude, for example.  Thus, eventually, satellites' replacements could double as traffic markers.  Then, of course, 
+a UFO could go much higher.  
+</p>
+
+<p>For now, though, I stick with roughly a 200 mile limit.  I've come up with a tentative 20 mile vertical separation margin.  
+The "big boy" jets need at least 1,000 feet.  Given their relative speeds, I translated that to 20 miles.  I believe I was assuming 
+10 miles a second ground speed.  
+</p>
+
+<section><h5>an aside: when 1,000 foot vertical separation isn't enough</h5>
+
+<p>As an aside, I dramatically remember 1,000 foot separation based on a January 7, 2017 incident, when a 
+Bombardier Challenger 604 (roughly 12 passengers) passed 1,000 feet directly below an Airbus 380.  The wake turbulence subjected the 
+much, much smaller plane to 5 - 6 gravities for a few moments at a time as it rolled over 3 - 5 times, and both engines flamed out. 
+The pilots managed to restart both engines and otherwise recover, and they landed in one piece.  One passenger was seriously injured 
+from being flung about.  They were at cruise altitude, so passengers were free to move about.  Given that the plane far exceeded its 
+maximum structural load, it was written off as a full (hull) loss.  
+</p>
+
+<p>For the record, Grok is pretty sure the Airbus was Emirates Flight EK412 from Dubai, United Arab Emirates (DXB) to Sydney, Australia (SYD).  Malé, Maldives (Velana International Airport, MLE).  The Challenger 604 was en route from Malé to Abu Dhabi, cruising at (flight level) FL340 (34,000 feet) over the Arabian Sea, approximately 630 nautical miles southeast of Muscat, Oman.   The small plane was owned by MHS Aviation, a German private jet operator, tail number D-AMSC.
+</p>
+</section>
+
+<p>
+
+</p>
+
+
+
+
+
+</section>
+
+<section><h4>the Turing Test in 2025 (today's post 1)</h4>
+
+<p>I was asking Grok (3 beta) about the Turing Test.  Grok gave me the specifics:
+</p>
+
+<blockquote>
+<p>
+In his 1950 paper, “Computing Machinery and Intelligence,” published in <i>Mind</i> ... [Turing] proposed a game with three players: a human interrogator, a human respondent, and a machine. The interrogator chats with both (via text, so no voice clues) and tries to figure out which is the machine. Turing’s benchmark wasn’t a hard number but a thought experiment: if the machine could perform as well as a human in fooling the interrogator, it’d be a win for “thinking” machines. He framed it as, “Can the machine make the interrogator guess wrong as often as a human would?”
+</p>
+</blockquote>
+
+<p>Grok said there are people doing the test, but it didn't find data on any Grok versions.  With a 5 minute limit via text-only, in 
+May, 2024, "GPT-4: Fooled 54% of judges, meaning over half thought it was human. It leaned on fluent, context-aware responses, but stumbled if pushed into deep reasoning or quirky tangents."  That was UCSD (San Diego).
+</p>
+
+<p>So that's a pass given a 5 minute limit.  I tend to think the limit should be much longer, though, for a true pass.  That's impressive, though.
+</p>
+
+<p>"A preprint from MIT (circa November 2024, arXiv ID pending) tested GPT-4o in 10-minute blind chats—60% fool rate."
+</p>
+
+<p>This one made me literally LOL:
+</p>
+
+<blockquote>
+<p>Cultural Twists: A fun wrinkle: a Tokyo University team (Feb 2025 preprint) tested AI in Japanese, where politeness norms trip up Western models. GPT-4o scored 48%—cultural nuance matters. X users in Japan (@NihonAI, Feb 28, 2025) griped it “sounds like a gaijin trying too hard.”
+</p>
+</blockquote>
+
+
+
+</section>
+
+</section>
+
+
+<section><h3>March 5, 2025</h3>
+
+<p>I originally labeled this "March 4," and it was up as such for a minute or so around 00:33am.  
+
+</p>
+
+<section id='e2025_0305_h41_ssh'><h4>words of advice on MongoDB and MySQL (MariaDB) SSH tunnels</h4>
+
+
+<p>The main advice I wanted to convey is that in order to use the following ssh command, on the server side, /etc/hosts needs a one line entry like "127.0.0.1 example.com" Even though I'm using IPv6 for the connection, using 127... on the server side works fine.  (As I note below, I must use 
+ip6-localhost from the database client.)  Without that entry, ssh on the server side doesn't "know" who it is.  It took me a long time to figure that 
+out, years ago.
+
+</p>
+
+<p>Now I'll back up and explain the context:
+
+</p>
 
 <p>I have no reason to expose my MongoDB and MySQL (MariaDB) servers to the outside world.  However, sometimes I need to look at live data as opposed to 
 my local copy.  I already have my AWS EC2 Security Group (firewall) for ssh (port 22) set to accept my local machine's IPv6 prefix 
@@ -94,7 +206,13 @@ ssh.  (see security note below)
 when one starts an AWS EC2 instance. 
 </li>
 
-<li> -L is for "local port forwarding."  You follow that with localPort:domain:remotePort.  
+<li> -L is for "local port forwarding."  You follow that with localPort:domain:remotePort.  Thus, I point Compass to mongodb://ip6-localhost:9999/  Given 
+that I am using v6, note that I have to use ip6-localhost .  That is in /etc/hosts of by default.  It needs to be in /etc/hosts of the local machine.  
+Mine shows a line "::1     ip6-localhost ip6-loopback" where ::1 is the IPv6 equivalent of 127.0.0.1 .  9999 is arbitrary. It can be anything that isn't 
+taken on your local machine.  27017 is the default MongoDB server port, so that's the value unless you changed it.  
+</li>
+
+<li>-N means to keep the connection open rather than running a command and then leaving.  
 
 </li>
 
@@ -103,6 +221,11 @@ when one starts an AWS EC2 instance.
 
 <section><h5>notes</h5>
 
+<p>There are background versions of the ssh command, but I have found my life easier if I leave shells open and running that command.  It makes it 
+much easier for figure out if the connection broke, for one.  
+
+</p>
+
 <p>By revealing the "ubuntu" user, I'm arguably bending security to some degree.  For one, that's a conscious choice.  To the best of my memory, I have 
 mentioned numerous times that I almost always use Ubuntu.  Also, the various Apache web servers involved are set (by default) to 
 use the "Server" HTTP response header, which says "Server: Apache/2.4.58 (Ubuntu)."  I am 99% sure I can turn that off, but I have no plans to do so.
@@ -110,13 +233,14 @@ Similarly, knowing that the servers involved are on AWS is a matter of an IP add
 (which I do NOT use) and Cloudflare's ilk.  You can set up Cloudflare to hide what service you're using.  The whois simply comes up as CloudFlare.  
 </p>
 
-<p>I've been holding a grudge, though, against CloudFlare for 8 - 9 years now.  They have or at least had an upload file limit.  That costs me an enormous amount of time working around.  The limit was something like 300 or 500MB, as I recall.  It was pretty small even for the time.  You could pay for 
-higher limits, of course.  
+<p>I've been holding a grudge, though, against CloudFlare for 8 - 9 years now.  They have or at least had an upload file limit.  That cost me an enormous amount of time working around.  The limit was something like 300 or 500MB, as I recall.  It was pretty small even for the time.  (You could pay for 
+higher limits, of course, but I wasn't in control of the whole situation at the time.  I am now.)
 </p>
 
-<p>I've sometimes been confused about the format of various key files.  This one  begins with "[dashes] BEGIN OPENSSH PRIVATE KEY [dashes]" and ends 
+<p>I've sometimes been confused about the format of various key files.  This one (the PEM) 
+begins with "[dashes] BEGIN OPENSSH PRIVATE KEY [dashes]" and ends 
 with a similar END tag.  Mine is 387 bytes including the BEGIN / END tags.  It's 7 lines total, where the main package is base64 encoded.  
-The other end is set up automatically upon instance creation, but it's at /home/ubuntu/.ssh/authorized_keys.  That's the public key.  It has the 
+The other end is set up automatically upon instance creation. It's at /home/ubuntu/.ssh/authorized_keys.  That's the public key.  It has the 
 form ssh-ed25519 BB..3g MyInstance2025 [newline] .  ed25519 is the more recent default key pair generation method, as opposed to earlier RSA.  My file has one public key and is 99 chars long total.  That's the only line that has content.  
 The main body is once again base64.  By default, 
 MyInstance2025 corresponds with the PEM file name.  It may have to correspond to the name.  I'm not sure, and I'm not going to test that now.
