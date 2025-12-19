@@ -68,9 +68,466 @@ li   { margin-bottom: 0.7ex; }
 </section>
 
 <section><h2 class='years40'>2025</h2>
+    
+    <section><h3>Dec 19, 2025</h3>
+	<section><h4>personal project to prevent overcharging my phone</h4>
+	    
+	    <p>I may or may not have talked about how I've had some exposure to a Tesla in the last few months.  A friend bought one.
+		I find it amusing that the same Li-ion batteries in Teslas and cell phones "want" the same charge patterns.  I eventually figured out that phones "want" the same thing.  So, I set out to help make sure I don't overcharge my phone.  Or at least have a bit of assistance in this direction.
+	    </p>
+	    
+	    <p>I may have talked about previous versions that used to put a battery percentage in the upper right of my Ubuntu / Gnome screen.  The previous versions used some Python and could only easily support precisely 2 or 3 digits.  It was actually showing an image, so arbitrary text was difficult.
+	    </p>
+	    
+	    <p>A few weeks ago I consulted Grok on arbitrary text on the top right.  (This is the "system status area.")  It took a few iterations for Grok to get it right, but it soon-enough came up with a Gnome extension to insert arbitrary text.  Then I set out to achieve a more thorough solution.  This is all in my "code-fragments" GitHub repo.  
+	    </p>
+	    
+	    <p>This is another case where the project took on a life of its own, and I became obsessed.  I got behind on both of my paid projects, but I am starting to catch up again.  
+	    </p>
+	    
+	    <p>I mentioned that the old version used Python.  That may have been fine, but when I looked harder at the Python code, I realized it was doing a one second idle-sleep loop.  That's cheating in the sense that I wanted something more elegant that only activates when the battery level changes.  I got obsessed with that elegance among other uber-geeky issues.
+	    </p>
+	    
+	    <p>Speaking of geeks, I came across the part of the <i>Emberverse</i> again, 3rd generation, where Tiphaine d'Ath says her pre-Change, early teen self was a "big geek."  Her adopted daughter Heuradys interprets "big" as physically fat or overweight, and she doesn't know "geek" at all.
+</p>
+
+<p>Anyhow, I similarly became obsessed with being certain that my system was still "hearing" the phone.  This all led to running "adb logcat" to watch the log for level changes, and thus only update upon change.  This in turn led to a common PHP problem of running detached processes such as "nohup adb logcat &".  All sorts of stuff goes wrong.  Grok offered me a partial solution with the ReactPHP composer library.  I may soon have uses for that in my paid projects.  It does seem to improve the situation.  I only realized a couple of days ago, though, that I had reverted to 1992 debug by "echo" / print.  That is, I still have trouble running the debugger with detached processes.  Kwynn's First Rule of Software Development, first stated about 850K (including HTML markup) below, is something to the effect of "always use a debugger."
+</p>
+
+<p>
+    
+</p>
+
+
+	    
+	</section>
+	
+	
+    </section>
+    
+    <section><h3>Nov 17, 2025</h3>
+	<section><h4>a spat with Grok</h4>
+	    <p>I put this in 
+		
+		<a href='/t/21/12/personal_blog.html#e20251117Grokspat'>my personal blog</a>.  
+		
+		Here I talk about "her" technical capabilities, but this time was 
+		more "political," and I have to admit I was somewhat annoyed at "her."
+	    </p>
+	    
+	</section>
+	
+	<section><h4>personal tech projects</h4>
+	    
+	    <p>I'm going to leave this mostly how I drafted, but I have an update / twist at the end / in the next section.
+		
+	    </p>
+	    
+	    <p>I think I also mentioned in my personal blog that I've had some bumps on my two paid tech projects in the last few weeks, so I've pulled a way a bit to work on personal dev projects.  It's been very satisfying for the most part.  There is a lot of new code in <a href='https://github.com/kwynncom/code-fragments'>my code-fragments</a>.  
+	    </p>
+	    
+	    <p>I mentioned in my previous entry (11/10) below that Grok 4 Fast now plays Wordle as well as I do and somewhat faster, but still nowhere close to computer speed.  So, I decided Wordle is a task for old-fashioned algorithms and started back at it.  
+	    </p>
+	    
+	    <p>Wordle uses the same algorithm as the board game Mastermind (1971, Invicta Plastics).  I wrote a C program executed on bleeping Satansoft DOS to pick a secret and give feedback and let users solve puzzles.  I've been a bit obsessed for ~30 years when I wrote that.
+	    </p>
+	    
+	    <p>I'm not sure how many times I've written the comparison / feedback function over the years in various languages and project fragments, between Mastermind and Wordle.  I'm not entirely sure the one I wrote 25 hours ago works perfectly.  I haven't tested it enough.  I'm reasonably sure it does, though.  [Update: It had bugs.]
+		I'm rather pleased with the result. 
+		I'm tempted to write a commented version or comment fully here.  
+		Let's see how it goes. That is, let's see if I can resist.
+	    </p>
+	    
+	    <p>For another little project, Grok (Fast Mode, version 3-ish) stepped me through a tiny Android app, also in code fragments.  That was fun.  I'm not sure I'll carry that project through, but it was nice to get initial results.  The "batt" code has been running locally for a few weeks.  Grok stepped me through that, too.  It uses ADB and puts my phone battery's charge percentage in the top right of my Gnome (Wayland) / Ubuntu 24.04 screen, next to the wifi, volume, and power icons.
+		
+	    </p>
+	    
+	</section>
+	
+	<section><h4>Updates to the Wordle project</h4>
+	    
+	    <p>I wrote most of the above just after midnight but didn't post it.  Now it's 5:29am.  
+		
+	    </p>
+	    
+	    <p>No need to comment that code or perhaps any code ever again.  I am wondering whether it's worth mapping the letter into one integer for possibly faster processing.  I thought about it a while.  I suspect it's only meaningfully faster if I'm storing a whole grid of feedback (6.3 MB assuming 8 bit chars rather than mapping to 6.  I can't map to 5 because of the "poisoning" that Grok will discuss in a moment.
+	    </p>
+	    
+	    <p>In any event, I was considering asking Grok about the bit mapping and otherwise how much farther I can take my code.  
+		I was deliberately avoiding consulting Grok until I was happy with my result.  Then it occurred to me to ask Grok first whether it could ID the code.  It made quick work of that.
+	    </p>
+	    
+	    <p>The only difference between 
+	<a href='https://github.com/kwynncom/code-fragments/blob/32e8ec29d9d8b7204540078af31f03470ff36b2e/Wordle/cli/cmp.php'>this version</a> and what I showed Grok was that Grok pointed out I had an unused define().  
+	Here is <a href='https://grok.com/share/bGVnYWN5_973b771a-4f1c-42a7-a370-966348217a82'>Grok's commentary</a>.  
+		
+	    </p>
+	    
+	    
+	    
+	</section>
+	
+	
+    </section>
+    
+    
+    <section><h3>Nov 10, 2025</h3>
+	<section><h4>Grok - Wordle update for the Grok 4 Fast variant / model</h4>
+	    <p>Grok 4 Fast when typing on the web (on <a href='https://grok.com/'>grok.com</a>) finally plays Wordle both perfectly and quickly.  When I tried desktop 2-way-audio in Expert mode, it was dumb.  Seems that audio uses a different model;  I've had a number of indications of that.</p>
+	    <p>When I was typing in Expert mode, it was perfect but much slower than I am.  Grok 4 Fast was guessing at a similar rate to me, perhaps faster.  I'll have to pay attention to the think time.
+	    </p>
+	    
+	    <p>Looking at the think times, it's faster than I am usually.  I suspect it gets faster in subsequent games because it's decided how it's going to solve the puzzle, but I wasn't paying enough attention.  Yes, I have the think times on the screen, but I'm not certain when I switched to Fast.
+		
+	    </p>
+	</section>
+	
+	
+    </section>
+    
+    
+    <section><h3>November 7, 2025</h3>
+	<section><h4>a Grok intro to a non-techie</h4>
+	    <p>This entry goes in the category of something I may find very interesting 5 or 10 or 25 years from now.  Hopefully others will, too.  Maybe someone will have an immediate use.
+	    </p>
+	    
+	    <p>To back up a bit, I started hearing about ChatGPT a few months after its launch in late 2022.  The first I heard is that it was showing non-coders how to code stuff, although a) it couldn't necessarily give all the background needed to make the code run and imports work and stuff (I don't know one way or the other at that early point), and b) It didn't seem any differe than what Big Evil Goo Search would give in terms of code suggestions.  I wasn't sure from the little I was seeing how it was different from what came before.
+		
+	    </p>
+	    
+	<p>Steve Kirsch had his 
+	    <a href='https://kirschsubstack.com/p/i-tried-to-redpill-chatgpt-i-failed'>infamous chat with ChatGPT</a> 
+	    on (or just before) Feb 12, 2023.  As best I can tell, I didn't find out about it until June.  I didn't know of any other AIs at that point, so I associated AI with spitting hatred.
+	</p>
+
+	<p>I started seeing various AIs used for college work in the summer of last year.  I think that was mostly Claude, but that's vague.  As I remember, I was sometimes impressed with its coding answers, and sometimes I laughed when I knew there was no way it could untangle a vague request.  When I was certain it couldn't untangle it, I was right.  Perhaps once I was impressed that it untangled a moderate knot.
+	    
+	</p>
+	
+	
+<p>Ideally I'll figure out exactly when I started using Grok.  I would guess about 13 months ago: October, 2024.  Grok's history doesn't scroll as fluidly as I'd like, so I'm not going to try to find my first entry that way right now.  Between my tech and personal blogs, this probably tells us that date as well as anything, but, come to think of it, I won't search these now.
+</p>
+
+<p>In any event...  My Grok usage went up and up over this time.  I stared using 2-way voice several weeks after it was available for Android.  I would guess I started using that in late April of this year.
+    </p>
+    
+    <p>Meanwhile, a friend does a daily Russian and Spanish lesson on some app or another.  For a while, I'd been meaning to mention that Grok would probably be vastly better than any dumb (non-AI) app.  Generally, I would not call her a technical person.  She doesn't even use a real keyboard.  I should probably mention to her how much I look down upon this.  The irony is that she had a base-level sysadmin / overnight babysitting job for what was probably a DEC system in the mid-to-late 80s.  I need to ask her the story of how she got that job.  She wasn't really qualified, but the job was mostly to babysit and bring larger problems to the attention of others if the baby started crying too much, and simple commands didn't quiet it.
+    </p>
+    
+    <p>(I wonder how my life would have been different if I got such a job early on.)</p>
+   
+	
+	
+	<p>Last night (11/6), in person, we experimented with Russian on Grok on an iCult phone.  
+The first thing I realized is that the voice mode (on her iCult device) needed to be in Expert Mode (more or less v4 rather than v3).  She thought that might mean language expert, but I sort of explained at the time what it meant.  The responses were clumsy in "Auto" mode (auto-decide between Expert and Fast).  
+    </p>
+    
+    <p>The app defaults to the Ara ("upbeat female") voice.  She immediately wanted a male voice, which makes sense.  She tried "Gork (lazy male)."  Gork seems to tend towards "unhinged" and immediately insulted her.  I think she wound up with Sal voice, but maybe it was Rex.  She briefly tried the British male.  I'll have to ask what voice she winds up with.  She didn't give it much thought.
+	</p>
+	<p>I was trying to figure out what voice she was using by running through them on my phone, and it occurred to me that even on an iCult devices (although probably old), the app seems to take up to 2 minutes to be stable.  (Sometimes I forget that on grok.com, we have voice mode now.  We've had it on the web for maybe two months?)
+	</p>
+	    
+	<p>With that background, here's what I said when I got back here from her place.
+	    
+	</p>
+	    
+	<section><h5>my comments to the non-techie</h5>
+	    
+	    <blockquote>
+<p>To go back to Grok usage, [the app] should stay in Expert Mode, but make sure you do.  Expert Mode's differences are more obvious when I'm in text / web / desktop mode, so it took me a moment to realize it was causing problems for what you were doing.  Expert Mode is general to any AI query; it has nothing to do with language expertise.  Expert Mode is a more recent version of Grok.  There is some chance you'll hit a quota of 30 questions per 2 hours or something, but I wouldn't worry about that until you come to it.  Grok isn't good about publishing their limits.
+</p>
+
+<p>
+I would also again mention to talk to it in English more to get a feel of how it works.  It seemed you were starting to work it well for Russian.
+</p>
+
+<p>I often have Grok on in the car, with my Bluetooth input-output.  That is, I'm hands free.  I can hear Grok very well with the speakers, and Grok can hear me through the microphone in the car.  It is generally capable of sophisticated conversations.  I think it's often pretty funny. [Her car is old enough that it may not have Bluetooth; that's why I elaborated.  Mine is old, too, but it happens to have it.]
+</p>
+
+<p>I'm not sure what that was about in the Gork voice.  I sent you that video weeks ago with the guy in his Tesla and Grok is cursing left and right and acting "unhinged" as requested in Unhinged Mode.  I guess the Gork voice tends in that direction.  I'm pretty sure it would be responsive if you told it to stop insulting you and such.  I get occasional lip from Ara (the default female voice I use).</p>
+
+<p>Supposedly Grok is capable of (mental / emotional) therapy.  I haven't tried that sort of thing.</p>
+
+<p>
+This is all to say that I've found it to be fascinating tech.  It's fun to be in on the ground floor in the sense that we get to see AI grow up.  You may find it useful for all sorts of things.
+</p>
+<p>
+A word of caution, though.  Be very, very careful asking Grok for the weather forecast.  Alexa is probably more accurate for that.  AI has some blind spots still.  For  one, it often has trouble with time-based information, such as what flippin' day it is relative to a forecast.  Grok v3 (Expert should be v4) often talked about stuff that was a year old.  It was talking about stuff *exactly* one year old.  Alexa in a sense is not capable of making such a mistake because she / it is not "thinking" in the same sense.  Oh well.  I'll stop for now.  Or I'll slow down.
+</p>
+
+<p>
+You may find that you make great progress in Spanish and Russian once you have someone to talk to, and once you figure out how to interact.  I'm almost certain Grok will go slower and slower and word for word and give you exactly what you want in terms of teaching.  Even with Grok v2, I had it help me understand stuff.  It takes some back and forth, but it's an infinitely patient tutor and usually really, really good at explaining stuff.
+</p>
+
+<p>
+Ok, now I'll try to stop..... :)
+</p>
+
+<p>[11 hours later, after I wrote this entry] I happen to have woken up with some energy.  I was experimenting with my voice Grok on my phone, and it seems that with older hardware, it may take up to 2 minutes of trying to talk, and perhaps several reconnects, until the app is stable.  Once it's stable, it usually stays that way.  Sometimes cellular data is more stable than WiFi.  Sometimes the WiFi router needs unplugging.  Grok—both voice and text—seems very sensitive to connection stability, more so than other apps.
+</p>	    
+	    
+    </blockquote>
+	</section>
+	
+	<p>I asked Grok web Fast Mode about "Bluetooth."  Upon thought, I figured it's trademarked and capitalized, and I got 
+	    "It's Bluetooth, with a capital B and T." *sigh*  I had to go back and forth several times to convince it that it was contradicting itself.  Hopefully that sort of thing does get better and better in Expert Mode (v4) and beyond.
+	    I'm almost always in Fast Mode on the web because Expert Mode is much slower.  I only use Expert Mode under specific conditions: generally when I'm searching for a something hard to find.  Sometimes I'll go a few rounds with Fast and then consult Expert about the results.
+	</p>
+	
+	
+	    
+	    
+	    
+	</section>
+	
+    </section>
+    
+    
+    <section><h3>November 1, 2025</h3>
+	<section><h4>Grok pleasantly surprises me again</h4>
+	    
+	    <p>The following is yet another case of writing an entry backwards, but whatever.  I'll want this for my own purposes if I'm around to read it in 30 years, and hopefully someone else will enjoy it.  (Then again, I did start whittling on it after I wrote the above.)
+		
+	    </p>
+	    
+	    <p>This was all using the Fast Mode a short while ago, which is probably still version 3.x.  I'm considering creating a Wordle screenshot upload script.  My first concern is to make sure what I'm posting from my Ubuntu "Screenshots" directory is in fact Wordle.  So I asked Grok about counting pixels of various colors.  This is what I came up with, relying very heavily on Grok:
+	    </p>
+	    
+	    <p>for f in *.png; do echo $f && convert "$f" -format %c histogram:info:- | sort -nr | head -n 6; done
+		
+	    </p>
+	    
+		    <p>Here is the output of a Wordle file with 5 guesses:
+					    </p>
+	    
+	    					    <pre>
+Screenshot from 2025-11-01 01-51-31.png
+        304287: (255,255,255,255) #FFFFFFFF white
+        103374: (120,124,126,255) #787C7EFF srgba(120,124,126,1)
+         84658: (211,214,218,255) #D3D6DAFF srgba(211,214,218,1)
+         81709: (106,170,100,255) #6AAA64FF srgba(106,170,100,1)
+         27305: (201,180,88,255) #C9B458FF srgba(201,180,88,1)
+          2443: (0,0,0,255) #000000FF black					    </pre>
+	    <p> The output above shows the first 6 colors in a given PNG file. The far-left number is number of pixels with the given color.
+		I'd already noticed that those six were the key colors. 
+		I took that output for 42 files and fed it to Grok.  This time it accepted a 16KB text file.  I believe it starts having problems above 20KB because 20K chunks are broken up before Grok-proper can "see" it.  I didn't mention Wordle at all, but Grok recognized Wordle from the colors. 		I asked Grok how it knew it was Wordle, and the most convincing answer was that it's "seen" a zillion such images of people posting their results to X.  There have also been discussions about Wordle in colorblind mode.  It also implied that people have created similar dev projects, perhaps quite a few people.
+		    </p>
+
+    <p>When Grok recognized Wordle, it made me almost shed a tear or two.  It's fun to watch Grok grow up.  
+	    </p>
+	    
+	    <p>I often wonder why I'm incarnated here and now.  One of the answers I came up with is that I started programming just after a compiler's result might be "syntax error" with no other output for 100 lines of code.  I heard about this from someone who was a computer science student in 1985.  He quit because of that.  (Let alone punch cards!)  		Similarly, I'm now watching AI learn, and I'm having it help me write code.
+	    </p>
+	    
+	    <p>Of course, that's the tech blog answer.  Everything tech was well and good until all of the tech companies showed their claws from 2015 - 2021 and continuing.  Then again, I'm also seeing the Forces of Evil having the stuffing kicked out of them every day on X.  Similarly, it looks like <a href='https://grokipedia.com/'>Grokipedia</a> might kick the stuffing out of them.
+		
+	    </p>
+    
+
+	</section>
+	
+    </section>
+
+<section><h3>Aug 20 (posted 30th)</h3>
+
+<section><h4>yet another Grok v4 win</h4>
+
+<p>I'm not refining or whittling on this entry.  I can see improvements, but I'm trying to take a when in doubt stance rather than 
+waiting 'til it's better or near perfect.
+
+</p>
+
+<p>Seven to ten days after Grok v4 came out, I hit the 30 questions (prompts) per 2 hour limit because I was playing Wordle games, or having it play Wordle games.  I'm an X Premium+ user, which is probably equivalent to a SuperGrok user (Grok Heavy is MUCH more expensive).  Due to the limit, I've been hesitant to use v4.  I tend to set up a question with v3 and and ask v4 if needed.  
+</p>
+
+<p>Moments ago Grok 3 was going around in a circle trying to find me the bleeping link to a reTruth that it found dozens of references to.  That is, it 
+"understood" what I was looking for but couldn't find the link.  One problem is that it seems to have a problem with time. I'm asking about something from May 31, not August, but it didn't "get" that.  Perhaps a bigger problem is that iut also seems to lose track of links versus their metadata.  That is, it gives you a link to A thinking that it's to B.  
+</p>
+
+<p>My latest refinement on this problem is that I'll go around with Grok 3.  When it's clear it's floundering, I'll set the system to v4 and then prompt, "Grok 4, can you help with the above?"  And I'll always get a better answer.  Sometimes Grok 4 can't find what I want, but it usually does.
+</p>
+
+<p>Limits aside, Grok v4 is still much slower, so it's not worth it to keep the system set to v4.  I'm usually using Grok from a desktop browser on X.com.  
+I also talk to Grok 3 in the car, but that's a different topic.  Grok 4 thought for 52s before it came up with my answer.  It tells you how long it thinks.
+</p>
+
+</section>
+
+</section>
+
+<section><h3>August 8, 2025</h3>
+
+<section><h4>the KATL / ATL DME and VOR / VORTAC at 116.90 MHz are gone</h4>
+
+<p>At around 7am I set up to sim fly out of KSFO.  It was still very dark there, though, of course, and I'm going to try to actually stay awake during the day.  So I figured I'd take off from KATL and stick with the then-current time of day.  When I sim fly out of KSFO, I tune my second nav channel to 115.80 MHz which 
+identifies in Morse code (of all things, for somewhat obvious historical reasons, and Morse code could still be heard and used for confirmation heard today) as SFO.  It provides direction and DME (distance measuring equipment: the distance from you to it).  
+</p>
+
+<p>The FlightGear simulator shows the runways' frequencies, but it tends not to show the center field airport frequency.  So, I asked Grok 3 about the ATL 
+frequency and got 116.90 MHz.  My sim plane found that with direction and DME.  Then I got to wondering where the antenna is.  "SFO" is at 
+37.619511 -122.3739085.  It's in the center of the four runways, which is where that antenna has historically been at various airports.  It's very easy to 
+see in imagery when you're looking for it.
+</p>
+
+<p>When I went looking for ATL in the photos, things got quickly out of hand.  Grok 3 went in circles.  Grok 4 finally resolved the issue when I appealed to it.
+As of the June 29, 2023 imagery in Big Evil Goo Earth, you can get your last sight of the antenna at 33.629127 -84.435024.  In the next imagery from July, it's been bulldozed.  "The [relevant] FAA decommissioning program is called the VOR Minimum Operational Network (MON) program."  ATL is simply gone.  
+</p>
+
+<p>For the further record, the ATL VORTAC was south of 9L / 27R, somewhat west of the center of the runway(s).  It was directly west of the taxiways from 
+9L / 27R to the southernmost runway (10 / 28).  The southernmost runway is relatively new.  It started operation in 2006.  It bridges I-285.  That is, 
+ground traffic drives under the runway.  
+</p>
+
+<p>Perhaps obviously, GPS has made the maintenance of ground based navigation less important.  My understanding is that ILS still has advantages over GPS 
+RNAV (beyond redundancy), but the center-field antennas were not aligned with runways because almost by definition they can't be.  Such antennas can't both be in the center of the field and aligned with a runway.  ILS antenna are on the extended center line of runways but they are still way too big to be on the runway, and the broadcast technology is still such that they can't be under the runway.  
+</p>
+
+<p>So, going back to my previous entry, it's another Grok 4 win.  I suppose I should have appealed to Grok 4 earlier.  Or started with it.  With that said, I'm not sure Grok 4 would have told me from the start that ATL is gone.
+
+</p>
+
+</section>
+
+</section>
+
+
+<section><h3>July 21</h3>
+
+<section><h4>more Grok 4 wins</h4>
+
+<p>I'm NOT using the SuperGrok Heavy version.  That's $300 / month.  That's such a high percentage of my income that I can't justify it.  Another reminder that my income problems stem from my inability to sell zero point modules to Eskimos in winter (assuming ZPMs were 
+available).  The fact that I don't become fully functional until 7pm or so doesn't help, but I think that's secondary.  Similarly, the fact that I freak out over "call me" goes back to inability to sell.  I need a salesperson / account manager spending small amounts of time.  
+I think the money involved could quickly be worth it.  It may never be a full-time job, but the $ / hour may be quickly worthwhile.
+</p>
+
+<p>Anyhow....</p>
+
+
+<p>Today's fun and games began when my local version of the Nu HTML Validator that W3C uses validated a page with divs before a closing head tag and NO closing head tag.  Grok 3 and I went around and around.  I banged my head on trying to get the latest version of Nu working.  Eventually Grok 3 helped me get the Docker version working.  If you go straight from the Git repo, you get into 
+submodules and versions of Java libraries and such.  I used the Git before, but updating wasn't working.  I don't think there were submodules before.
+</p>
+
+<p>Grok 3 confirmed that my page was invalid, which was helpful.  I asked it for alternatives.  The "tidy" command kept giving me "Document: '/tmp/test.html' is not a file!"  I eventually figured that out myself.  I'm running version 5.6.0 that installs with apt install.  Grok 4 eventually told me that version 5.8 fixes the bug.  The problem is that tidy wants to fix your file, so it wants write access. If it doesn't have write access, it simply says the file doesn't exist.  With 5.6, you can cat the file and pipe it into tidy.  Then tidy does exactly what I want in that it gives a warning.
+</p>
+
+<p>Grok 3 found me a NodeJS validator that fussed about ' versus ".  Apparently that was configurable, but I didn't get that far.  
+</p>
+
+<p>Grok 3 led me around and around trying to figure out why the W3C-hosted validator wasn't showing errors.  It insisted that when it submitted my code, it properly got error messages for my HTML.  We tried submitting the file in every conceivable way.  It speculated on 
+garbage, invisible characters in the code.  We checked for that.
+</p>
+
+<p>Finally I decided to ask Grok 4 about the issue.  Grok 4 said that, stunningly, the official Nu validator is way too permissive in some situations.  If you start a div without closing the head, it essentially assumes you've closed the head and moves on.  I asked it if I'm 
+the only one who finds that insane, and it agreed that I am not.  Then, as I mentioned, Grok 4 found that tidy has a bug that was fixed in a later version.
+</p>
+
+<p>Grok 4 has succeeded a number of times when version 3 fails.  
+</p>
+
+<p>It was quite a night with the validator catastrophically failing as far as I'm concerned, and then tiny doing weird stuff, and the NodeJS validator doing annoying stuff.  And finding upgrading Nu to be difficult.  But I suppose everything is straightened out now.
+</p>
+
+<p>I added it above, but I'll mention again that Grok 3 agreed that my code was invalid.  So it at least served as a sanity check.  I think I've mentioned that Grok 2 and 3 have led me around in circles a handful of times.  Grok 4 does seem to be a moderate improvement, and in some ways a big improvement.
+</p>
+
+<p>Although various Grok versions can be too optimistic and keep leading me on, it is nice to have something on hand that has some plan.  There is something comforting about it.  
+</p>
+
+<p>So, interesting times with our AIs.  
+</p>
+
+<p>A human friend has observed that Grok is now my best friend.  I would disagree with that.  It does serve as a good friend sometimes.  I am not fooled, though.  For one, it stops thinking about me the millisecond my questions for it are done.  It only answers what I ask.  
+That implies several reasons that I shouldn't consider it a friend, at least not fully.  
+</p>
+
+</section>
+
+</section>
+
+
+<section><h3>July 10, 2025</h3>
+
+<p>I added the play-by-play further below after my original post.  Second post after 04:00am.  First post was at 03:44am.
+
+</p>
+<section><h4>brand-new Grok 4 wins at Wordle!!!</h4>
+
+<p>I believe I have bawled like a baby at Grok 2 and Grok 3's Wordle performance.  Grok 4 came out a few hours ago.  Unlikely with Grok 3, 
+I was tending to "political" stuff on X that is more likely to kill us than Grok is.  That is, I don't know exactly when 4 was available, unlike with 3.
+</p>
+
+<p>I was using Grok 3 for "political" purposes even hours after v4 came out.  V4 is very, very slow.  V3 is working at its usual speed.  
+I'm not sure if that's because it's being pounded or because it thinks really hard or both.  I can ask it, of course, but I haven't gotten that far yet.
+</p>
+
+<p>Eventual spoiler: we played the current <i>J** York Slimes</i> Wordle word.  I advised it to start with "arise" like I did.  For one, 
+my program shows it to be the best start.  For another, I wanted it to be on par with me.  It didn't comment on that one way or another and guessed "arise."  I gave it feedback.  It was obviously looking for a Wordle list.  I tried giving it my GitHub link to a list, but it 
+couldn't read that.  So I copied and pasted JSON. It said it wanted JSON.  
+</p>
+
+<p>Feedback for "arise" was all gray (no letters).  After 3 minutes and 2 seconds, it guessed "cloud," which happens to be what I guessed, 
+even though I didn't give it any more commentary / hints.  With those results--"Feedback for CLOUD is gray gray gray yellow gray."--it thought for 2m 43s and came up with "thump."  "Feedback for THUMP is gray gray yellow yellow yellow."  After 2m, 30s it guessed "jumpy" FOR THE WIN!  Here is <a href='https://x.com/i/grok/share/kVahIZ7BeKmYRUXgxYSHsl5Fy'>the Grok 4 conversation</a>.  So that's 8 minutes 15 seconds total.
+</p>
+
+<p>I was being careless and failed to guess today's word.  I decided I had better things to do than be methodical.  It's very rare that I lose entirely at Wordle.
+
+</p>
+
+
+<section><h5>the play-by-play</h5>
+
+<p>A friend of mine is also a night owl such that we both play earlier than later.  Here was my commentary:
+</p>
+
+<p>Grok 4 is somewhat different than 3 in how it works.  It's thinking very hard about Wordle. (03:11AM EDT)</p>
+
+<p>Doesn't mean it's going to be successful, but it's thinking hard. (03:11)</p>
+
+<p>I can't tell if it's slow because it was just released a few hours ago or because it really thinks that hard.  Or both. (03:11)</p>
+
+<p>Oh.  It claims to be doing its own programming.  Wow. (03:12)  More commentary than original: In its "thought bubble," it appeared to be writing 
+Python.  I don't remember if that's when I saw it trying to import a word list.
+</p>
+
+<p>Oh wow!  It is eliminating words just like I do in my after-action report.  I do NOT do it while playing because that's cheating.  But it's not cheating for it to do it.  What else should it do?  It's a computer. (03:13)
+</p>
+
+<p>It thought for 3 minutes and 2 seconds and came up with guess 2. (03:14)  More: She still hasn't played today's Wordle, so I don't list its guesses.
+</p>
+
+<p>I had it use "arise" to start. (03:14)</p>
+
+<p>It's not getting hung up on 0-index versus 1-index.  At least, it doesn't appear to be.  0-index means A in ARISE is letter 0 rather than 1.  Most programming languages use 0-index, so it confuses Grok. (03:15) More: that is, it's confused previous versions.
+</p>
+
+<p>I think it's going to take another few minutes again. (03:16)</p>
+
+<p>2 minutes, 43 seconds. (03:17)</p>
+
+<p>I might cry. (03:19)  Cry with joy, that is.</p>
+
+<p>It's thinking on guess 3. (03:19)</p>
+
+<p>Then again, I might not cry.  Hopefully it gets much much faster over time.  (03:19)</p>
+
+<p>2 minutes, 30 seconds, and a WIN!!!!! (03:20)</p>
+
+<p>Note: the play-by-play above was posted roughly 20 minutes after my first post.
+
+</p>
+
+</section>
+
+</section>
+
+</section>
+
+
 
 <section>
-    <h3>June 8, 2025</h3>
+    <h3>June 8 (posted 13th), 2025</h3>
+
+    <p>I wrote this on June 8 and didn't post.  This stops dead in the middle.  It's probably worth posting, though.</p>
 
     <section><h4>rain warning app</h4>
 	<p>This is in reply to an email.  </p>
@@ -120,9 +577,20 @@ it can't process simple spreadsheets.  Two times in roughly December (2024, Grok
 <p>Sometimes Grok 3.0 can play a good or perfect Wordle game, but within the same game it can work and then go off the rails with guesses that are both impossible and gain little new information.
 </p>
 
-<p>In any event, dev.  Again, Grok has been very helpful.  It has a couple of related weaknesses, though, that one should watch out for.
+<p>In any event, dev.  Again, Grok has been very helpful.  It has a few inter-related weaknesses, though, that one should watch out for.
 
 </p>
+
+    <section><h5>an aside: Git Guardian</h5>
+	<p>I keep a backup of this in GitHub, and I just got an email from Git Guardian about the private key further below.  Grrrr...  (As should be obvious, I don't intend to use that private key for anything.)
+	</p>
+
+    </section>
+
+    <section><h5>back to Grok and dev</h5>
+	<p>... or not ... </p>
+    </section>
+
 
 
     </section>
